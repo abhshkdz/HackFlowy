@@ -70,47 +70,50 @@ body {
       }
       .children {
         margin-left: 40px;
-        .task {
-          margin: 10px 0;
-          color: $fontcolor;
-          .link {
-            vertical-align: middle;
-            display: inline-block;
-            margin-top: 1px;
-            margin-left:1px;
-            height: 18px;
-            width:18px;
-            color: #666;
-            background: white;
-            left:50px;
-            text-indent:5px;
-            font-size:24px;
-            font-family: Arial;
-            line-height:19px;
-            z-index:6;
-            -moz-border-radius:12px;
-            -webkit-border-radius:12px;
-            -khtml-border-radius:12px;
-            border-radius:12px;
-          }
-          .with-children > .link {
-            background-color: #e0e0e0;
-          }
-          .open > .link {
-            background-color: white;
-          }
-          .link:hover {
-            cursor: pointer;
-            z-index: 8;
-            background-color: #aaa;
-          }
-          .content {
-            padding-left: 10px;
-            width: 90%;
-            line-height: 20px;
-            text-align: justify;
-            vertical-align: middle;
-            display: inline-block;
+        li {
+          list-style: none;
+          .task {
+            margin: 10px 0;
+            color: $fontcolor;
+            .link {
+              vertical-align: middle;
+              display: inline-block;
+              margin-top: 1px;
+              margin-left:1px;
+              height: 18px;
+              width:18px;
+              color: #666;
+              background: white;
+              left:50px;
+              text-indent:5px;
+              font-size:24px;
+              font-family: Arial;
+              line-height:19px;
+              z-index:6;
+              -moz-border-radius:12px;
+              -webkit-border-radius:12px;
+              -khtml-border-radius:12px;
+              border-radius:12px;
+            }
+            .with-children > .link {
+              background-color: #e0e0e0;
+            }
+            .open > .link {
+              background-color: white;
+            }
+            .link:hover {
+              cursor: pointer;
+              z-index: 8;
+              background-color: #aaa;
+            }
+            .content {
+              padding-left: 10px;
+              width: 90%;
+              line-height: 20px;
+              text-align: justify;
+              vertical-align: middle;
+              display: inline-block;
+            }
           }
         }
       }

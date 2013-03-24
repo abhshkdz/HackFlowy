@@ -5565,12 +5565,16 @@ body #gofish #main .children {
   margin-left: 40px;
 }
 /* line 73, ../sass/app.scss */
-body #gofish #main .children .task {
+body #gofish #main .children li {
+  list-style: none;
+}
+/* line 75, ../sass/app.scss */
+body #gofish #main .children li .task {
   margin: 10px 0;
   color: #333333;
 }
-/* line 76, ../sass/app.scss */
-body #gofish #main .children .task .link {
+/* line 78, ../sass/app.scss */
+body #gofish #main .children li .task .link {
   vertical-align: middle;
   display: inline-block;
   margin-top: 1px;
@@ -5590,22 +5594,22 @@ body #gofish #main .children .task .link {
   -khtml-border-radius: 12px;
   border-radius: 12px;
 }
-/* line 96, ../sass/app.scss */
-body #gofish #main .children .task .with-children > .link {
+/* line 98, ../sass/app.scss */
+body #gofish #main .children li .task .with-children > .link {
   background-color: #e0e0e0;
 }
-/* line 99, ../sass/app.scss */
-body #gofish #main .children .task .open > .link {
+/* line 101, ../sass/app.scss */
+body #gofish #main .children li .task .open > .link {
   background-color: white;
 }
-/* line 102, ../sass/app.scss */
-body #gofish #main .children .task .link:hover {
+/* line 104, ../sass/app.scss */
+body #gofish #main .children li .task .link:hover {
   cursor: pointer;
   z-index: 8;
   background-color: #aaa;
 }
-/* line 107, ../sass/app.scss */
-body #gofish #main .children .task .content {
+/* line 109, ../sass/app.scss */
+body #gofish #main .children li .task .content {
   padding-left: 10px;
   width: 90%;
   line-height: 20px;
@@ -5613,11 +5617,11 @@ body #gofish #main .children .task .content {
   vertical-align: middle;
   display: inline-block;
 }
-/* line 118, ../sass/app.scss */
+/* line 121, ../sass/app.scss */
 body #gofish #main > .children {
   margin-left: 0;
 }
-/* line 121, ../sass/app.scss */
+/* line 124, ../sass/app.scss */
 body #gofish #footer {
   color: #333333;
   margin: 10px 0;
