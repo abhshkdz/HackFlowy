@@ -8,6 +8,8 @@ var app = app || {};
       parent_id: '',
       content: ''
     },
+
+    url: '/task'
     
   });
 

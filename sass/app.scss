@@ -74,6 +74,7 @@ body {
           list-style: none;
           .task {
             margin: 10px 0;
+            height: 20px;
             color: $fontcolor;
             .link {
               vertical-align: middle;
@@ -106,13 +107,30 @@ body {
               z-index: 8;
               background-color: #aaa;
             }
-            .content {
-              padding-left: 10px;
-              width: 90%;
-              line-height: 20px;
-              text-align: justify;
-              vertical-align: middle;
-              display: inline-block;
+            textarea.edit {
+              box-shadow: none;
+              display: inline;
+              background: transparent;
+              resize: none;
+              outline: 0;
+              border: 0;
+              padding: 0;
+              margin: 0;
+              width: 620px;
+              height: 18px;
+              font-family: inherit;
+              font-size: inherit;
+              font-weight: inherit;
+              line-height: inherit;
+              letter-spacing: inherit;
+              color: inherit;
+              overflow: hidden;
+              position: relative;
+              word-wrap: break-word;
+            }
+            textarea.edit:focus {
+              background-color: white;
+              height: 18px;
             }
           }
         }

@@ -5571,9 +5571,10 @@ body #gofish #main .children li {
 /* line 75, ../sass/app.scss */
 body #gofish #main .children li .task {
   margin: 10px 0;
+  height: 20px;
   color: #333333;
 }
-/* line 78, ../sass/app.scss */
+/* line 79, ../sass/app.scss */
 body #gofish #main .children li .task .link {
   vertical-align: middle;
   display: inline-block;
@@ -5594,34 +5595,52 @@ body #gofish #main .children li .task .link {
   -khtml-border-radius: 12px;
   border-radius: 12px;
 }
-/* line 98, ../sass/app.scss */
+/* line 99, ../sass/app.scss */
 body #gofish #main .children li .task .with-children > .link {
   background-color: #e0e0e0;
 }
-/* line 101, ../sass/app.scss */
+/* line 102, ../sass/app.scss */
 body #gofish #main .children li .task .open > .link {
   background-color: white;
 }
-/* line 104, ../sass/app.scss */
+/* line 105, ../sass/app.scss */
 body #gofish #main .children li .task .link:hover {
   cursor: pointer;
   z-index: 8;
   background-color: #aaa;
 }
-/* line 109, ../sass/app.scss */
-body #gofish #main .children li .task .content {
-  padding-left: 10px;
-  width: 90%;
-  line-height: 20px;
-  text-align: justify;
-  vertical-align: middle;
-  display: inline-block;
+/* line 110, ../sass/app.scss */
+body #gofish #main .children li .task textarea.edit {
+  box-shadow: none;
+  display: inline;
+  background: transparent;
+  resize: none;
+  outline: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 620px;
+  height: 18px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  overflow: hidden;
+  position: relative;
+  word-wrap: break-word;
 }
-/* line 121, ../sass/app.scss */
+/* line 131, ../sass/app.scss */
+body #gofish #main .children li .task textarea.edit:focus {
+  background-color: white;
+  height: 18px;
+}
+/* line 139, ../sass/app.scss */
 body #gofish #main > .children {
   margin-left: 0;
 }
-/* line 124, ../sass/app.scss */
+/* line 142, ../sass/app.scss */
 body #gofish #footer {
   color: #333333;
   margin: 10px 0;
