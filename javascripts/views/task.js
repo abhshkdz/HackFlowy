@@ -31,8 +31,13 @@ var app = app || {};
       this.$el.removeClass('editing');
     },
 
-    add: function() {
-      this.$input.blur();
+    add: function(e) {
+      if (e.which === ENTER_KEY) {
+        this.$input.blur();
+        var render = new app.TaskView({model: new app.Task()}).render();
+        render.$el.insertAfter(this.$el);
+        render.$input.focus();
+      }
     }
 
   });
