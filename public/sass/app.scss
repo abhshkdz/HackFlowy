@@ -127,6 +127,9 @@ body {
               overflow: hidden;
               position: relative;
               word-wrap: break-word;
+              white-space: pre-wrap;
+              text-align: start;
+              -webkit-writing-mode: horizontal-tb;
             }
             textarea.edit:focus {
               background-color: white;

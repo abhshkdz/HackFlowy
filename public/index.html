@@ -25,7 +25,7 @@
               <h2></h2>
             </div>
             <ul class="children"></ul>
-            <button id="add">+</button>
+            <!-- <button id="add">+</button> -->
           </section>
           <footer id="footer">
             Make Lists. Catch Fish. <3 Open Source.
@@ -36,7 +36,7 @@
     <script type="text/template" id="taskTemplate">
       <div class="task">
         <div class="link">•</div>
-        <textarea data-id="<%= id %>" class="edit"><%= content %></textarea>
+        <textarea rows="1" data-id="<%= id %>" wrap="off" class="edit"><%= content %></textarea>
       </div>
     </script>
     <script src="javascripts/vendor/jquery.min.js"></script>

@@ -26,7 +26,10 @@ var app = app || {};
       var taskView = new app.TaskView({
         model: task
       });
-      this.$el.append(taskView.render().el);
+      var a = taskView.render();
+      this.$el.append(a.el);
+      a.$input.focus();
+      console.log(a.$input.prop('selectionStart'));
     }
 
   });
