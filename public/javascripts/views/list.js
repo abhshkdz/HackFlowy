@@ -13,14 +13,7 @@ var app = app || {};
     initialize: function() {
       this.collection = new app.List();
       this.collection.fetch();
-      this.render();
-
       this.listenTo(this.collection, 'add', this.renderTask);
-    },
-
-    addTask: function() {
-      console.log('yes');
-      //var view = new app.TaskView({model: task})
     },
 
     render: function() {
