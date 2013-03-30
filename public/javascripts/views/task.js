@@ -9,7 +9,9 @@ var app = app || {};
 
     events: {
       'click .task': 'edit',
-      'blur .edit': 'close'
+      'blur .edit': 'close',
+      'keyup .edit': 'broadcast',
+      'keypress .edit': 'add'
     },
 
     initialize: function() {
@@ -34,16 +36,20 @@ var app = app || {};
     edit: function() {
       this.$el.addClass('editing');
       this.$input.focus();
-      var id = (this.model.id === undefined) ? '' : this.model.id;
-      var parent_id = (this.model.parent_id === undefined) ? '' : this.model.parent_id;
-      this.$input.on('keyup',function(){
-        var value = $(this).val().trim();
-        socket.emit('task', { 
-          id: id, 
-          parent_id: parent_id, 
-          content: value 
-        });
+    },
+
+    broadcast: function() {
+      socket.emit('task', { 
+        id: this.model.id, 
+        parent_id: this.model.parent_id, 
+        content: this.$input.val().trim() 
       });
+    },
+
+    add: function(e) {
+      if ( e.which === ENTER_KEY ) {
+        console.log('Add stuff here');
+      }
     },
 
     close: function() {
