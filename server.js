@@ -1,8 +1,11 @@
 var application_root = __dirname,
   express = require('express'),
+  app = express(),
   path = require('path'),
+  config = require('./config'),
   mysql = require('mysql'),
-  config = require('./config');
+  server = require('http').createServer(app),
+  io = require('socket.io').listen(server);
 
 var client = mysql.createConnection({
   host: 'localhost',
@@ -12,8 +15,6 @@ var client = mysql.createConnection({
 
 client.query('USE '+config.db_name);
 
-var app = express();
-
 app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
@@ -22,58 +23,42 @@ app.configure(function() {
   app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 });
 
+var port = 3000;
+server.listen(port, function() {
+  console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
+});
+
 app.get('/tasks', function(req,res){
   client.query("SELECT * FROM tasks", function select(err,tasks){
-    if (err)
-      res.send(err);
-    console.log('Initialized');
     res.send(tasks);
   });
 });
 
-app.get('/tasks/:id', function(req,res){
-  client.query("SELECT * FROM tasks WHERE id = ?", [req.params.id], function select(err, task) {
-    if (err)
-      res.send(err);
-    console.log('Fetched');
-    res.send(task);
-  });
-});
-
 app.post('/tasks', function(req,res){
-  var content = req.body.content;
-  var parent = req.body.parent;
   var timestamp = Math.round((new Date()).getTime()/1000);
-  client.query("INSERT INTO tasks (content, timestamp) VALUES (?,?)", [content,timestamp], function insert(err, task){
-    if (err)
-      res.send(err);
-    console.log('Inserted');
+  client.query("INSERT INTO tasks (content, timestamp) VALUES (?,?)", [req.body.content,timestamp]);
+  client.query("SELECT * FROM tasks WHERE content = ?", [req.body.content], function select(err,task){
+    req.body.id = task[0].id;
     res.send(req.body);
   });
 });
 
 app.put('/tasks/:id', function(req,res){
-  var content = req.body.content;
-  var parent = req.body.parent;
   var timestamp = Math.round((new Date()).getTime()/1000);
-  client.query("UPDATE tasks SET content = ? AND timestamp = ? WHERE id = ?", [content,timestamp,req.params.id], function(err, task){
-    if (err)
-      res.send(err);
-    console.log('Updated');
+  client.query("UPDATE tasks SET content = ?, timestamp = ? WHERE id = ?", [req.body.content,timestamp,req.body.id], function(err, task){
+    req.body.timestamp = timestamp;
     res.send(req.body);
   });
 });
 
 app.delete('/tasks/:id', function(req,res){
   client.query("DELETE FROM tasks WHERE id = ?", [req.params.id], function(err, task){
-    if (err)
-      res.send(err);
-    console.log('Removed');
     res.send('');
   })
 });
 
-var port = 4711;
-app.listen(port, function() {
-  console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
+io.sockets.on('connection', function (socket) {
+  socket.on('task', function (data) {
+    socket.broadcast.emit('task', data);
+  });
 });

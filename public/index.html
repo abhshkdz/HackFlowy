@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="stylesheets/normalize.css" />
     <link rel="stylesheet" href="stylesheets/app.css" />
     <script src="javascripts/vendor/custom.modernizr.js"></script>
+    <script src="/javascripts/vendor/socket.io.min.js"></script>
+    <script>
+      var socket = io.connect('http://gofish.dev:3000');
+    </script>
   </head>
   <body>
     <div class="row">
@@ -21,6 +25,7 @@
               <h2></h2>
             </div>
             <ul class="children"></ul>
+            <button id="add">+</button>
           </section>
           <footer id="footer">
             Make Lists. Catch Fish. <3 Open Source.
@@ -31,7 +36,7 @@
     <script type="text/template" id="taskTemplate">
       <div class="task">
         <div class="link">•</div>
-        <textarea rows="1" cols="1" class="edit"><%= content %></textarea>
+        <textarea data-id="<%= id %>" class="edit"><%= content %></textarea>
       </div>
     </script>
     <script src="javascripts/vendor/jquery.min.js"></script>

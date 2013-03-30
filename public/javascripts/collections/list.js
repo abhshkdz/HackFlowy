@@ -4,7 +4,8 @@ var app = app || {};
 
   app.List = Backbone.Collection.extend({
 
-    model: app.Task
+    model: app.Task,
+    url: '/tasks'
     
   });
 

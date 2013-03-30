@@ -9,8 +9,6 @@ var app = app || {};
       content: ''
     },
 
-    url: '/task'
-    
   });
 
 }());
