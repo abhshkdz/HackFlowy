@@ -11,7 +11,7 @@ var app = app || {};
     },
 
     initialize: function() {
-      this.collection = new app.List();
+      app.Tasks = this.collection = new app.List();
       this.collection.fetch();
       this.listenTo(this.collection, 'add', this.renderTask);
     },

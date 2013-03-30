@@ -48,7 +48,11 @@ var app = app || {};
 
     add: function(e) {
       if ( e.which === ENTER_KEY ) {
-        console.log('Add stuff here');
+        this.$input.blur();
+        var task = new app.Task({content:''});
+        var taskView = new app.TaskView({model:task}).render();
+        taskView.$el.insertAfter(this.$el);
+        taskView.$input.focus();
       }
     },
 
