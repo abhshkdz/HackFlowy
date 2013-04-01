@@ -1,5 +1,5 @@
 {
-    "name": "gofish",
+    "name": "hackflowy",
     "version": "0.0.1",
     "description": "A simple WorkFlowy clone",
     "dependencies": {

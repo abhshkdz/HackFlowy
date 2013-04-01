@@ -5541,7 +5541,7 @@ body {
   background-color: #f9f9fa;
 }
 /* line 54, ../sass/app.scss */
-body #gofish {
+body #hackflowy {
   background-color: white;
   height: 1000px;
   margin: 75px 100px;
@@ -5549,33 +5549,33 @@ body #gofish {
   padding: 60px 60px;
 }
 /* line 60, ../sass/app.scss */
-body #gofish #main {
+body #hackflowy #main {
   height: 880px;
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #eeeeee;
 }
 /* line 65, ../sass/app.scss */
-body #gofish #main #name h2 {
+body #hackflowy #main #name h2 {
   font-weight: normal;
   font-size: 30px;
   margin: 25px 0 5px 0;
 }
 /* line 71, ../sass/app.scss */
-body #gofish #main .children {
+body #hackflowy #main .children {
   margin-left: 40px;
 }
 /* line 73, ../sass/app.scss */
-body #gofish #main .children li {
+body #hackflowy #main .children li {
   list-style: none;
 }
 /* line 75, ../sass/app.scss */
-body #gofish #main .children li .task {
+body #hackflowy #main .children li .task {
   margin: 10px 0;
   height: 20px;
   color: #333333;
 }
 /* line 79, ../sass/app.scss */
-body #gofish #main .children li .task .link {
+body #hackflowy #main .children li .task .link {
   vertical-align: middle;
   display: inline-block;
   margin-top: 1px;
@@ -5596,21 +5596,21 @@ body #gofish #main .children li .task .link {
   border-radius: 12px;
 }
 /* line 99, ../sass/app.scss */
-body #gofish #main .children li .task .with-children > .link {
+body #hackflowy #main .children li .task .with-children > .link {
   background-color: #e0e0e0;
 }
 /* line 102, ../sass/app.scss */
-body #gofish #main .children li .task .open > .link {
+body #hackflowy #main .children li .task .open > .link {
   background-color: white;
 }
 /* line 105, ../sass/app.scss */
-body #gofish #main .children li .task .link:hover {
+body #hackflowy #main .children li .task .link:hover {
   cursor: pointer;
   z-index: 8;
   background-color: #aaa;
 }
 /* line 110, ../sass/app.scss */
-body #gofish #main .children li .task textarea.edit {
+body #hackflowy #main .children li .task textarea.edit {
   box-shadow: none;
   display: inline;
   background: transparent;
@@ -5635,16 +5635,16 @@ body #gofish #main .children li .task textarea.edit {
   -webkit-writing-mode: horizontal-tb;
 }
 /* line 134, ../sass/app.scss */
-body #gofish #main .children li .task textarea.edit:focus {
+body #hackflowy #main .children li .task textarea.edit:focus {
   background-color: white;
   height: 18px;
 }
 /* line 142, ../sass/app.scss */
-body #gofish #main > .children {
+body #hackflowy #main > .children {
   margin-left: 0;
 }
 /* line 145, ../sass/app.scss */
-body #gofish #footer {
+body #hackflowy #footer {
   color: #333333;
   margin: 10px 0;
   font-size: 12px;
