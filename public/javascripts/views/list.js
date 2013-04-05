@@ -28,7 +28,7 @@ var app = app || {};
       });
       var a = taskView.render();
       this.$el.append(a.el);
-      a.$input.focus();
+      //a.$input.focus();
       console.log(a.$input.prop('selectionStart'));
     }
 

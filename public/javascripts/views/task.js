@@ -11,7 +11,7 @@ var app = app || {};
       'click .task': 'edit',
       'blur .edit': 'close',
       'keyup .edit': 'broadcast',
-      'keypress .edit': 'add'
+      'keypress .edit': 'update'
     },
 
     initialize: function() {
@@ -46,11 +46,11 @@ var app = app || {};
       });
     },
 
-    add: function(e) {
+    update: function(e) {
       if ( e.which === ENTER_KEY ) {
         app.Tasks.add({content:''});
         this.$input.blur();
-        //this.next('textarea').focus();
+        this.$el.next('li').find('input').focus();
       }
     },
 

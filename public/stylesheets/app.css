@@ -5610,7 +5610,7 @@ body #hackflowy #main .children li .task .link:hover {
   background-color: #aaa;
 }
 /* line 110, ../sass/app.scss */
-body #hackflowy #main .children li .task textarea.edit {
+body #hackflowy #main .children li .task input.edit {
   box-shadow: none;
   display: inline;
   background: transparent;
@@ -5620,7 +5620,6 @@ body #hackflowy #main .children li .task textarea.edit {
   padding: 0;
   margin: 0;
   width: 620px;
-  height: 18px;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
@@ -5634,16 +5633,15 @@ body #hackflowy #main .children li .task textarea.edit {
   text-align: start;
   -webkit-writing-mode: horizontal-tb;
 }
-/* line 134, ../sass/app.scss */
-body #hackflowy #main .children li .task textarea.edit:focus {
+/* line 133, ../sass/app.scss */
+body #hackflowy #main .children li .task input.edit:focus {
   background-color: white;
-  height: 18px;
 }
-/* line 142, ../sass/app.scss */
+/* line 140, ../sass/app.scss */
 body #hackflowy #main > .children {
   margin-left: 0;
 }
-/* line 145, ../sass/app.scss */
+/* line 143, ../sass/app.scss */
 body #hackflowy #footer {
   color: #333333;
   margin: 10px 0;

@@ -107,7 +107,7 @@ body {
               z-index: 8;
               background-color: #aaa;
             }
-            textarea.edit {
+            input.edit {
               box-shadow: none;
               display: inline;
               background: transparent;
@@ -117,7 +117,6 @@ body {
               padding: 0;
               margin: 0;
               width: 620px;
-              height: 18px;
               font-family: inherit;
               font-size: inherit;
               font-weight: inherit;
@@ -131,9 +130,8 @@ body {
               text-align: start;
               -webkit-writing-mode: horizontal-tb;
             }
-            textarea.edit:focus {
+            input.edit:focus {
               background-color: white;
-              height: 18px;
             }
           }
         }
