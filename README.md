@@ -2,6 +2,8 @@
 
 An open-source [Workflowy](http://workflowy.com) clone.
 
+![](https://dl.dropbox.com/u/19398876/screenshots/043.png)
+
 ##Technologies used
 
 * Node + Socket.io
