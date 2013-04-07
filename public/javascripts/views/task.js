@@ -23,7 +23,15 @@ var app = app || {};
       var tmpl = _.template(this.template);
       var task = this;
       this.$el.html(tmpl(this.model.toJSON()));
-      this.$input = this.$('.edit');
+      if (this.model.get('parent_id')!=0) {
+        this.$el.addClass('shift1');
+        var className = $('*[data-id="'+this.model.get('parent_id')+'"]').parents('li:first').attr('class');
+        if (className!=undefined && className!=0 && className.substring(0,5) == 'shift') {
+          this.$el.removeClass();
+          this.$el.addClass('shift' + (parseInt(className.charAt(5))+1));
+        }
+      }
+      this.$input = this.$('.edit:first');
       socket.on('task', function(data){
         if (task.model.id == data.id) {
           if (task.$input.val != data.content)

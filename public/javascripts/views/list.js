@@ -27,8 +27,10 @@ var app = app || {};
         model: task
       });
       var a = taskView.render();
-      this.$el.append(a.el);
-      //a.$input.focus();
+      if (a.model.get('parent_id')!=0)
+        a.$el.insertAfter($('*[data-id="'+a.model.get('parent_id')+'"]').parents('li:first'));
+      else
+        this.$el.append(a.el);
       console.log(a.$input.prop('selectionStart'));
     }
 

@@ -116,7 +116,7 @@ body {
               border: 0;
               padding: 0;
               margin: 0;
-              width: 620px;
+              width: 80%;
               font-family: inherit;
               font-size: inherit;
               font-weight: inherit;
@@ -134,6 +134,33 @@ body {
               background-color: white;
             }
           }
+        }
+        li.shift1 {
+          margin-left: 30px;
+        }
+        li.shift2 {
+          margin-left: 60px;
+        }
+        li.shift3 {
+          margin-left: 90px;
+        }
+        li.shift4 {
+          margin-left: 120px;
+        }
+        li.shift5 {
+          margin-left: 150px;
+        }
+        li.shift6 {
+          margin-left: 180px;
+        }
+        li.shift7 {
+          margin-left: 210px;
+        }
+        li.shift8 {
+          margin-left: 240px;
+        }
+        li.shift9 {
+          margin-left: 270px;
         }
       }
     }
