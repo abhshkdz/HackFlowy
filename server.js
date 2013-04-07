@@ -36,7 +36,7 @@ app.get('/tasks', function(req,res){
 
 app.post('/tasks', function(req,res){
   var timestamp = Math.round((new Date()).getTime()/1000);
-  client.query("INSERT INTO tasks (content, timestamp) VALUES (?,?)", [req.body.content,timestamp]);
+  client.query("INSERT INTO tasks (content, timestamp, parent_id) VALUES (?,?,?)", [req.body.content,timestamp,req.body.parent_id]);
   client.query("SELECT * FROM tasks WHERE content = ?", [req.body.content], function select(err,task){
     req.body.id = task[0].id;
     res.send(req.body);

@@ -56,19 +56,20 @@ var app = app || {};
 
     update: function(e) {
       if ( e.which === ENTER_KEY ) {
-        app.Tasks.add({content:''});
+        app.Tasks.add({content:'', parent_id: this.model.get('parent_id')});
         this.$input.blur();
-        this.$el.next('li').find('input').focus();
+        this.$el.prev('li').find('input').focus();
       }
     },
 
     close: function() {
       var value = this.$input.val().trim();
+      console.log(this.model);
       if (value === '') {
         this.model.destroy();
       }
       else
-        this.model.save({content: value});
+        this.model.save({content: value, parent_id: this.model.get('parent_id')});
       this.$el.removeClass('editing');
     }
 
