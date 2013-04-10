@@ -45,7 +45,7 @@ app.post('/tasks', function(req,res){
 
 app.put('/tasks/:id', function(req,res){
   var timestamp = Math.round((new Date()).getTime()/1000);
-  client.query("UPDATE tasks SET content = ?, timestamp = ? WHERE id = ?", [req.body.content,timestamp,req.body.id], function(err, task){
+  client.query("UPDATE tasks SET content = ?, timestamp = ?, parent_id = ? WHERE id = ?", [req.body.content,timestamp,req.body.parent_id,req.body.id], function(err, task){
     req.body.timestamp = timestamp;
     res.send(req.body);
   });

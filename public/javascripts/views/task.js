@@ -46,7 +46,14 @@ var app = app || {};
       this.$input.focus();
     },
 
-    broadcast: function() {
+    broadcast: function(e) {
+      if (e.keyCode == 9) {
+        var parent = this.$el.prev('li').prev('li').find('input').data('id');
+        var current = this.$el.prev('li').find('input').data('id');
+        var model = app.Tasks.get(current);
+        model.set('parent_id',parent);
+        model.save({content: model.get('content'), parent_id: model.get('parent_id')});
+      }
       socket.emit('task', { 
         id: this.model.id, 
         parent_id: this.model.parent_id, 
@@ -64,12 +71,13 @@ var app = app || {};
 
     close: function() {
       var value = this.$input.val().trim();
-      console.log(this.model);
       if (value === '') {
         this.model.destroy();
       }
-      else
-        this.model.save({content: value, parent_id: this.model.get('parent_id')});
+      else {
+        console.log(this.model.attributes);
+        this.model.save({content: value, parent_id: this.model.attributes.parent_id});
+      }
       this.$el.removeClass('editing');
     }
 
