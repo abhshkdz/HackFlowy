@@ -10,6 +10,12 @@ An open-source [Workflowy](http://workflowy.com) clone.
 * Create a new database and import `schema/hackflowy.sql`.
 * `node server.js`
 
+##Controls
+
+* <kbd>UP</kbd> & <kbd>DOWN</kbd>: navigate through tasks
+* <kbd>TAB</kbd>: right-indent
+* <kbd>SHIFT</kbd> + <kbd>TAB</kbd>: left-indent
+
 ##Technologies used
 
 * Node + Socket.io

@@ -10,7 +10,7 @@ var app = app || {};
     events: {
       'click .task': 'edit',
       'blur .edit': 'close',
-      'keyup .edit': 'broadcast',
+      'keyup .edit': 'handleKeyup',
       'keypress .edit': 'update'
     },
 
@@ -46,8 +46,23 @@ var app = app || {};
       this.$input.focus();
     },
 
-    broadcast: function(e) {
-      if (e.keyCode == 9) {
+    handleKeyup: function(e) {
+      if (e.keyCode == 40)
+        this.$el.next('li').find('input').focus();
+      else if (e.keyCode == 38)
+        this.$el.prev('li').find('input').focus();
+
+      if (e.shiftKey && e.keyCode == 9) {
+        var model = this.$el.next('li').find('input').data('id');
+        model = app.Tasks.get(model);
+        var old_parent = model.get('parent_id');
+        old_parent = app.Tasks.get(old_parent);
+        var new_parent = old_parent.get('parent_id');
+        if (new_parent == null) new_parent = 0;
+        model.set('parent_id',new_parent);
+        model.save({content: model.get('content'), parent_id: model.get('parent_id')});
+      }
+      else if (e.keyCode == 9) {
         var parent = this.$el.prev('li').prev('li').find('input').data('id');
         var current = this.$el.prev('li').find('input').data('id');
         var model = app.Tasks.get(current);
@@ -75,7 +90,6 @@ var app = app || {};
         this.model.destroy();
       }
       else {
-        console.log(this.model.attributes);
         this.model.save({content: value, parent_id: this.model.attributes.parent_id});
       }
       this.$el.removeClass('editing');
