@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.11.1deb1
+-- version 3.5.7deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 06, 2013 at 02:09 AM
--- Server version: 5.5.29
--- PHP Version: 5.4.6-1ubuntu1.2
+-- Generation Time: Apr 10, 2013 at 09:51 PM
+-- Server version: 5.5.29-0ubuntu1
+-- PHP Version: 5.4.9-4ubuntu2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `gofish`
+-- Database: `hackflowy`
 --
 
 -- --------------------------------------------------------
@@ -32,7 +32,19 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `timestamp` int(12) NOT NULL,
   `parent_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=96 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=107 ;
+
+--
+-- Dumping data for table `tasks`
+--
+
+INSERT INTO `tasks` (`id`, `content`, `timestamp`, `parent_id`) VALUES
+(96, 'Welcome to HackFlowy!', 1365610846, 0),
+(99, 'An open-source WorkFlowy clone', 1365610837, 0),
+(101, 'Built using Backbone + Socket.IO', 1365610824, 0),
+(102, 'I pulled this together in a few hours to learn Backbone', 1365610861, 0),
+(104, 'Feel free to try it out and hack on it', 1365610859, 0),
+(106, 'Good Luck!', 1365610865, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

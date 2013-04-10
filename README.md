@@ -4,6 +4,12 @@ An open-source [Workflowy](http://workflowy.com) clone.
 
 ![](https://dl.dropbox.com/u/19398876/screenshots/043.png)
 
+##Installation
+
+* Copy over `sample.config.js` to `config.js`, and fill up the DB credentials.
+* Create a new database and import `schema/hackflowy.sql`.
+* `node server.js`
+
 ##Technologies used
 
 * Node + Socket.io
