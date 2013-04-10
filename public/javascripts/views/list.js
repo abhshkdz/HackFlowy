@@ -31,7 +31,6 @@ var app = app || {};
         a.$el.insertAfter($('*[data-id="'+a.model.get('parent_id')+'"]').parents('li:first'));
       else
         this.$el.append(a.el);
-      console.log(a.$input.prop('selectionStart'));
     }
 
   });
