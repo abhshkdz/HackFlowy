@@ -58,7 +58,7 @@ var app = app || {};
       if ( e.which === ENTER_KEY ) {
         app.Tasks.add({content:'', parent_id: this.model.get('parent_id')});
         this.$input.blur();
-        this.$el.prev('li').find('input').focus();
+        this.$el.next('li').find('input').focus();
       }
     },
 
