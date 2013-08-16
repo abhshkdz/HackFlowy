@@ -21,25 +21,31 @@
       <div class="large-12 columns">
         <section id="hackflowy">
           <header id="header"></header>
+
           <section id="main">
+
             <div id="name">
               <h2></h2>
             </div>
             <ul class="children"></ul>
-            <!-- <button id="add">+</button> -->
+          <!--   <button id="add">+</button>
+            <input id="newTask" type="text" placeholder="What needs to be done?"> -->
           </section>
+
           <footer id="footer">
-            Make Lists. Not War. <3 Open Source.
+            Make Lists. Not War.  Open Source.
           </footer>
         </section>
       </div>
     </div>
+
     <script type="text/template" id="taskTemplate">
       <div class="task">
         <div class="link">•</div>
         <input value="<%= content %>" data-id="<%= id %>" class="edit">
       </div>
     </script>
+
     <script src="javascripts/vendor/jquery.min.js"></script>
     <script src="javascripts/vendor/lodash.min.js"></script>
     <script src="javascripts/vendor/backbone.js"></script>
@@ -47,6 +53,7 @@
     <script src="javascripts/collections/list.js"></script>
     <script src="javascripts/views/list.js"></script>
     <script src="javascripts/views/task.js"></script>
+     <script src="javascripts/views/page.js"></script>
     <script src="javascripts/app.js"></script>
   </body>
 </html>
