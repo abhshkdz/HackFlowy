@@ -1,14 +1,20 @@
-var app = app || {};
+define(
+['backbone'
+],
 
-(function() {
-
-  app.Task = Backbone.Model.extend({
+function(
+Backbone
+) {
+	
+  var TaskModel = Backbone.Model.extend({
 
     defaults: {
       parent_id: '',
       content: ''
     },
 
-  });
+ });
 
-}());
+return TaskModel;
+
+});

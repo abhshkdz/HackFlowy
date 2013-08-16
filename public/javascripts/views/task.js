@@ -1,8 +1,18 @@
-var app = app || {};
+define(
+['jquery',
+'backbone',
+'socket',
+'util/constants'
+],
 
-(function() {
+function(
+$,
+Backbone,
+socket,
+constants
+) {
 
-  app.TaskView = Backbone.View.extend({
+  var TaskView = Backbone.View.extend({
 
     tagName: 'li',
     template: $('#taskTemplate').html(),
@@ -17,6 +27,7 @@ var app = app || {};
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
+      this.socket = io.connect();   
     },
 
     render: function() {
@@ -32,7 +43,7 @@ var app = app || {};
         }
       }
       this.$input = this.$('.edit:first');
-      socket.on('task', function(data){
+      this.socket.on('task', function(data){
         if (task.model.id == data.id) {
           if (task.$input.val != data.content)
             task.$input.val(data.content);
@@ -47,7 +58,7 @@ var app = app || {};
     },
 
     broadcast: function() {
-      socket.emit('task', { 
+      this.socket.emit('task', { 
         id: this.model.id, 
         parent_id: this.model.parent_id, 
         content: this.$input.val().trim() 
@@ -55,8 +66,8 @@ var app = app || {};
     },
 
     update: function(e) {
-      if ( e.which === ENTER_KEY ) {
-        app.Tasks.add({content:'', parent_id: this.model.get('parent_id')});
+      if ( e.which === constants.ENTER_KEY ) {
+        Tasks.add({content:'', parent_id: this.model.get('parent_id')});
         this.$input.blur();
         this.$el.prev('li').find('input').focus();
       }
@@ -73,6 +84,8 @@ var app = app || {};
       this.$el.removeClass('editing');
     }
 
-  });
+ });
 
-}());
+return TaskView;
+
+});

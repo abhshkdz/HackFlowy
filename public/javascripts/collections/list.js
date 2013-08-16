@@ -1,12 +1,21 @@
-var app = app || {};
+define(
+[
+'backbone',
+'models/task'
+],
 
-(function() {
+function(
+Backbone,
+Task
+) {
 
-  app.List = Backbone.Collection.extend({
+  var List = Backbone.Collection.extend({
 
-    model: app.Task,
+    model: Task,
     url: '/tasks'
     
-  });
+ });
 
-}());
+return List;
+
+});

@@ -10,11 +10,6 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.png" />
     <link rel="stylesheet" href="stylesheets/normalize.css" />
     <link rel="stylesheet" href="stylesheets/app.css" />
-    <script src="javascripts/vendor/custom.modernizr.js"></script>
-    <script src="/javascripts/vendor/socket.io.min.js"></script>
-    <script>
-      var socket = io.connect();
-    </script>
   </head>
   <body>
     <div class="row">
@@ -46,14 +41,7 @@
       </div>
     </script>
 
-    <script src="javascripts/vendor/jquery.min.js"></script>
-    <script src="javascripts/vendor/lodash.min.js"></script>
-    <script src="javascripts/vendor/backbone.js"></script>
-    <script src="javascripts/models/task.js"></script>
-    <script src="javascripts/collections/list.js"></script>
-    <script src="javascripts/views/list.js"></script>
-    <script src="javascripts/views/task.js"></script>
-     <script src="javascripts/views/page.js"></script>
-    <script src="javascripts/app.js"></script>
+  
+    <script data-main="javascripts/app" src="javascripts/vendor/require.js" ></script>
   </body>
 </html>

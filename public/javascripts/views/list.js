@@ -1,8 +1,18 @@
-var app = app || {};
+define(
+['jquery',
+'backbone',
+'collections/list',
+'views/task'
+],
 
-(function() {
+function(
+$,
+Backbone,
+List,
+TaskView
+) {
 
-  app.ListView = Backbone.View.extend({
+  var ListView = Backbone.View.extend({
 
     el: $("#main .children"),
 
@@ -11,7 +21,7 @@ var app = app || {};
     },
 
     initialize: function() {
-      app.Tasks = this.collection = new app.List();
+      Tasks = this.collection = new List();
       this.collection.fetch();
       this.listenTo(this.collection, 'add', this.renderTask);
     },
@@ -23,7 +33,7 @@ var app = app || {};
     },
 
     renderTask: function(task) {
-      var taskView = new app.TaskView({
+      var taskView = new TaskView({
         model: task
       });
       var a = taskView.render();
@@ -34,6 +44,8 @@ var app = app || {};
       console.log(a.$input.prop('selectionStart'));
     }
 
-  });
+ });
 
-}());
+return ListView;
+
+});
