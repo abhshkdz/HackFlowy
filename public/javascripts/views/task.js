@@ -14,20 +14,20 @@ constants
 
   var TaskView = Backbone.View.extend({
 
-    tagName: 'li',
+     tagName: 'li',
     template: $('#taskTemplate').html(),
 
     events: {
       'click .task': 'edit',
       'blur .edit': 'close',
-      'keyup .edit': 'broadcast',
+      'keyup .edit': 'handleKeyup',
       'keypress .edit': 'update'
     },
 
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
-      this.socket = io.connect();   
+      this.socket = io.connect();
     },
 
     render: function() {
@@ -57,7 +57,29 @@ constants
       this.$input.focus();
     },
 
-    broadcast: function() {
+    handleKeyup: function(e) {
+      if (e.keyCode == 40)
+        this.$el.next('li').find('input').focus();
+      else if (e.keyCode == 38)
+        this.$el.prev('li').find('input').focus();
+
+      if (e.shiftKey && e.keyCode == 9) {
+        var model = this.$el.next('li').find('input').data('id');
+        model = Tasks.get(model);
+        var old_parent = model.get('parent_id');
+        old_parent = Tasks.get(old_parent);
+        var new_parent = old_parent.get('parent_id');
+        if (new_parent == null) new_parent = 0;
+        model.set('parent_id',new_parent);
+        model.save({content: model.get('content'), parent_id: model.get('parent_id')});
+      }
+      else if (e.keyCode == 9) {
+        var parent = this.$el.prev('li').prev('li').find('input').data('id');
+        var current = this.$el.prev('li').find('input').data('id');
+        var model = Tasks.get(current);
+        model.set('parent_id',parent);
+        model.save({content: model.get('content'), parent_id: model.get('parent_id')});
+      }
       this.socket.emit('task', { 
         id: this.model.id, 
         parent_id: this.model.parent_id, 
@@ -66,22 +88,21 @@ constants
     },
 
     update: function(e) {
-      console.log("update here");
       if ( e.which === constants.ENTER_KEY ) {
         Tasks.add({content:'', parent_id: this.model.get('parent_id')});
         this.$input.blur();
-        this.$el.prev('li').find('input').focus();
+        this.$el.next('li').find('input').focus();
       }
     },
 
     close: function() {
       var value = this.$input.val().trim();
-      console.log(this.model);
       if (value === '') {
         this.model.destroy();
       }
-      else
-        this.model.save({content: value, parent_id: this.model.get('parent_id')});
+      else {
+        this.model.save({content: value, parent_id: this.model.attributes.parent_id});
+      }
       this.$el.removeClass('editing');
     }
 
