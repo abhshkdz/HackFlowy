@@ -1,21 +1,19 @@
 require.config({
 
+  //load lib files required
   paths: {
     jquery: "vendor/jquery.min",
-    underscore: "vendor/underscore",
+    lodash:"vendor/lodash.min",
     backbone: "vendor/backbone",
     modernizr:"vendor/custom.modernizr",
-    socket:"vendor/socket.io.min",
-    lodash:"vendor/lodash.min"
+    socket:"vendor/socket.io.min"   
   },
   
-  shim: {
-   
+  shim: {   
     backbone: {
-      deps: ["underscore", "jquery"],
+      deps: ["lodash", "jquery"],
       exports: "Backbone"
     }  
-
   },
   
   waitSeconds: 5
@@ -26,7 +24,6 @@ require.config({
 require([
     'views/page'
 ],
-
 function( App ) {
    new App();
 });

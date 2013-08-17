@@ -66,6 +66,7 @@ constants
     },
 
     update: function(e) {
+      console.log("update here");
       if ( e.which === constants.ENTER_KEY ) {
         Tasks.add({content:'', parent_id: this.model.get('parent_id')});
         this.$input.blur();
