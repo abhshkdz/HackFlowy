@@ -6,7 +6,8 @@ require.config({
     lodash:"vendor/lodash.min",
     backbone: "vendor/backbone",
     modernizr:"vendor/custom.modernizr",
-    socket:"vendor/socket.io.min"   
+    socket:"vendor/socket.io.min",
+    text:"vendor/text"
   },
   
   shim: {   
