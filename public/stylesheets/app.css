@@ -5683,3 +5683,96 @@ body #hackflowy #footer {
   margin: 10px 0;
   font-size: 12px;
 }
+
+.options-div{
+  display: none;
+}
+
+.options{
+  position: absolute;
+z-index: 1000;
+  color: rgb(51, 51, 51);
+cursor: auto;
+display: none;
+font-family: 'Helvetica Neue', Arial, sans-serif;
+font-size: 16px;
+font-weight: normal;
+height: 0px;
+line-height: 16px;
+width: 675px;
+}
+
+.options a {
+display: inline-block;
+width: 20px;
+height: 20px;
+cursor: pointer;
+}
+
+.options-left {
+background: #ddd;
+border: 1px solid #bbb;
+width: 80px;
+height: 58px;
+padding: 10px 0 5px 10px;
+margin-bottom: 10px;
+border-radius: 4px;
+font-family: 'Helvetica Neue', Arial, Sans-serif;
+z-index: 8;
+margin-top: 8px;
+margin-left: -29px;
+}
+
+
+.options-left a {
+color: #555;
+margin-bottom: 5px;
+font-size: 12px;
+display: block;
+margin-right: 10px;
+width: auto;
+}
+
+.options-left a:hover {
+  text-decoration: underline;
+}
+
+.options-left > .mouse-tip {
+content: '';
+position: absolute;
+left: 0;
+height: 25px;
+width: 90px;
+margin-top: -36px;
+margin-left: -1%;
+}
+
+.options-left >  .mouse-tip:before {
+content: '';
+position: absolute;
+top: 10px;
+left: 19%;
+margin-left: -15px;
+height: 0;
+width: 0;
+border-bottom: 15px solid #ddd;
+border-left: 15px solid transparent;
+border-right: 15px solid transparent;
+}
+
+.mouse-tip:before {
+content: '';
+position: absolute;
+top: 10px;
+left: 50%;
+margin-left: -15px;
+height: 0;
+width: 0;
+border-bottom: 15px solid #ddd;
+border-left: 15px solid transparent;
+border-right: 15px solid transparent;
+}
+
+.task-completed{
+  text-decoration: line-through;
+}
