@@ -2,38 +2,45 @@ define(
 ['jquery',
 'backbone',
 'socket',
-'util/constants'
+'util/constants',
+'text!../../templates/task.html'
 ],
 
 function(
 $,
 Backbone,
 socket,
-constants
+constants,
+taskTemplate
 ) {
 
   var TaskView = Backbone.View.extend({
 
-     tagName: 'li',
-    template: $('#taskTemplate').html(),
+    tagName: 'li',
+    template: taskTemplate,
 
     events: {
       'click .task': 'edit',
       'blur .edit': 'close',
       'keyup .edit': 'handleKeyup',
-      'keypress .edit': 'update'
+      'keypress .edit': 'update',
+      'mouseover .task-wrappper':'showOptions',
+      'mouseout .task-wrappper':'hideOptions',
+      'click .complete':'markComplete',
+      'click .uncomplete':'unmarkComlete'
     },
 
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
       this.socket = io.connect();
+      
     },
 
     render: function() {
       var tmpl = _.template(this.template);
       var task = this;
-      this.$el.html(tmpl(this.model.toJSON()));
+      this.$el.html(tmpl({model:this.model.toJSON()}));
       if (this.model.get('parent_id')!=0) {
         this.$el.addClass('shift1');
         var className = $('*[data-id="'+this.model.get('parent_id')+'"]').parents('li:first').attr('class');
@@ -53,6 +60,7 @@ constants
     },
 
     edit: function() {
+      console.log("function");
       this.$el.addClass('editing');
       this.$input.focus();
     },
@@ -104,6 +112,22 @@ constants
         this.model.save({content: value, parent_id: this.model.attributes.parent_id});
       }
       this.$el.removeClass('editing');
+    },
+
+    showOptions:function(){
+      this.$el.find('.options').show();
+    },
+
+    hideOptions:function(){
+      this.$el.find('.options').hide();
+    },
+
+    markComplete:function(){
+       this.model.toggelCompletedStatus('Y');
+    },
+    
+    unmarkComlete:function(){
+       this.model.toggelCompletedStatus('N');
     }
 
  });
