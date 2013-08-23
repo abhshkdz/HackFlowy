@@ -24,10 +24,11 @@ taskTemplate
       'blur .edit': 'close',
       'keyup .edit': 'handleKeyup',
       'keypress .edit': 'update',
-      'mouseover .task-wrappper':'showOptions',
-      'mouseout .task-wrappper':'hideOptions',
+      'mouseover .link':'showOptions',
+      'mouseout .link':'hideOptions',
       'click .complete':'markComplete',
-      'click .uncomplete':'unmarkComlete'
+      'click .uncomplete':'unmarkComlete',
+      'click .note':'addNote'
     },
 
     initialize: function() {
@@ -128,6 +129,10 @@ taskTemplate
     
     unmarkComlete:function(){
        this.model.toggelCompletedStatus('N');
+    },
+
+    addNote:function(){
+      this.$el.find('.divNote').show();
     }
 
  });
