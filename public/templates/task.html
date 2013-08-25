@@ -1,0 +1,37 @@
+<div class="task-wrappper">
+<div class="task">
+    <div class="link">•
+
+      <div class="options">
+    <div class="options-left">
+        <div class="mouse-tip"></div>
+      <%  if(model.is_completed=='Y'){%>
+      <a class="uncomplete">
+      Uncomplete
+      <hr>
+      </a>
+      <%}else {%>
+       <a class="complete">
+      Complete
+      <hr>
+      </a>
+      <%}%>
+        <a class="note">
+            <span class="note">Add Note</span>
+        </a>
+    </div>
+</div>
+
+    </div>
+     <%  if(model.is_completed=='Y'){%>
+      <input value="<%= model.content %>" data-id="<%= model.id %>" class="edit task-completed">
+      <%}else {%>
+       <input value="<%= model.content %>" data-id="<%= model.id %>" class="edit">
+      <%}%>
+      <div class="divNote">
+        <textarea></textarea>
+      </div>
+   
+</div>
+
+</div>

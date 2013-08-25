@@ -1,28 +1,46 @@
-var app = app || {};
+define(
+['jquery',
+'backbone',
+'socket',
+'util/constants',
+'text!../../templates/task.html'
+],
 
-(function() {
+function(
+$,
+Backbone,
+socket,
+constants,
+taskTemplate
+) {
 
-  app.TaskView = Backbone.View.extend({
+  var TaskView = Backbone.View.extend({
 
     tagName: 'li',
-    template: $('#taskTemplate').html(),
+    template: taskTemplate,
 
     events: {
       'click .task': 'edit',
       'blur .edit': 'close',
       'keyup .edit': 'handleKeyup',
-      'keypress .edit': 'update'
+      'keypress .edit': 'update',
+      'mouseover .link':'showOptions',
+      'mouseout .link':'hideOptions',
+      'click .complete':'markComplete',
+      'click .uncomplete':'unmarkComlete',
+      'click .note':'addNote'
     },
 
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
+      this.socket = io.connect();
     },
 
     render: function() {
       var tmpl = _.template(this.template);
       var task = this;
-      this.$el.html(tmpl(this.model.toJSON()));
+      this.$el.html(tmpl({model:this.model.toJSON()}));
       if (this.model.get('parent_id')!=0) {
         this.$el.addClass('shift1');
         var className = $('*[data-id="'+this.model.get('parent_id')+'"]').parents('li:first').attr('class');
@@ -32,7 +50,7 @@ var app = app || {};
         }
       }
       this.$input = this.$('.edit:first');
-      socket.on('task', function(data){
+      this.socket.on('task', function(data){
         if (task.model.id == data.id) {
           if (task.$input.val != data.content)
             task.$input.val(data.content);
@@ -42,6 +60,7 @@ var app = app || {};
     },
 
     edit: function() {
+      console.log("function");
       this.$el.addClass('editing');
       this.$input.focus();
     },
@@ -54,9 +73,9 @@ var app = app || {};
 
       if (e.shiftKey && e.keyCode == 9) {
         var model = this.$el.next('li').find('input').data('id');
-        model = app.Tasks.get(model);
+        model = Tasks.get(model);
         var old_parent = model.get('parent_id');
-        old_parent = app.Tasks.get(old_parent);
+        old_parent = Tasks.get(old_parent);
         var new_parent = old_parent.get('parent_id');
         if (new_parent == null) new_parent = 0;
         model.set('parent_id',new_parent);
@@ -65,20 +84,20 @@ var app = app || {};
       else if (e.keyCode == 9) {
         var parent = this.$el.prev('li').prev('li').find('input').data('id');
         var current = this.$el.prev('li').find('input').data('id');
-        var model = app.Tasks.get(current);
+        var model = Tasks.get(current);
         model.set('parent_id',parent);
         model.save({content: model.get('content'), parent_id: model.get('parent_id')});
       }
-      socket.emit('task', { 
-        id: this.model.id, 
-        parent_id: this.model.parent_id, 
-        content: this.$input.val().trim() 
+      this.socket.emit('task', {
+        id: this.model.id,
+        parent_id: this.model.parent_id,
+        content: this.$input.val().trim()
       });
     },
 
     update: function(e) {
-      if ( e.which === ENTER_KEY ) {
-        app.Tasks.add({content:'', parent_id: this.model.get('parent_id')});
+      if ( e.which === constants.ENTER_KEY ) {
+        Tasks.add({content:'', parent_id: this.model.get('parent_id')});
         this.$input.blur();
         this.$el.next('li').find('input').focus();
       }
@@ -93,8 +112,30 @@ var app = app || {};
         this.model.save({content: value, parent_id: this.model.attributes.parent_id});
       }
       this.$el.removeClass('editing');
+    },
+
+    showOptions:function(){
+      this.$el.find('.options').show();
+    },
+
+    hideOptions:function(){
+      this.$el.find('.options').hide();
+    },
+
+    markComplete:function(){
+       this.model.toggelCompletedStatus('Y');
+    },
+
+    unmarkComlete:function(){
+       this.model.toggelCompletedStatus('N');
+    },
+
+    addNote:function(){
+      this.$el.find('.divNote').show();
     }
 
-  });
+ });
 
-}());
+return TaskView;
+
+});
