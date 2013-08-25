@@ -35,6 +35,12 @@ taskTemplate
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
       this.socket = io.connect();
+       var task = this;
+      this.socket.on('task', function(data){
+        if (task.model.id == data.id) {
+           task.model.set({'content':data.content, 'is_completed':data.is_completed});
+        }
+      });
     },
 
     render: function() {
@@ -50,17 +56,11 @@ taskTemplate
         }
       }
       this.$input = this.$('.edit:first');
-      this.socket.on('task', function(data){
-        if (task.model.id == data.id) {
-          if (task.$input.val != data.content)
-            task.$input.val(data.content);
-        }
-      });
+
       return this;
     },
 
     edit: function() {
-      console.log("function");
       this.$el.addClass('editing');
       this.$input.focus();
     },
@@ -91,7 +91,8 @@ taskTemplate
       this.socket.emit('task', {
         id: this.model.id,
         parent_id: this.model.parent_id,
-        content: this.$input.val().trim()
+        content: this.$input.val().trim(),
+        is_completed:this.model.toJSON().is_completed
       });
     },
 
@@ -124,10 +125,22 @@ taskTemplate
 
     markComplete:function(){
        this.model.toggelCompletedStatus('Y');
+       this.socket.emit('task', {
+          id: this.model.id,
+          parent_id: this.model.parent_id,
+          content:this.model.toJSON().content,
+          is_completed: this.model.toJSON().is_completed
+      });
     },
 
     unmarkComlete:function(){
        this.model.toggelCompletedStatus('N');
+        this.socket.emit('task', {
+          id: this.model.id,
+          parent_id: this.model.parent_id,
+          content:this.model.toJSON().content,
+          is_completed: this.model.toJSON().is_completed
+      });
     },
 
     addNote:function(){
