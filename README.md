@@ -8,6 +8,7 @@ An open-source [Workflowy](http://workflowy.com) clone.
 
 * Copy over `sample.config.js` to `config.js`, and fill up the DB credentials.
 * Create a new database and import `schema/hackflowy.sql`.
+* `npm install`
 * `node server.js`
 
 ##Controls
