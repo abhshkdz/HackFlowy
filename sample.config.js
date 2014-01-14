@@ -1,6 +1,11 @@
 var config = {
-  db_user: "",
-  db_password: "",
-  db_name: ""
+  db: {
+      user      : '',
+      password  : '',
+      name      : '',
+      options   : {
+          dialect: 'sqlite'
+      }
+  }
 };
 module.exports = config;
