@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "Tasks" (
   "createdAt" TIMESTAMP WITH TIME ZONE 
 );
 
-INSERT INTO tasks (id, content, timestamp, parent_id) VALUES
+INSERT INTO "Tasks" (id, content, timestamp, parent_id) VALUES
 (96, 'Welcome to HackFlowy!', 1365610846, 0),
 (99, 'An open-source WorkFlowy clone', 1365610837, 0),
 (101, 'Built using Backbone + Socket.IO', 1365610824, 0),
