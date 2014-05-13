@@ -1,6 +1,7 @@
 .sass-cache
 config.js
 lib-cov
+*.swp
 *.seed
 *.log
 *.csv
