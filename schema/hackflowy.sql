@@ -26,11 +26,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `tasks`
 --
 
-CREATE TABLE IF NOT EXISTS `tasks` (
+CREATE TABLE IF NOT EXISTS `Tasks` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `content` varchar(1000) NOT NULL,
   `timestamp` int(12) NOT NULL,
   `parent_id` int(10) NOT NULL,
+  `parent` char(30),
+  `is_completed` boolean,
+  `updatedAt` timestamp,
+  `createdAt` timestamp,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=107 ;
 
@@ -38,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 -- Dumping data for table `tasks`
 --
 
-INSERT INTO `tasks` (`id`, `content`, `timestamp`, `parent_id`) VALUES
+INSERT INTO `Tasks` (`id`, `content`, `timestamp`, `parent_id`) VALUES
 (96, 'Welcome to HackFlowy!', 1365610846, 0),
 (99, 'An open-source WorkFlowy clone', 1365610837, 0),
 (101, 'Built using Backbone + Socket.IO', 1365610824, 0),
