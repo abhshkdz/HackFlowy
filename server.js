@@ -16,7 +16,7 @@ app.configure(function() {
   app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 });
 
-var port = 3000;
+var port = config.port;
 server.listen(port, function() {
   console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
 });
