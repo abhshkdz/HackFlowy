@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link href="stylesheets/reset.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/normalize.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/toolbar.css" rel="stylesheet" />
+<link href="stylesheets/bootstrap.icons.css" rel="stylesheet" />
+<link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+
+
+<script src="js/libs/externalLibs/jquery-2.0.3.js"></script>
+<script src="socket.io/socket.io.js"></script>
+<script src="js/libs/myLib/addNode.js"></script>
+<script src="js/libs/myLib/removeNode.js"></script>
+<script src="js/libs/myLib/KeyBoardLogic.js"></script>
+<script src="js/libs/myLib/moveNode.js"></script>
+<script src="js/app.js"></script> 
+
+
+
+<!-- <script src="./jquery-sortable.js"></script> -->
+<script src="js/libs/externalLibs/rangyinputs-jquery-1.1.2.js"></script>
+
+<script src="js/libs/externalLibs/textarea_auto_expand.js"></script>
+
+
+
+
+<script src ="js/libs/externalLibs/underscore-min.js"></script>
+<script src="js/libs/externalLibs/backbone-min.js"></script>
+
+
+<script src="js/models/node.js"></script>
+<script src="js/collections/nodesCollection.js"></script>
+<script src="js/views/listView.js"></script>
+<script src="js/views/showView.js"></script>
+<script src="js/router.js"></script>
+
+
+
+<body>
+	<p><br /><span class="math"><em>x</em><sup>2</sup></span><br /></p>
+
+	<div class="navbar-xs">
+    <div class="navbar-primary">
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+          <a class="navbar-left" href="sidebar.html"><i class="icon-list"></i></a>
+          <a class="navbar-brand" href="index.html">Metablock</a>
+        </div>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+        </form>
+        <a class="btn btn-default" href=""><i class="icon-star"></i></a>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class='transclude'>Transclude/alias</a></li>
+          <!-- <li><a href="index.html"><img src="img/splitscreen.png"></a></li> -->
+          <li><a class='splitScreen'><img src="img/splitscreen.png"></a></li>
+          <li><a href=""><img src="img/undo.png"></a></li>
+          <li><a href=""><img src="img/redo.png"></a></li>
+          <li><a href="">x<sup>2</sup></a></li>
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="">Action</a></li>
+              <li><a href="">Another action</a></li>
+              <li class="divider"></li>
+              <li><a href="">Separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+
+  <div class="main-container">
+    <div class="container">
+      <div class="row">
+
+        <!-- Pane 1 -->
+        <div class="col-md-6 col-md-offset-2">
+        <div id="pathDiv">PathDIV</div>
+          <div class='main main1 panel'>
+            <ul id="0" class='root subList dd-list' ></ul>
+            <h4 class="addendum"><small> Make lists. Not war. </small></h4>
+          </div>
+        </div>
+
+        <!-- Pane 2 -->
+        <!-- <div class="col-md-6">
+          <div class='main2 panel'>
+            <ul id="0" class='root subList dd-list' >
+              <li id='1' class='herez node'>
+                Inentionally Un-editable. (split-screen editing is a pending feature).
+            </ul>
+            <h4 class="addendum"><small> Make lists. Not war. </small></h4>
+          </div>
+        </div> -->
+
+
+
+
+
+       </div>
+    </div>
+  </div>
+
+ <!-- Toolbars
+  <div id="toolbar" hidden>
+    <a href="#"><i class="icon-user"></i></a>
+    <a href="#"><i class="icon-star"></i></a>
+    <a href="#"><i class="icon-edit"></i></a>
+    <a href="#"><i class="icon-trash"></i></a>
+  </div> -->
+
+ <!-- <script src="js/tempFolder/nestable.js"></script> -->
+ <script src="js/tempFolder/toolbar.js"></script>
+ <script src="js/tempFolder/bootstrap.js"></script>
+ <script src="js/tempFolder/startup.js"></script>
+</body>
+<script>
+$(function(){
+	$('textarea').textareaAutoExpand();
+});
+</script>
+
+</html>

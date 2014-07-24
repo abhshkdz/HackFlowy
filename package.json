@@ -1,0 +1,22 @@
+{
+  "name": "ndent",
+  "version": "0.0.1-2",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.1.0",
+    "jade": "0.26.1",
+    "mongoose": "2.6.5",
+    "ejs": "0.8.3",
+    "mongodb": "^1.1.7",
+    "socket.io": "0.9.13",
+    "cookie": "0.0.4",
+    "underscore": "1.5.2"
+  },
+  "subdomain": "ndent",
+  "engines": {
+    "node": "0.10.x"
+  }
+}
