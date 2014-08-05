@@ -26,10 +26,19 @@
 <script src="js/libs/externalLibs/textarea_auto_expand.js"></script>
 
 
-
+ <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      showProcessingMessages: false,
+      tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] },
+      TeX: { equationNumbers: {autoNumber: "AMS"} }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="js/libs/externalLibs/marked.js"></script>
 
 <script src ="js/libs/externalLibs/underscore-min.js"></script>
 <script src="js/libs/externalLibs/backbone-min.js"></script>
+<script src="js/libs/externalLibs/markdowneditor.js"></script>
 
 
 <script src="js/models/node.js"></script>
@@ -37,6 +46,7 @@
 <script src="js/views/listView.js"></script>
 <script src="js/views/showView.js"></script>
 <script src="js/router.js"></script>
+
 
 
 

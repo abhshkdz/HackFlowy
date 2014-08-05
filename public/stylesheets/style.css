@@ -141,7 +141,11 @@ body {
 /**************** Panel ****************/
 
 /**************** List *****************/
-
+#marked-mathjax-input{
+  border: 2px dotted black;
+  margin-left: 0px;
+  background-color: rgb(245, 231, 234); 
+}
 
 
 ul {

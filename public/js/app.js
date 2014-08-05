@@ -1,6 +1,12 @@
 $(function(){
 	//alert("jquery works"); 
 
+	$("#markdownButton").click(function(){
+		vo.thisView.createMarkDownBullet(); 
+	}); 
+
+
+
 	$("body").on("mouseover", "a.expandCollapse", function(event){
 		// console.log("bleh"); 
 		// debugger; 
@@ -122,6 +128,7 @@ voInitializer = function(that, event){
 	vo.thisId = vo.thisLI.attr("data-id"); //data-id. 
 	vo.thisIndex = vo.thisLI.index(); //returns -1 if there's no match. 
 	vo.thisModel = nodesCollection.findWhere({_id: vo.thisId});
+	vo.thisView = vo.thisModel.get("views")[0]; //split screen isn't implemented yet. 
 
 	//alert(thisIndex)
 	//thisModel = nodesCollection.get(thisId);

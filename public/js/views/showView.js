@@ -76,6 +76,17 @@ var showView = Backbone.View.extend({
 	  	return bullet;
   },
 
+  createMarkDownBullet: function(){
+  	var preview = "<div class='preview content' id='marked-mathjax-preview'>"+ this.model.get("text") + " </div>"; 
+  	var buffer = '<div class="preview content" id="marked-mathjax-preview-buffer" style="display:none; position:absolute; top:0; left: 0"></div>'; 
+  	var textareaInput = '<textarea id="marked-mathjax-input" onkeyup="Preview.Update()" name="comment" "autofocus"></textarea>'; 
+  	this.$el.find("textarea").remove(); 	
+  	this.$el.children(".content").html(preview+buffer+textareaInput); 
+  	Preview.Init();
+  	Preview.Update();
+  	return; 
+  }, 
+
  	addNode: function(newNode, index, cur){
  		var that = this;
  		console.log("addNodeText" + newNode.get("text"))
