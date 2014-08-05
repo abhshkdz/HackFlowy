@@ -1,5 +1,5 @@
 body {
-	background-color: rgb(245, 245, 245)
+	background-color: rgb(245, 245, 245);
 }
 
 /* Fix for Firefox dotted outline */
@@ -107,10 +107,15 @@ body {
 /************* End Sidebar *************/
 
 /**************** Panel ****************/
-.main-container {
+/*.main-container {
   margin-top: 60px;
   margin-bottom: 30px;
+}*/
+.centering{
+  width: 800px;
+  margin: auto;
 }
+
 .panel {
 	background: none repeat scroll 0% 0% rgb(252, 252, 252);
 	padding: 20px;
@@ -127,9 +132,18 @@ body {
   position:absolute;
   bottom: 35px;
 }
+
+.root {
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
 /**************** Panel ****************/
 
 /**************** List *****************/
+
+
+
 ul {
   margin-left: 20px;
   padding: 0;
@@ -180,7 +194,7 @@ ul {
   vertical-align: top;
   margin: 0;
   padding: 0;
-  width: 85%;
+  width: 100%;
 }
 .node p {
   margin: 0;
@@ -197,6 +211,10 @@ ul {
 /*MINE */
 
 #pathDiv {
+  position: relative;
+  top:30px;
+  width: 90%;
+  margin: auto;
   border: 1px solid rgb(217, 217, 217);
   height: 20px;
 }
@@ -233,7 +251,7 @@ ul {
     padding: 0;
     padding-top: 0px;
     margin: 0;
-    margin-left: 25px;
+    margin-left: 10px;
     background-repeat: no-repeat;
     list-style: none;
     /*background-image: url(smiley.png); */
@@ -249,6 +267,7 @@ textarea {
     padding: 0;
     border: none; 
     resize: none;
+    font-size: 110%;
   }
 
   /*textarea {
