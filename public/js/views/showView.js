@@ -12,6 +12,7 @@ var showView = Backbone.View.extend({
 
 	tagName: 'li',
 	className: "herez node",
+	events: {"click .markdown" : "showMarkDownEditor"}, 
 
 
 	//todo = refactor this function.
@@ -30,7 +31,7 @@ var showView = Backbone.View.extend({
 		that.$el.html(html);
 		console.log("about to render textarea")
 		
-		that.renderChildren();
+		that.renderChildren(); 
 
 		return that;
 	},
@@ -74,18 +75,40 @@ var showView = Backbone.View.extend({
 	  	var subList = "<ul class ='subList dd-list' data-id="+ id + "></ul>"
 	  	var bullet =  expandCollapse + zoomButton + "<span class='hoverWrap content'>" +  textArea + "</span>" + subList;
 	  	return bullet;
-  },
+  	},
 
-  createMarkDownBullet: function(){
-  	var preview = "<div class='preview content' id='marked-mathjax-preview'>"+ this.model.get("text") + " </div>"; 
-  	var buffer = '<div class="preview content" id="marked-mathjax-preview-buffer" style="display:none; position:absolute; top:0; left: 0"></div>'; 
-  	var textareaInput = '<textarea id="marked-mathjax-input" onkeyup="Preview.Update()" name="comment" "autofocus"></textarea>'; 
-  	this.$el.find("textarea").remove(); 	
-  	this.$el.children(".content").html(preview+buffer+textareaInput); 
-  	Preview.Init();
-  	Preview.Update();
-  	return; 
-  }, 
+	  //text-area => MarkDownEditor. 
+	createMarkDownBullet: function(){
+	  	var that = this; 
+	  	var textarea = that.$el.find("textarea"); 
+
+	  	var newDiv = "<div><p>" + textarea.val() + "</p></div>"; 
+	  	textarea.remove(); 
+
+	  	that.$el.children(".hoverWrap").html(newDiv); 
+
+	  	that.showMarkDownEditor(); 
+	  	return; 
+	}, 
+
+	showMarkDownEditor: function(){
+		var that = this; 
+		var hoverWrap = that.$el.children(".hoverWrap").removeClass("markdown"); 
+
+
+		hoverWrap.children("div").attr("id", "marked-mathjax-preview"); 
+
+		var buffer = '<div class="preview content" id="marked-mathjax-preview-buffer" style="display:none; position:absolute; top:0; left: 0"> </div>'; 
+	  	var textareaInput = '<textarea id="marked-mathjax-input" onkeyup="Preview.Update()" name="comment" "autofocus"></textarea>'; 
+		hoverWrap.append(buffer+textareaInput); 
+
+		setTimeout(function(){
+			Preview.Init();
+	  		Preview.Update();
+	  		hoverWrap.children("textarea").val(that.model.get("text")).focus(); 
+		}, 200); 
+	  	// setTimeout(function(){ MathJax.Callback(["CreatePreview",Preview]); }, 300); 
+	},
 
  	addNode: function(newNode, index, cur){
  		var that = this;

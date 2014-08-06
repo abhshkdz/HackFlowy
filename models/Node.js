@@ -3,7 +3,8 @@ var db = require('../lib/db');
 var NodeSchema = new db.Schema({
     text: {type: String}, 
     children: {type: Array}, 
-    parents: {type: Array}
+    parents: {type: Array}, 
+    markdown: {type: Boolean}
 })
 
 var SnapSchema = new db.Schema({
@@ -181,6 +182,7 @@ function addNode(text, children, parents, callback){
   instance.text = text; 
   instance.children = children;
   instance.parents = parents;
+  instance.markdown = 0; 
   addSnap(instance, now);
 
   instance.save(function (err) { 

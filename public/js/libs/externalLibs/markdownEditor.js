@@ -24,8 +24,13 @@ var Preview = {
   //  Get the preview and buffer DIV's
   //
   Init: function () {
+    this.timeout = null; 
+    this.mjRunning = false; 
+    this.oldText = null; 
+    
     this.preview = document.getElementById("marked-mathjax-preview");
     this.buffer = document.getElementById("marked-mathjax-preview-buffer");
+    this.preview.classList.add('Current'); //bad bugs happen if this isn't here. 
   },
 
   //
@@ -47,6 +52,9 @@ var Preview = {
     preview.style.width = "90%"; 
     preview.style.height = "auto"; 
     preview.style.overflow = "auto"; 
+
+    buffer.classList.remove('Current'); 
+    preview.classList.add('Current');
     
 
     // preview.style.display = "";

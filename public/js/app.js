@@ -5,6 +5,20 @@ $(function(){
 		vo.thisView.createMarkDownBullet(); 
 	}); 
 
+	//grab the rendered div. 
+	//(remove the content of everything else)
+	//remove the classes. 
+	$("body").on("blur", "#marked-mathjax-input", function(){
+		debugger; 
+  		var editor = $("#marked-mathjax-input"); //(this is the text-area)
+  		var wrapper = editor.closest(".hoverWrap"); 
+  		var text = editor.siblings(".Current").html(); 
+  		var html = "<div>" + text  + "</div>"; 
+  		
+  		wrapper.html(html).addClass('markdown'); 
+  		//editor.remove() is redundant. 
+  	}); 
+
 
 
 	$("body").on("mouseover", "a.expandCollapse", function(event){
