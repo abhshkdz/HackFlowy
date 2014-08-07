@@ -1,55 +1,63 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express');
-// var routes = require('./routes/routes.js'); 
-var fs = require('fs');
-var http = require('http');
-var path = require('path');
-var crypto = require('crypto');
+var app = express(); 
+var port = process.env.PORT || 3000; 
+
+var passport = require('passport');
+var flash    = require('connect-flash');
+require('./config/passport')(passport); // pass passport for configuration
+
+
+require('./config/database.js').safeConnect(); 
+
 var db = require('./lib/db');
 var helperLib = require('./lib/helperLib.js');
 
-var app = express()
-var server = http.Server(app);
-helperLib.createSocket(server); 
-server.listen(process.env.PORT || 3000);
+// var routes = require('./routes/routes.js'); 
+var http = require('http');
+var path = require('path');
 
 
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
+app.set('port', port);
+
+// app.set('views', path.join(__dirname, 'views')); 
+app.set('views', __dirname + '/views');
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public')); //ALREADY USING IT. 
 app.set('view engine', 'ejs');
-app.use(express.favicon());
+
 app.use(express.logger('dev'));
+app.use(express.favicon());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.cookieParser()); //(I've also installed cookie module)
+app.use(express.bodyParser()); //not sure...
 app.use(express.session({secret: 'secretpasswordforsessions', store: helperLib.getSessionStore()}));
+//the session stuff differs from the scotch tutorial. 
 
-app.configure(function () {
-  app.use(express.bodyParser()); //not sure...
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.use(express.static(__dirname + '/public')); //ALREADY USING IT. 
-});
+app.use(passport.initialize()); 
+app.use(passport.session()); 
+app.use(flash()); 
+
 app.set('view options', {
   layout: false
 });
 
-app.get('/',function(req,res){
-  console.log("\n\nrenderingIndex\n")
-  res.render('index');
-}); 
+
+
+
+
+var server = http.Server(app);
+helperLib.createSocket(server); 
+server.listen(port);
+
+
 
 if(process.argv[2] == "restart"){
   console.log("restarting"); 
 helperLib.setUpDB();
 }
-
