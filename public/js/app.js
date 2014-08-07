@@ -9,7 +9,6 @@ $(function(){
 	//(remove the content of everything else)
 	//remove the classes. 
 	$("body").on("blur", "#marked-mathjax-input", function(){
-		debugger; 
   		var editor = $("#marked-mathjax-input"); //(this is the text-area)
   		var wrapper = editor.closest(".hoverWrap"); 
   		var text = editor.siblings(".Current").html(); 
@@ -142,7 +141,8 @@ voInitializer = function(that, event){
 	vo.thisId = vo.thisLI.attr("data-id"); //data-id. 
 	vo.thisIndex = vo.thisLI.index(); //returns -1 if there's no match. 
 	vo.thisModel = nodesCollection.findWhere({_id: vo.thisId});
-	vo.thisView = vo.thisModel.get("views")[0]; //split screen isn't implemented yet. 
+	vo.thisView = vo.thisModel.get("views").slice(-1)[0]; //we're assuming a tree. 
+	//(also, I'm not garbage collecting extra views when you zoom in/out, so we have to grab last element). 
 
 	//alert(thisIndex)
 	//thisModel = nodesCollection.get(thisId);

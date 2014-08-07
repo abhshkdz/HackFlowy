@@ -23,7 +23,7 @@ var showView = Backbone.View.extend({
 		var id = that.model.get("_id");
 		var text = that.model.get("text");
 
-		var html = that.createUIBullet(id, text, that.depth);
+		var html = that.createUIBullet(id, text, that.depth); 
 		that.$el.children("ul").addClass("collapsed");
 		that.$el.attr("data-depth", that.depth);
 		that.$el.attr("data-id", id);
@@ -80,7 +80,7 @@ var showView = Backbone.View.extend({
 	  //text-area => MarkDownEditor. 
 	createMarkDownBullet: function(){
 	  	var that = this; 
-	  	var textarea = that.$el.find("textarea"); 
+	  	var textarea = that.$el.children(".hoverWrap").children("textarea"); 
 
 	  	var newDiv = "<div><p>" + textarea.val() + "</p></div>"; 
 	  	textarea.remove(); 
@@ -101,7 +101,7 @@ var showView = Backbone.View.extend({
 		var buffer = '<div class="preview content" id="marked-mathjax-preview-buffer" style="display:none; position:absolute; top:0; left: 0"> </div>'; 
 	  	var textareaInput = '<textarea id="marked-mathjax-input" onkeyup="Preview.Update()" name="comment" "autofocus"></textarea>'; 
 		hoverWrap.append(buffer+textareaInput); 
-
+		debugger; 
 		setTimeout(function(){
 			Preview.Init();
 	  		Preview.Update();

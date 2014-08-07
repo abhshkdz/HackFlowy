@@ -162,6 +162,7 @@
 	     	if ( null != this.currentView ) {
 	        	this.currentView.undelegateEvents();
 	      	}
+	      	
 	      	this.currentView = view;
 	      	$("textarea").textareaAutoExpand(); 
 	      	
