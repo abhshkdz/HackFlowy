@@ -1,21 +1,13 @@
 var express = require('express');
 var app = express(); 
-var port = process.env.PORT || 3000; 
+var port = require('./config/config.js').port; 
 
 var passport = require('passport');
 var flash    = require('connect-flash');
 require('./config/passport')(passport); // pass passport for configuration
 
-
 require('./config/database.js').safeConnect(); 
-
-var db = require('./lib/db');
 var helperLib = require('./lib/helperLib.js');
-
-// var routes = require('./routes/routes.js'); 
-var http = require('http');
-var path = require('path');
-
 
 
 // all environments
@@ -32,7 +24,6 @@ app.use(express.favicon());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(app.router);
 
 app.use(express.cookieParser()); //(I've also installed cookie module)
 app.use(express.bodyParser()); //not sure...
@@ -42,6 +33,8 @@ app.use(express.session({secret: 'secretpasswordforsessions', store: helperLib.g
 app.use(passport.initialize()); 
 app.use(passport.session()); 
 app.use(flash()); 
+app.use(app.router);
+
 
 app.set('view options', {
   layout: false
@@ -49,11 +42,14 @@ app.set('view options', {
 
 
 
-
-
+var http = require('http');
+var path = require('path');
 var server = http.Server(app);
 helperLib.createSocket(server); 
 server.listen(port);
+require('./lib/routes.js')(app, passport); 
+
+
 
 
 

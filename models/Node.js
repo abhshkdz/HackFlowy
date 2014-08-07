@@ -1,13 +1,13 @@
-var db = require('../lib/db');
+var mongoose = require('mongoose'); 
 
-var NodeSchema = new db.Schema({
+var NodeSchema = new mongoose.Schema({
     text: {type: String}, 
     children: {type: Array}, 
     parents: {type: Array}, 
     markdown: {type: Boolean}
 })
 
-var SnapSchema = new db.Schema({
+var SnapSchema = new mongoose.Schema({
     text: {type: String}, 
     children: {type: Array}, 
     parents: {type: Array}, 
@@ -19,8 +19,8 @@ var SnapSchema = new db.Schema({
 
 var rootID;
 
-var MySnap = db.mongoose.model('snaps', SnapSchema);
-var MyNode = db.mongoose.model('nodes', NodeSchema);
+var MySnap = mongoose.model('snaps', SnapSchema);
+var MyNode = mongoose.model('nodes', NodeSchema);
 
 // Exports
 module.exports.addNode = addNode;
