@@ -1,13 +1,15 @@
 define(
 ['jquery',
 'backbone',
-'views/list'
+'views/list',
+'models/task'
 ],
 
 function(
 $,
 Backbone,
-ListView
+ListView,
+Task
 ) {
 
   var PageView = Backbone.View.extend({
