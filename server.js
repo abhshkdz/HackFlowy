@@ -2,9 +2,9 @@ var application_root = __dirname,
   express = require('express'),
   app = express(),
   path = require('path'),
-  config = require('./config'),
-  orm = require('./orm').configure(config.db),
-  Tasks = require('./models/task').instance(orm),
+  config = require('config'),
+  orm = require('./orm').configure(config.get('database')),
+  Tasks = require('./db/models/task').instance(orm),
   server = require('http').createServer(app),
   io = require('socket.io').listen(server);
 
@@ -16,9 +16,8 @@ app.configure(function() {
   app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 });
 
-var port = config.port;
-server.listen(port, function() {
-  console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
+server.listen(config.get('port'), function() {
+  console.log( 'Express server listening on port %d in %s mode', config.get('port'), app.settings.env );
 });
 
 app.get('/tasks', function(req,res){
@@ -31,17 +30,17 @@ app.post('/tasks', function(req,res){
   Tasks.create({
     content: req.body.content,
     parent: req.body.parent_id,
-    is_completed: false,
+    isCompleted: false
   }).success(function(task){
     res.send(task);
   });
 });
 
 app.put('/tasks/:id', function(req,res){
-  console.log(req.body.is_completed);
+  console.log(req.body.isCompleted);
   Tasks.find(req.params.id).success(function(task){
     task.content = req.body.content;
-    task.is_completed = req.body.is_completed;
+    task.isCompleted = req.body.isCompleted;
     task.save().success(function(task){
       res.send(task);
     })
