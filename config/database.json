@@ -8,10 +8,10 @@
     "storage": "db/test.sqlite"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+      "username": "postgres",
+      "password": "",
+      "database": "hackflowy",
+      "host"    : "localhost",
+      "dialect" : "postgres"
   }
 }

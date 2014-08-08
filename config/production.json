@@ -1,0 +1,13 @@
+{
+    "port": 3000,
+    "database": {
+        "username": "postgres",
+        "password": "",
+        "database": "hackflowy",
+        "options" : {
+            "dialect": "postgres",
+            "host"   : "localhost",
+            "port"   : "5432"
+        }
+    }
+}
