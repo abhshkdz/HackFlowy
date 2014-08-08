@@ -6,9 +6,9 @@ An open-source [Workflowy](http://workflowy.com) clone.
 
 ##Installation
 
-* Copy over `sample.config.js` to `config.js`, and fill up the DB credentials.
-* Create a new database and import `schema/hackflowy.sql`.
+* Edit `config/development.json` to your needs
 * `npm install`
+* Run migrations and initialize the database: `sequelize-cli -m --config config/database.json` and `node db/seed/initial_tasks.js`
 * `node server.js`
 
 ##Controls

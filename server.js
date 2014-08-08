@@ -2,9 +2,9 @@ var application_root = __dirname,
   express = require('express'),
   app = express(),
   path = require('path'),
-  config = require('./config'),
-  orm = require('./orm').configure(config.db),
-  Tasks = require('./models/task').instance(orm),
+  config = require('config'),
+  orm = require('./orm').configure(config.get('database')),
+  Tasks = require('./db/models/task').instance(orm),
   server = require('http').createServer(app),
   io = require('socket.io').listen(server);
 
@@ -16,9 +16,8 @@ app.configure(function() {
   app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 });
 
-var port = config.port;
-server.listen(port, function() {
-  console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
+server.listen(config.get('port'), function() {
+  console.log( 'Express server listening on port %d in %s mode', config.get('port'), app.settings.env );
 });
 
 app.get('/tasks', function(req,res){
