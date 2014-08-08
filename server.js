@@ -30,17 +30,17 @@ app.post('/tasks', function(req,res){
   Tasks.create({
     content: req.body.content,
     parent: req.body.parent_id,
-    is_completed: false,
+    isCompleted: false
   }).success(function(task){
     res.send(task);
   });
 });
 
 app.put('/tasks/:id', function(req,res){
-  console.log(req.body.is_completed);
+  console.log(req.body.isCompleted);
   Tasks.find(req.params.id).success(function(task){
     task.content = req.body.content;
-    task.is_completed = req.body.is_completed;
+    task.isCompleted = req.body.isCompleted;
     task.save().success(function(task){
       res.send(task);
     })
