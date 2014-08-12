@@ -1,6 +1,20 @@
 $(function(){
 	//alert("jquery works"); 
 
+
+	$("#COMMIT").click(function(){
+		socket.emit("COMMIT"); 
+	}); 
+
+	$(".getRevHistory").click(function(){
+		socket.emit("revHistoryRequest"); 
+	});
+
+	$(".toggleSidebar").click(function(){
+		$("#mainPanel").toggleClass("floatRight centering"); 
+		$("#metaSidebar").toggleClass("hideBar"); 
+	}); 
+
 	$("#markdownButton").click(function(){
 		vo.thisView.createMarkDownBullet(); 
 	}); 

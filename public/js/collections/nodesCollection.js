@@ -1,4 +1,4 @@
-var nodesCollection = Backbone.Collection.extend({
+var NodesCollection = Backbone.Collection.extend({
 
   model: NodeModel
 

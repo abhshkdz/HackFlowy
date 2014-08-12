@@ -51,6 +51,20 @@ require('./lib/routes.js')(app, passport);
 
 
 
+// console.log("ABOUT TO RECURSE"); 
+// require('./lib/revAlgorithm').recurse(); 
+
+// var MySnap = require('./models/Snap.js').MySnap; 
+// console.log("TESTING Mongo"); 
+// MySnap.find({},'timestamp')
+// 		.sort({timestamp: -1}).limit(1).exec(function(err,timeStamp){
+// 			timeStamp = timeStamp[0].timestamp; 
+// 			console.log("timeStamp="); 
+// 			console.log(timeStamp); 
+// 		}); 
+
+
+
 
 
 if(process.argv[2] == "restart"){

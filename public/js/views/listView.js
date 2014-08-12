@@ -55,6 +55,7 @@ var listView = Backbone.View.extend({
 		var childrenIds = that.model.get("children");
 		_.each(childrenIds, function(childId, index){
 			var childModel = nodesCollection.findWhere({_id: childId});
+			if(!childModel){childModel= nodesCollection.findWhere({cur_id: childId});}
 			console.log("childModelId = " + childId); 
 			console.log(childModel); 
 			 var tempView = new showView({

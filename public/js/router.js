@@ -29,7 +29,7 @@
 			socket.on('nodeData', function(data){
 				//alert("data");
 				console.log(data);
-				nodesCollection = new nodesCollection(data); 
+				nodesCollection = new NodesCollection(data); 
 				var id = nodesCollection.findWhere({text: "0root"}).get("_id");
 				if(otherID){
 					id = otherID
@@ -38,6 +38,42 @@
 
 				that.viewRoot(id);
 			});
+
+
+			socket.on("commitReceived", function(){
+				alert("commitReceived"); 
+			}); 
+
+			socket.on("revHistory", function(data){
+				alert("revHistory!!"); 
+				console.log("revHistory!!"); 
+				snapHash = data[0]; 
+				timeHash = data[1]; 
+				console.log("snapHash"); 
+				console.log(snapHash); 
+				console.log("timeHash"); 
+				console.log(timeHash); 
+
+				var list = ""; 
+				_.each(Object.keys(timeHash), function(timestamp){
+					list += "<li><a class='timestamp'>"+timestamp+"</a></li>"; 
+				})
+
+				$("#revTimestamps").html(list); 
+			})
+
+			$("#revTimestamps").on("click", "a.timestamp", function(event){
+				// debugger; 
+				var a = event.target; 
+				var timestamp = parseInt($(a).html()); 
+				renderRevControl("53ea3f506dc8d39342bf4f9f", timestamp); 
+				setTimeout(function(){
+					// debugger; 
+					console.log("nodesCollection")
+					console.log(nodesCollection); 
+					that.viewRoot("53ea3f506dc8d39342bf4f9f")
+				}, 1000); 
+			}); 
 
 			socket.on('edit', function(data){
 				var id = data[0];
@@ -130,9 +166,24 @@
 				var thisModel = nodesCollection.findWhere({_id: ids[0]});
 				var oldParModel = nodesCollection.findWhere({_id: ids[1]});
 				var newParModel = nodesCollection.findWhere({_id: ids[2]});
-				debugger;
+				// debugger;
 				moveNode(thisModel, indices[0], oldParModel, newParModel, indices[1]);
-			})
+			}); 
+
+
+			socket.on("revControl", function(data){
+				//(store all of this...). 
+				var timeHash = data[0]; 
+				var snapHash = data[1]; 
+				var timeStamps = timeHash.keys; 
+
+				//To be continued...
+
+
+
+
+			}); 
+
 
 
 
@@ -140,6 +191,9 @@
 
 		viewRoot: function(id){
 			var rootNode = nodesCollection.findWhere({_id: id});
+			if(!rootNode){
+				rootNode = nodesCollection.findWhere({cur_id: id});
+			}
 			// alert("viewNode"); 
 			console.log("ViewRoot + rootNode");
 			console.log(rootNode); 

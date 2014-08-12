@@ -16,6 +16,7 @@
 <script src="js/libs/myLib/removeNode.js"></script>
 <script src="js/libs/myLib/KeyBoardLogic.js"></script>
 <script src="js/libs/myLib/moveNode.js"></script>
+<script src="js/libs/myLib/revControl.js"></script>
 <script src="js/app.js"></script> 
 
 
@@ -51,44 +52,40 @@
 
 
 <body>
-	<p><br /><span class="math"><em>x</em><sup>2</sup></span><br /></p>
+<div class='myNav'>
+  <a class='logoLink'>CoNote</a>
+  <input type='text'>
+  <a class='btn btn-default'><i class='icon-star'></i></a>
 
-	<div class="navbar-xs">
-    <div class="navbar-primary">
-      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-          <a class="navbar-left" href="sidebar.html"><i class="icon-list"></i></a>
-          <a class="navbar-brand" href="index.html">Metablock</a>
-        </div>
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
-          </div>
-        </form>
-        <a class="btn btn-default" href=""><i class="icon-star"></i></a>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a class='transclude'>Transclude/alias</a></li>
-          <!-- <li><a href="index.html"><img src="img/splitscreen.png"></a></li> -->
-          <li><a class='splitScreen'><img src="img/splitscreen.png"></a></li>
-          <li><a href=""><img src="img/undo.png"></a></li>
-          <li><a href=""><img src="img/redo.png"></a></li>
-          <li><a id="markdownButton">x<sup>2</sup></a></li>
-          <li class="dropdown">
-            <a href="" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="">Action</a></li>
-              <li><a href="">Another action</a></li>
-              <li class="divider"></li>
-              <li><a href="">Separated link</a></li>
-              <li><a href="/auth/google">Sign In with Google</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-    </div>
+  <ul class='navbar-right'>
+    <li><a class='toggleSidebar'>Toggle sideBar</a></li>
+    <li><a href='/auth/google'>Sign In With Google</a></li>
+    <li><a id='COMMIT'>Make Commit!</a></li>
+    <!-- <li><a><img src='img/undo.png'></a></li>
+    <li><a><img src='img/redo.png'></a></li> -->
+    <li><a id='markdownButton'>x<sup>2</sup></a></li>
+  </ul>
+
+
+</div>
+
+<div id='metaSidebar'>
+  <div class='nodeAttributes'>
+    Node Attributes
+    <ul>
+      <li>author: you</li>
+      <li>timeStamp: now</li>
+      <li>etc</li>
+    </ul>
   </div>
+  <div class='revHistory'>
+    <a class='getRevHistory'>Get revHistory</a>
+    <ul id='revTimestamps'>
+    </ul>
+  </div>
+</div>
 
-<div class='centering'>
+<div id='mainPanel' class='floatRight'>
     <div id="pathDiv">PathDIV</div>
     <div class='main main1 panel'>
       <ul id="0" class='root subList dd-list' ></ul>
