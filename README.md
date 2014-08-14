@@ -11,6 +11,12 @@ An open-source [Workflowy](http://workflowy.com) clone.
 * Run migrations and initialize the database: `sequelize-cli -m --config config/database.json` and `node db/seed/initial_tasks.js`
 * `node server.js`
 
+##Heroku deploy
+
+* heroku create --stack cedar
+* git remote add heroku URL from above
+* git push heroku master
+
 ##Controls
 
 * <kbd>UP</kbd> & <kbd>DOWN</kbd>: navigate through tasks

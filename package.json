@@ -10,5 +10,14 @@
         "sequelize": "~1.7.9",
         "socket.io": "~1.0.6",
         "config": "~1.0.2"
+    },
+    "engines": {
+        "node": "0.10.x"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "db:migrate": "./node_modules/sequelize/bin/sequelize -m --config config/database.json",
+        "db:seed": "node db/seed/initial_tasks.js",
+        "postinstall": "npm run db:migrate && npm run db:seed"
     }
 }
