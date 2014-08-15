@@ -15,6 +15,8 @@ An open-source [Workflowy](http://workflowy.com) clone.
 
 * heroku create --stack cedar
 * git remote add heroku URL from above
+* heroku addons:add heroku-postgresql:dev
+* heroku config:set NODE_ENV=production
 * git push heroku master
 
 ##Controls
