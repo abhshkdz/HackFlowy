@@ -37,8 +37,8 @@ TaskView
         model: task
       });
       var a = taskView.render();
-      if (a.model.get('parent_id')!=0)
-        a.$el.insertAfter($('*[data-id="'+a.model.get('parent_id')+'"]').parents('li:first'));
+      if (a.model.get('parentId')!=0)
+        a.$el.insertAfter($('*[data-id="'+a.model.get('parentId')+'"]').parents('li:first'));
       else
         this.$el.append(a.el);
     }
