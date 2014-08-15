@@ -1,5 +1,5 @@
 {
-    "port": 3000,
+    "port": 80,
     "database": {
         "use_env_variable": "DATABASE_URL"
     }
