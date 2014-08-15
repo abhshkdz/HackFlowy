@@ -16,8 +16,9 @@ app.configure(function() {
   app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 });
 
-server.listen(config.get('port'), function() {
-  console.log( 'Express server listening on port %d in %s mode', config.get('port'), app.settings.env );
+var port = process.env.PORT || config.get('port');
+server.listen(port, function() {
+  console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
 });
 
 app.get('/tasks', function(req,res){
