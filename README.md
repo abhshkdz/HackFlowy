@@ -12,6 +12,12 @@ An open-source [Workflowy](http://workflowy.com) clone.
 
 ##Heroku deploy
 
+You can use our one-click heroku deploy:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+or proced manually as follow:
+
 * heroku create --stack cedar
 * heroku addons:add heroku-postgresql:dev
 * heroku config:set NODE_ENV=production

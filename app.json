@@ -1,0 +1,16 @@
+{
+  "name": "HackFlowy",
+  "description": "Workflowy clone, built using Backbone.js & Socket.io",
+  "keywords": ["express", "backbone", "socket.io"],
+  "website": "https://github.com/abhshkdz/HackFlowy",
+  "repository": "https://github.com/abhshkdz/HackFlowy",
+  "scripts": {
+    "postdeploy": ""
+  },
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "addons": [
+    "heroku-postgresql:dev"
+  ]
+}
