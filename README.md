@@ -6,9 +6,8 @@ An open-source [Workflowy](http://workflowy.com) clone.
 
 ##Installation
 
-* Edit `config/development.json` to your needs
+* Edit `config/development.json` and `config/database.json` to your needs
 * `npm install`
-* Run migrations and initialize the database: `sequelize-cli -m --config config/database.json` and `node db/seed/initial_tasks.js`
 * `node server.js`
 
 ##Heroku deploy
