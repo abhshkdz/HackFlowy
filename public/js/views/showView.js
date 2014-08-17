@@ -1,6 +1,8 @@
 var showView = Backbone.View.extend({
 	initialize: function(options){
 		var that = this;
+		that.metaCollection = options["metaCollection"]; 
+		that.snapView = options["snapView"]; 
 
 		this.model = options["model"];
 		this.depth = options["depth"];
@@ -13,6 +15,16 @@ var showView = Backbone.View.extend({
 	tagName: 'li',
 	className: "herez node",
 	events: {"click .markdown" : "showMarkDownEditor"}, 
+
+
+	findModel: function(id){
+		if(this.snapView){
+			return this.metaCollection.findWhere({cur_id: id}); 
+		}
+		else{
+			return this.metaCollection.findWhere({_id: id}); 
+		}
+	},
 
 
 	//todo = refactor this function.
@@ -29,6 +41,10 @@ var showView = Backbone.View.extend({
 		that.$el.attr("data-id", id);
 
 		that.$el.html(html);
+		if(that.snapView){
+			that.$el.children().children("textarea").prop("disabled", true);
+			that.$el.addClass("snapLI"); 
+		}
 		console.log("about to render textarea")
 		
 		that.renderChildren(); 
@@ -40,10 +56,12 @@ var showView = Backbone.View.extend({
 		var childrenIds = that.model.get("children");
 
 		_.each(childrenIds, function(childId, index){
-			var childModel = nodesCollection.findWhere({_id: childId});
+			var childModel = that.findModel(childId); 
 			var tempView = new showView({
-				depth: 0,
-				model: childModel
+				depth: that.depth + 1,
+				model: childModel, 
+				metaCollection: that.metaCollection, 
+				snapView: that.snapView
 			});
 			that.childViews.push(tempView)
 			that.$el.children("ul").append(tempView.render().$el);
@@ -115,7 +133,10 @@ var showView = Backbone.View.extend({
  		console.log("addNodeText" + newNode.get("text"))
   		var newView = new showView({
   			model: newNode,
-  			depth: that.depth +1
+  			depth: that.depth +1, 
+  			metaCollection: that.metaCollection, 
+  			snapView: that.snapView
+
   		});
 
   		var newLI = newView.render().$el;
@@ -130,7 +151,7 @@ var showView = Backbone.View.extend({
 
   		that.childViews.insert(index , newView);
   		if(cur){
-  			newLI.children().children("textarea").focus();
+  			newLI.children().children("textarea").focus().textareaAutoExpand(); 
   		}
   		else{
   			newView.lock();
@@ -146,7 +167,7 @@ var showView = Backbone.View.extend({
  		var that = this;
  		this.$el.children().children("textarea").val(that.model.get("text"));
  	},
- 	lock: function(){
+ 	lock: function(){ //for concurrent editing...
  		this.$el.children().children("textarea").attr("readonly", "readonly");
  		this.$el.children().children("textarea").val("editing....")
  	},

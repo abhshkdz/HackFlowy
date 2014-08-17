@@ -2,6 +2,8 @@ var listView = Backbone.View.extend({
 
 	initialize: function(options){
 		var that = this;
+		that.metaCollection = options["metaCollection"]; 
+		that.snapView = options["snapView"]; 
 
 		this.viewWindow = $(options["viewWindow"]);
 		that.model = options["model"];
@@ -24,6 +26,15 @@ var listView = Backbone.View.extend({
 		return that;
 	}, 
 
+	findModel: function(id){
+		if(this.snapView){
+			return this.metaCollection.findWhere({cur_id: id}); 
+		}
+		else{
+			return this.metaCollection.findWhere({_id: id}); 
+		}
+	},
+
 
 	renderPath: function(){
 		var that = this; 
@@ -33,12 +44,12 @@ var listView = Backbone.View.extend({
 		var parents = that.model.get("parents"); 
 		while(parents.length != 0){
 			ancestry.push(parents); 
-			parents = nodesCollection.findWhere({_id: parents[0] }).get("parents");
+			parents = that.findModel(parents[0]).get("parents"); 
 			//making the assumption/simplification that it's a tree. Not a graph. 
 		}
 
 		_.each(ancestry.reverse(), function(parent){
-			var parentModel = nodesCollection.findWhere({_id: parent[0] });
+			var parentModel = that.findModel(parent[0]); 
 			pathDiv += "<a class='pathLink' href='#"+ parentModel.get("_id") + "'>" + parentModel.get("text") + "</a>"; 
 			pathDiv += " -- "; 
 		}); 
@@ -54,15 +65,15 @@ var listView = Backbone.View.extend({
 		
 		var childrenIds = that.model.get("children");
 		_.each(childrenIds, function(childId, index){
-			var childModel = nodesCollection.findWhere({_id: childId});
-			if(!childModel){childModel= nodesCollection.findWhere({cur_id: childId});}
-			console.log("childModelId = " + childId); 
-			console.log(childModel); 
+			var childModel = that.findModel(childId); 
+
 			 var tempView = new showView({
 				depth: 0, 
-				model: childModel //, 
-				//nodesCollection: that.nodesCollection
+				model: childModel, 
+				metaCollection: that.metaCollection, 
+				snapView: that.snapView
 			});
+
 			var tempLI = tempView.render().$el; 
 			tempLI.children("textarea").textareaAutoExpand(); 
 			that.$el.append(tempLI);
@@ -76,7 +87,9 @@ var listView = Backbone.View.extend({
  		var that = this; 
   		var newView = new showView({
   			model: newNode, 
-  			depth: 0
+  			depth: 0, 
+  			metaCollection: that.metaCollection, 
+  			snapView: that.snapView
   		});
   		var newLI = newView.render().$el;
 

@@ -11,7 +11,8 @@ renderRevControl = function(rootNode, timeStamp){
 	}
 	console.log("FINALCOLLECTION"); 
 	console.log(finalCollection); 
-	nodesCollection = new NodesCollection(finalCollection); 
+	var snapCollection = new NodesCollection(finalCollection); 
+	return snapCollection; 
 
 }
 

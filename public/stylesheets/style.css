@@ -148,6 +148,12 @@ ul.navbar-right {
 /**************** Panel ****************/
 
 /**************** List *****************/
+
+.snapLI > span > textarea:hover{
+  border: 1px solid black;
+}
+
+
 #marked-mathjax-input{
   border: 2px dotted black;
   margin-left: 0px;

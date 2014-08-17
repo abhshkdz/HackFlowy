@@ -62,17 +62,19 @@
 				$("#revTimestamps").html(list); 
 			})
 
+
 			$("#revTimestamps").on("click", "a.timestamp", function(event){
 				// debugger; 
 				var a = event.target; 
 				var timestamp = parseInt($(a).html()); 
-				renderRevControl("53ea3f506dc8d39342bf4f9f", timestamp); 
-				setTimeout(function(){
-					// debugger; 
-					console.log("nodesCollection")
-					console.log(nodesCollection); 
-					that.viewRoot("53ea3f506dc8d39342bf4f9f")
-				}, 1000); 
+				var subRootId = $(".getRevHistory").attr("data-id"); 
+
+				var snapCollection = renderRevControl(subRootId, timestamp); 
+
+				console.log("snapCollection")
+				console.log(snapCollection); 
+
+				that.viewRoot(subRootId, snapCollection); 
 			}); 
 
 			socket.on('edit', function(data){
@@ -189,27 +191,28 @@
 
 		}, 
 
-		viewRoot: function(id){
-			var rootNode = nodesCollection.findWhere({_id: id});
-			if(!rootNode){
-				rootNode = nodesCollection.findWhere({cur_id: id});
+		viewRoot: function(id, snapCollection){
+
+			var rootModel; 
+			var metaCollection; 
+			var snapView = 0; 
+			if(snapCollection){
+				rootModel = snapCollection.findWhere({cur_id: id});
+				metaCollection = snapCollection
+				snapView = 1; 
 			}
-			// alert("viewNode"); 
-			console.log("ViewRoot + rootNode");
-			console.log(rootNode); 
+			else{
+				rootModel = nodesCollection.findWhere({_id: id});
+				metaCollection = nodesCollection; 
+			}
+
 			var rootView = new listView({
 					viewWindow: ".main1",
-					model: rootNode, 
-					nodesCollection: nodesCollection //nodesCollection might be global (and this would be redundant)
+					model: rootModel, 
+					metaCollection: metaCollection,
+					snapView: snapView
 				})
 			this.changeView(rootView);
-
-			// var rootView = new listView({
-			// 		viewWindow: ".main2",
-			// 		model: rootNode, 
-			// 		nodesCollection: nodesCollection //nodesCollection might be global (and this would be redundant)
-			// 	})
-			// this.changeView(rootView);
 		}, 
 
 		changeView: function(view) {

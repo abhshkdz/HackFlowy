@@ -1,13 +1,16 @@
 $(function(){
 	//alert("jquery works"); 
+	var myRouter; 
 
 
 	$("#COMMIT").click(function(){
 		socket.emit("COMMIT"); 
 	}); 
 
-	$(".getRevHistory").click(function(){
-		socket.emit("revHistoryRequest"); 
+	$(".getRevHistory").click(function(e){
+		var rootId = $(".root").attr("data-id")
+		socket.emit("revHistoryRequest", rootId); 
+		$(e.target).attr("data-id", rootId); 
 	});
 
 	$(".toggleSidebar").click(function(){
@@ -291,6 +294,9 @@ if((vo.hitTab && !event.shiftKey) || (event.keyCode == 39 && event.shiftKey)){ /
 		if(hasAboveSibling){
 			var newIndex = vo.siblingModel.get("children").length; // no need for a + 1, because 0 index + insert (duh)
 			moveNode(vo.thisModel, vo.thisIndex, vo.parentModel, vo.siblingModel, newIndex, true);
+			setTimeout(function(){
+				
+			}, 100); 
 		}
 }
 if((vo.hitTab && event.shiftKey) || (event.keyCode == 37 && event.shiftKey)){// OUTDENT!!
