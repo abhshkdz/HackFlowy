@@ -9,7 +9,7 @@ Backbone
   var TaskModel = Backbone.Model.extend({
 
     defaults: {
-      parentId: 0,
+      parent: 0,
       content: '',
       isCompleted: 0
     },
