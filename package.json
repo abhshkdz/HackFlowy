@@ -21,5 +21,9 @@
         "db:migrate": "./node_modules/sequelize/bin/sequelize -m --config config/database.json",
         "db:seed": "node db/seed/initial_tasks.js",
         "postinstall": "npm run db:migrate && npm run db:seed"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/abhshkdz/HackFlowy.git"
     }
 }
