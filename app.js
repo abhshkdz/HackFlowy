@@ -1,13 +1,21 @@
 var express = require('express');
 var app = express(); 
-var port = require('./config/config.js').port; 
+var config = require('./config/config.js')
+var port = config.port; 
 
 var passport = require('passport');
 var flash    = require('connect-flash');
 require('./config/passport')(passport); // pass passport for configuration
 
-require('./config/database.js').safeConnect(); 
 var helperLib = require('./lib/helperLib.js');
+helperLib.safeConnectToDB(); 
+
+
+
+var MongoStore = require('connect-mongo')(express); 
+
+
+
 
 
 // all environments
@@ -27,7 +35,7 @@ app.use(express.methodOverride());
 
 app.use(express.cookieParser()); //(I've also installed cookie module)
 app.use(express.bodyParser()); //not sure...
-app.use(express.session({secret: 'secretpasswordforsessions', store: helperLib.getSessionStore()}));
+app.use(express.session({secret: config.sessionSecret, store: new MongoStore(config.StoreDB) }));
 //the session stuff differs from the scotch tutorial. 
 
 app.use(passport.initialize()); 

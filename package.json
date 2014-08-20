@@ -16,7 +16,8 @@
     "underscore": "1.5.2",
     "passport": "^0.2.0",
     "passport-google-oauth": "^0.1.5",
-    "connect-flash": "^0.1.1"
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^0.4.1"
   },
   "subdomain": "ndent",
   "engines": {
