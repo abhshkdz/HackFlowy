@@ -9,8 +9,8 @@
 			return parId != vo.parentId;
 		});
 		vo.thisModel.set("parents", newParents);
-		if(!broadcast){
-			socket.emit("removeNode", [vo.thisId, vo.thisIndex, vo.parentId]);
+		if(!broadcast){ //broadCast=true means we received this update from somebody else. 
+			socket.emit("removeNode", [vo.thisId, vo.thisIndex, vo.parentId, CurrentUser]);
 		}
 	}
 
@@ -22,7 +22,8 @@ var upDateParentModelViews = function(vo, broadcast){
 	vo.parentModel.set("children", children);
 	
 
-	if(!broadcast){
+
+	if(!broadcast){ //broadCast=true means we received this update from somebody else.
 		//UI STUFF
 		console.log("what");
 		if( !vo.thisLI.is(":first-child") ){
@@ -35,6 +36,7 @@ var upDateParentModelViews = function(vo, broadcast){
 			vo.thisLI.parent().parent().children().children("textarea").setSelection(len, len);
 		}
 	}
+
 
 	_.each(vo.parentModel.get("views"), function(parentView){
 		parentView.removeNode(vo.thisIndex);

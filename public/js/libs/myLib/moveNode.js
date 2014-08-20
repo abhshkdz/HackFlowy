@@ -26,10 +26,9 @@ var moveNode = function(thisModel, dragIndex, oldParModel, newParModel, dropInde
 	var ids = [thisModel.get("_id"), oldParModel.get("_id"), newParModel.get("_id")];
 	var arrays = [thisModel.get("parents"), oldParModel.get("children"), newParModel.get("children")];
 	var indices = [dragIndex, dropIndex];
-	var data = [ids, arrays, indices];
-	console.log("about to emit data!!");
-	console.log(data);
-	if(chr){
+	var data = [ids, arrays, indices, CurrentUser];
+
+	if(chr){ 
 		socket.emit("movedNode", data);
 	}
 	

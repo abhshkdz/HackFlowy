@@ -8,6 +8,7 @@ addNode = function(botStr, topStr){
 	  , text: botStr 
 	  , parents: [vo.parentId]
 	  , children: []
+	  , author: CurrentUser
 	};
 
 	
@@ -27,7 +28,7 @@ addNode = function(botStr, topStr){
 
 	vo.parentModel.get("children").insert(vo.thisIndex + 1, randomId);
 	
-	socket.emit("newNode", [[vo.parentId, vo.thisIndex+1], modelJSON ]);
+	socket.emit("newNode", [ [vo.parentId, vo.thisIndex+1] , modelJSON ]);
 	
 	var parentViews = vo.parentModel.get("views");
 	

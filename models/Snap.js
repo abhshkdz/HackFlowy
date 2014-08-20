@@ -7,7 +7,8 @@ var SnapSchema = new mongoose.Schema({
     markdown: {type: Boolean},
     timestamp: {type: Number}, 
 
-    cur_id: {type: String}
+    cur_id: {type: String},
+    authorId: {type: String, ref: 'User'}
 });
 
 var MySnap = mongoose.model('snaps', SnapSchema);
@@ -29,6 +30,7 @@ function addSnap(node, now, remove, callback){
   instance.markdown = node.markdown; 
   instance.cur_id = node._id;
   instance.timestamp = now;
+  instance.authorId = node.authorId; 
 
 
   if(remove){

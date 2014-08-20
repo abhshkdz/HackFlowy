@@ -1,6 +1,5 @@
 $(function(){
 	//alert("jquery works"); 
-	var myRouter; 
 
 
 	$("#COMMIT").click(function(){
@@ -13,10 +12,20 @@ $(function(){
 		$(e.target).attr("data-id", rootId); 
 	});
 
+	$("body").on("click", ".snapLI", function(e){
+		$(e.target).addClass("selectedSnap"); 
+	});
+
 	$(".toggleSidebar").click(function(){
 		$("#mainPanel").toggleClass("floatRight centering"); 
 		$("#metaSidebar").toggleClass("hideBar"); 
 	}); 
+
+	
+
+
+
+
 
 	$("#markdownButton").click(function(){
 		vo.thisView.createMarkDownBullet(); 
@@ -34,6 +43,9 @@ $(function(){
   		wrapper.html(html).addClass('markdown'); 
   		//editor.remove() is redundant. 
   	}); 
+
+
+
 
 
 
@@ -65,18 +77,17 @@ $(function(){
 		var that = this;
 		voInitializer(that, event);
 		var id = $(event.target).closest("li").attr("data-id");
-		console.log("ABOUT TO EMIT 'EDITING' "); 
-		console.log(id);
-		socket.emit("editing", id);
+
+		socket.emit("editing", [id, CurrentUser._id]);
 	}); 
 	$("body").on("blur", "textarea", function(event){
 		var thisLI = $(event.target).closest("li");
 		var id = thisLI.attr("data-id");
 		var text = thisLI.children().children("textarea").val();
-		//console.log(id);
-		//alert("blurred ID" + id + text);
-		socket.emit("blurred", [id, text]);
-		$("textarea").textareaAutoExpand(); 
+		$("textarea").textareaAutoExpand();
+	
+		socket.emit("blurred", [id, text, CurrentUser]);
+		 
 	});
 	$("body").on("click", ".transclude", function(event){
 		//alert(vo.thisId);
