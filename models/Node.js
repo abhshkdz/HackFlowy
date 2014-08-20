@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'); 
+var _ = require("underscore"); 
 
 var NodeSchema = new mongoose.Schema({
     text: {type: String}, 
@@ -132,7 +133,7 @@ function removeNode(thisId, thisIndex, parId, authorId){
       delNode.save(); 
     }
     else{ //this is the condition that we'll have to take care of if there are dups. 
-      delNode.parents = _.without(parents, parId);
+      delNode.parents = _.without(delNode.parents, parId);
       delNode.save();
     }
   })
@@ -149,6 +150,11 @@ function updateText(id, newText, authorId){
     node.save();
   });
 }
+
+
+
+
+
 
 function updateParent(parId, newId ,newIndex,now){
   MyNode.findById(parId, null, function(err, parNode){

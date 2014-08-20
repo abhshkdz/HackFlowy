@@ -1,6 +1,5 @@
 addNode = function(botStr, topStr){
-	console.log("ADDNODE (LOGIC)");
-	console.log(vo);
+	// debugger; 
 
 	var randomId = ( -1 * Math.floor( Math.random() * 100000000) )
 	var modelJSON = {

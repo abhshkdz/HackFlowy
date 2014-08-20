@@ -50,15 +50,11 @@ $(function(){
 
 
 	$("body").on("mouseover", "a.expandCollapse", function(event){
-		// console.log("bleh"); 
-		// debugger; 
 		$(event.target).find("a.expandCollapse").css("opacity", "1"); 
 		$(event.target).closest("a.expandCollapse").css("opacity", "1"); 
 		// $(event.target).siblings("a.expandCollapse").css("opacity", "1")
 	}); 
 	$("body").on("mouseleave", "a.expandCollapse", function(event){
-		// console.log("bleh"); 
-		// debugger; 
 		$(event.target).find("a.expandCollapse").css("opacity", ".001"); 
 		$(event.target).closest("a.expandCollapse").css("opacity", ".001"); 
 		// $(event.target).siblings("a.expandCollapse").css("opacity", ".001")
@@ -90,17 +86,13 @@ $(function(){
 		 
 	});
 	$("body").on("click", ".transclude", function(event){
-		//alert(vo.thisId);
 		alert("Transclusion syncing with the server has not been implemented. KnownBugs:\n0.Don't make infinite loops.\n1."); 
 		transclude();  
 	}); 
 
-	// AppRouter.initialize();
 	myRouter = new AppRouter; 
 	Backbone.history.start();
-
-	//console.log("typeOF FUNCTION");
-	//console.log($.fn.textareaAutoExpand);
+	//this calls initialize twice. 
 });
 
 
@@ -212,6 +204,7 @@ keydownHandler = function(event){ //the entire body is wrapped in this.
 	var that = this;
 	//
 	if(event.which == undefined){ return; }
+	if(!CurrentUser){ alert("only logged in users can edit"); return;}//prevent non-logged in users from editing. 
 	
 	voInitializer(that, event);
 
@@ -240,6 +233,7 @@ keydownHandler = function(event){ //the entire body is wrapped in this.
 			
 			if(!event.shiftKey){
 				event.preventDefault();
+
 				if(vo.empty){
 					addNode("");
 					return;

@@ -153,6 +153,10 @@ ul.navbar-right {
   border: 1px solid black;
 }
 
+.selectedSnap {
+  border: 2px solid red;
+}
+
 
 #marked-mathjax-input{
   border: 2px dotted black;
