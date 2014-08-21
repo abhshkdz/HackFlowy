@@ -8,7 +8,10 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 require('./config/passport')(passport); // pass passport for configuration
 
+require("./models/Node.js"); 
+//This isn't used in this file, but calling it before helper lib avoids circularDependencies. 
 var helperLib = require('./lib/helperLib.js');
+console.log(helperLib); 
 helperLib.safeConnectToDB(); 
 
 

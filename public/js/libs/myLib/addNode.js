@@ -1,6 +1,4 @@
 addNode = function(botStr, topStr){
-	// debugger; 
-
 	var randomId = ( -1 * Math.floor( Math.random() * 100000000) )
 	var modelJSON = {
 		_id: randomId 
@@ -27,7 +25,9 @@ addNode = function(botStr, topStr){
 
 	vo.parentModel.get("children").insert(vo.thisIndex + 1, randomId);
 	
-	socket.emit("newNode", [ [vo.parentId, vo.thisIndex+1] , modelJSON ]);
+	var data = [ [vo.parentId, vo.thisIndex+1] , modelJSON ]; 
+	console.log("AddNode DATA"); console.log(data); 
+	socket.emit("newNode", data);
 	
 	var parentViews = vo.parentModel.get("views");
 	
@@ -36,6 +36,8 @@ addNode = function(botStr, topStr){
 		parentView.addNode(newNode, tempIndex, true);
 	});
 	vo.thisLI.next().children().children("textarea").focus();
+	INPUT_PROCESSED=true; 
+	console.log("FINISHED- ADD NODE")
 }
 
 //topStr is to the left. (also, the bottom part will be to the right. )
@@ -79,7 +81,7 @@ transclude = function(){
 	});
 	vo.thisLI.next().children().children("textarea").focus();
 
-
+	INPUT_PROCESSED=true; 
 }
 
 

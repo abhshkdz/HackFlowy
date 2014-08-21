@@ -41,4 +41,6 @@ var upDateParentModelViews = function(vo, broadcast){
 	_.each(vo.parentModel.get("views"), function(parentView){
 		parentView.removeNode(vo.thisIndex);
 	}); 
+
+	INPUT_PROCESSED=true; 
 }

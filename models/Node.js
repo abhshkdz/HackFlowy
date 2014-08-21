@@ -72,73 +72,6 @@ function setUpDB(){
   }); 
 }
 
-
-
-
-
-
-
-
-
-function moveNode(ids, arrays, authorId){
-  var now = Date.now();
-
-  var thisId = ids[0]; //draggedId
-  MyNode.findById(thisId, null, function(err, node){
-    node.author = authorId; //
-    node.timestamp = now; 
-    node.parents = arrays[0];
-    node.save();
-  });
-
-  var oldParId = ids[1];
-  MyNode.findById(oldParId, null, function(err, node){
-    node.timestamp = now; 
-    node.children = arrays[1];
-    node.save();
-  });
-
-  var newParId = ids[2];
-  MyNode.findById(newParId, null, function(err, node){
-    node.timestamp = now; 
-    node.children = arrays[2];
-    node.save();
-  });
-}
-
-function removeNode(thisId, thisIndex, parId, authorId){
-  var now = Date.now();
-
-  MyNode.findById(parId, null, function(err, parNode){
-    if(err || parNode == null){
-      return;
-    }
-    var temp = parNode.children;
-    temp.splice(thisIndex, 1); //remove thisIndex. 
-    parNode.children = temp;
-    parNode.timestamp = now; 
-
-    parNode.save();
-  });
-
-  MyNode.findById(thisId, null, function(err, delNode){
-    if(err || delNode == null){
-      return;
-    }
-    delNode.author = authorId; 
-    delNode.timestamp = now; 
-    if(delNode.parents.length ==1 ){//(this if statement is technically redundant)
-      // delNode.remove();
-      delNode.parents = []; //(this is how deletion is represented). 
-      delNode.save(); 
-    }
-    else{ //this is the condition that we'll have to take care of if there are dups. 
-      delNode.parents = _.without(delNode.parents, parId);
-      delNode.save();
-    }
-  })
-}
-
 function updateText(id, newText, authorId){
   MyNode.findById(id, null, function(err, node){
     if(err || node == null){
@@ -156,6 +89,90 @@ function updateText(id, newText, authorId){
 
 
 
+
+
+
+
+
+
+function moveNode(ids, arrays, authorId){
+  var now = Date.now();
+  var numCallbacks = 0; 
+
+  var thisId = ids[0]; //draggedId
+  MyNode.findById(thisId, null, function(err, node){
+    node.author = authorId; //
+    node.timestamp = now; 
+    node.parents = arrays[0];
+    node.save(parallelExecutionHelper);
+  });
+
+  var oldParId = ids[1];
+  MyNode.findById(oldParId, null, function(err, node){
+    node.timestamp = now; 
+    node.children = arrays[1];
+    node.save(parallelExecutionHelper);
+  });
+
+  var newParId = ids[2];
+  MyNode.findById(newParId, null, function(err, node){
+    node.timestamp = now; 
+    node.children = arrays[2];
+    node.save(parallelExecutionHelper);
+  });
+
+
+  function parallelExecutionHelper(){
+    numCallbacks++; 
+    if(numCallbacks==3){
+      console.log("FINISHED- MoveNode,ParallelExecutionHelper")
+      helperLib.iterateQueue(); 
+      numCallbacks=0; 
+    }
+  }
+}
+
+function removeNode(thisId, thisIndex, parId, authorId){
+  var now = Date.now();
+
+  MyNode.findById(parId, null, function(err, parNode){
+    if(err || parNode == null){
+      return;
+    }
+    var temp = parNode.children;
+    temp.splice(thisIndex, 1); //remove thisIndex. 
+    parNode.children = temp;
+    parNode.timestamp = now; 
+
+    parNode.save(function(){helperLib.iterateQueue()});
+  });
+
+  MyNode.findById(thisId, null, function(err, delNode){
+    if(err || delNode == null){
+      return;
+    }
+    delNode.author = authorId; 
+    delNode.timestamp = now; 
+    if(delNode.parents.length ==1 ){//(this if statement is technically redundant)
+      // delNode.remove();
+      delNode.parents = []; //(this is how deletion is represented). 
+      delNode.save(); 
+    }
+    else{ //this is the condition that we'll have to take care of if there are dups. 
+      delNode.parents = _.without(delNode.parents, parId);
+      delNode.save();
+    }
+    
+  }); 
+
+
+}
+
+
+
+
+
+
 function updateParent(parId, newId ,newIndex,now){
   MyNode.findById(parId, null, function(err, parNode){
     if(err || parNode == null){
@@ -166,6 +183,7 @@ function updateParent(parId, newId ,newIndex,now){
     parNode.save();
   })
 }
+
 //add Node to the DB. 
 function addNode(text, children, parents, authorId, callback){
   var instance = new MyNode();
@@ -181,6 +199,7 @@ function addNode(text, children, parents, authorId, callback){
       callback(err);
     }
   else {
+      helperLib.iterateQueue(); 
       callback(null, instance); 
     }
   }); 
@@ -206,3 +225,8 @@ Array.prototype.remove = function(from, to) {
   this.length = from < 0 ? this.length + from : from;
   return this.push.apply(this, rest);
 };
+
+
+var helperLib = require("../lib/helperLib.js"); 
+console.log("HELPERLIB"); 
+console.log(helperLib); 

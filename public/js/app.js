@@ -1,5 +1,6 @@
 $(function(){
 	//alert("jquery works"); 
+	INPUT_PROCESSED = true; 
 
 
 	$("#COMMIT").click(function(){
@@ -73,15 +74,15 @@ $(function(){
 		var that = this;
 		voInitializer(that, event);
 		var id = $(event.target).closest("li").attr("data-id");
+		keydownHandler(event); 
 
-		socket.emit("editing", [id, CurrentUser._id]);
+		socket.emit("editing", [id, CurrentUser.google.name]);
 	}); 
 	$("body").on("blur", "textarea", function(event){
 		var thisLI = $(event.target).closest("li");
 		var id = thisLI.attr("data-id");
 		var text = thisLI.children().children("textarea").val();
 		$("textarea").textareaAutoExpand();
-	
 		socket.emit("blurred", [id, text, CurrentUser]);
 		 
 	});
@@ -143,6 +144,18 @@ function hasDuplicates(array) {
     return false;
 }
 
+Array.prototype.removeOne = function(parId){
+	var parIndex = this.indexOf(parId);
+	this.remove(parIndex);
+}
+
+
+
+
+
+
+
+
 voInitializer = function(that, event){
 	//var that = this;
 	vo = {};
@@ -200,13 +213,33 @@ voInitializer = function(that, event){
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 keydownHandler = function(event){ //the entire body is wrapped in this. 
 	var that = this;
+	console.log("keyDownHandler"); 
 	//
-	if(event.which == undefined){ return; }
+	if(event.which == undefined){ console.log("ABORTED- event.which==undefined"); return; }
 	if(!CurrentUser){ alert("only logged in users can edit"); return;}//prevent non-logged in users from editing. 
-	
+
+	if(!INPUT_PROCESSED){console.log("ABORT- INPUT_PROCESSED=false"); return;}//hitting-enter too quickly causes bugs. Need to make sure nodes have been added. 
+	if(event.which == 13){event.preventDefault();}
+
 	voInitializer(that, event);
+	console.log("ABOUT TO PROCESS INPUT"); 
+
+	INPUT_PROCESSED = false; 
 
 	//event.preventDefault();
 	//http://stackoverflow.com/questions/20964729/run-keydown-event-handler-after-the-value-of-a-textarea-has-been-changed
@@ -218,6 +251,8 @@ keydownHandler = function(event){ //the entire body is wrapped in this.
 		_.each(vo.thisModel.get("views"), function(view){
 			view.updateText()
 		});
+		INPUT_PROCESSED = true; 
+		return; 
 	}
 
 	if(vo.hitEnter){
@@ -266,7 +301,7 @@ keydownHandler = function(event){ //the entire body is wrapped in this.
 	if(vo.hitBack && vo.empty){
 		event.preventDefault();
 		removeNode(vo);
-
+		return; 
 	}//hitBack. 
 
 	// // START ON HIT TAB
@@ -332,14 +367,7 @@ if((vo.hitTab && event.shiftKey) || (event.keyCode == 37 && event.shiftKey)){// 
 
 
 
-}
-
-
-
-Array.prototype.removeOne = function(parId){
-	var parIndex = this.indexOf(parId);
-	this.remove(parIndex);
-}
+}//keyboardHandler
 
 
 

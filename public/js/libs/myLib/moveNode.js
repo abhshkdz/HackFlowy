@@ -32,4 +32,5 @@ var moveNode = function(thisModel, dragIndex, oldParModel, newParModel, dropInde
 		socket.emit("movedNode", data);
 	}
 	
+	INPUT_PROCESSED=true; 
 }
