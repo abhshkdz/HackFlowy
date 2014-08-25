@@ -4,9 +4,6 @@
   "keywords": ["express", "backbone", "socket.io"],
   "website": "https://github.com/abhshkdz/HackFlowy",
   "repository": "https://github.com/abhshkdz/HackFlowy",
-  "scripts": {
-    "postdeploy": ""
-  },
   "env": {
     "NODE_ENV": "production"
   },
