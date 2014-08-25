@@ -11,6 +11,6 @@
     "NODE_ENV": "production"
   },
   "addons": [
-    "heroku-postgresql:dev"
+    "heroku-postgresql"
   ]
 }
