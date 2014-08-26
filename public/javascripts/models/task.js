@@ -9,20 +9,20 @@ Backbone
   var TaskModel = Backbone.Model.extend({
 
     defaults: {
-      parent_id: '',
+      parent: 0,
       content: '',
-      is_completed:'n'
+      isCompleted: 0
     },
 
     toggelCompletedStatus:function(isCompleted){
     	var prev_isCompleted = isCompleted,
     		self = this;
-    	this.save({'is_completed':isCompleted},
+    	this.save({'isCompleted':isCompleted},
     	{
     		success:function(){},
     		error:function(){
     			//REVERT BACK ON ERROR
-    			self.set({'is_completed':prev_isCompleted});
+    			self.set({'isCompleted':prev_isCompleted});
     		}
     	})
     }

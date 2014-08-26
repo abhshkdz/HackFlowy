@@ -4,7 +4,7 @@
       <div class="options">
         <div class="options-left">
           <div class="mouse-tip"></div>
-          <%  if(model.is_completed=='Y'){%>
+          <%  if(model.isCompleted){%>
             <a class="uncomplete">Uncomplete<hr></a>
           <%}else {%>
             <a class="complete">Complete<hr></a>
@@ -16,7 +16,7 @@
       </div>
     </div>
     
-    <%  if(model.is_completed=='Y'){%>
+    <%  if(model.isCompleted){%>
       <input value="<%= model.content %>" data-id="<%= model.id %>" class="edit task-completed">
     <%}else {%>
       <input value="<%= model.content %>" data-id="<%= model.id %>" class="edit">

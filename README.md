@@ -6,10 +6,22 @@ An open-source [Workflowy](http://workflowy.com) clone.
 
 ##Installation
 
-* Edit `config/development.json` to your needs
+* Edit `config/development.json` and `config/database.json` to your needs
 * `npm install`
-* Run migrations and initialize the database: `sequelize-cli -m --config config/database.json` and `node db/seed/initial_tasks.js`
 * `node server.js`
+
+##Heroku deploy
+
+You can use our one-click heroku deploy:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+Or proceed manually as follow:
+
+* heroku create --stack cedar
+* heroku addons:add heroku-postgresql:dev
+* heroku config:set NODE_ENV=production
+* git push heroku heroku-integration:master
 
 ##Controls
 

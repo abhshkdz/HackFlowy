@@ -38,7 +38,7 @@ taskTemplate
       var task = this;
       this.socket.on('task', function(data){
         if (task.model.id == data.id) {
-           task.model.set({'content':data.content, 'is_completed':data.is_completed});
+           task.model.set({'content':data.content, 'isCompleted':data.isCompleted});
         }
       });
     },
@@ -47,9 +47,9 @@ taskTemplate
       var tmpl = _.template(this.template);
       var task = this;
       this.$el.html(tmpl({model:this.model.toJSON()}));
-      if (this.model.get('parent_id')!=0) {
+      if (this.model.get('parentId')!=0) {
         this.$el.addClass('shift1');
-        var className = $('*[data-id="'+this.model.get('parent_id')+'"]').parents('li:first').attr('class');
+        var className = $('*[data-id="'+this.model.get('parentId')+'"]').parents('li:first').attr('class');
         if (className!=undefined && className!=0 && className.substring(0,5) == 'shift') {
           this.$el.removeClass();
           this.$el.addClass('shift' + (parseInt(className.charAt(5))+1));
@@ -74,31 +74,31 @@ taskTemplate
       if (e.shiftKey && e.keyCode == 9) {
         var model = this.$el.next('li').find('input').data('id');
         model = Tasks.get(model);
-        var old_parent = model.get('parent_id');
+        var old_parent = model.get('parentId');
         old_parent = Tasks.get(old_parent);
-        var new_parent = old_parent.get('parent_id');
+        var new_parent = old_parent.get('parentId');
         if (new_parent == null) new_parent = 0;
-        model.set('parent_id',new_parent);
-        model.save({content: model.get('content'), parent_id: model.get('parent_id')});
+        model.set('parentId',new_parent);
+        model.save({content: model.get('content'), parentId: model.get('parentId')});
       }
       else if (e.keyCode == 9) {
         var parent = this.$el.prev('li').prev('li').find('input').data('id');
         var current = this.$el.prev('li').find('input').data('id');
         var model = Tasks.get(current);
-        model.set('parent_id',parent);
-        model.save({content: model.get('content'), parent_id: model.get('parent_id')});
+        model.set('parentId',parent);
+        model.save({content: model.get('content'), parentId: model.get('parentId')});
       }
       this.socket.emit('task', {
         id: this.model.id,
-        parent_id: this.model.parent_id,
+        parentId: this.model.parentId,
         content: this.$input.val().trim(),
-        is_completed:this.model.toJSON().is_completed
+        isCompleted:this.model.toJSON().isCompleted
       });
     },
 
     update: function(e) {
       if ( e.which === constants.ENTER_KEY ) {
-        Tasks.add({content:'', parent_id: this.model.get('parent_id')});
+        Tasks.add({content:'', parentId: this.model.get('parentId')});
         this.$input.blur();
         this.$el.next('li').find('input').focus();
       }
@@ -110,7 +110,7 @@ taskTemplate
         this.model.destroy();
       }
       else {
-        this.model.save({content: value, parent_id: this.model.attributes.parent_id});
+        this.model.save({content: value, parentId: this.model.attributes.parentId});
       }
       this.$el.removeClass('editing');
     },
@@ -124,22 +124,22 @@ taskTemplate
     },
 
     markComplete:function(){
-       this.model.toggelCompletedStatus('Y');
+       this.model.toggelCompletedStatus(true);
        this.socket.emit('task', {
           id: this.model.id,
-          parent_id: this.model.parent_id,
+          parentId: this.model.parentId,
           content:this.model.toJSON().content,
-          is_completed: this.model.toJSON().is_completed
+          isCompleted: this.model.toJSON().isCompleted
       });
     },
 
     unmarkComlete:function(){
-       this.model.toggelCompletedStatus('N');
+       this.model.toggelCompletedStatus(false);
         this.socket.emit('task', {
           id: this.model.id,
-          parent_id: this.model.parent_id,
+          parentId: this.model.parentId,
           content:this.model.toJSON().content,
-          is_completed: this.model.toJSON().is_completed
+          isCompleted: this.model.toJSON().isCompleted
       });
     },
 

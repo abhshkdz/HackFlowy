@@ -16,8 +16,9 @@ app.configure(function() {
   app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 });
 
-server.listen(config.get('port'), function() {
-  console.log( 'Express server listening on port %d in %s mode', config.get('port'), app.settings.env );
+var port = process.env.PORT || config.get('port');
+server.listen(port, function() {
+  console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
 });
 
 app.get('/tasks', function(req,res){
@@ -29,7 +30,7 @@ app.get('/tasks', function(req,res){
 app.post('/tasks', function(req,res){
   Tasks.create({
     content: req.body.content,
-    parent: req.body.parent_id,
+    parent: parseInt(req.body.parent) || 0,
     isCompleted: false
   }).success(function(task){
     res.send(task);
@@ -40,7 +41,8 @@ app.put('/tasks/:id', function(req,res){
   console.log(req.body.isCompleted);
   Tasks.find(req.params.id).success(function(task){
     task.content = req.body.content;
-    task.isCompleted = req.body.isCompleted;
+    task.parent = parseInt(req.body.parent) || 0,
+    task.isCompleted = req.body.isCompleted == 1;
     task.save().success(function(task){
       res.send(task);
     })

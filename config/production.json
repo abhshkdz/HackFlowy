@@ -1,13 +1,6 @@
 {
-    "port": 3000,
+    "port": 80,
     "database": {
-        "username": "postgres",
-        "password": "",
-        "database": "hackflowy",
-        "options" : {
-            "dialect": "postgres",
-            "host"   : "localhost",
-            "port"   : "5432"
-        }
+        "use_env_variable": "DATABASE_URL"
     }
 }
