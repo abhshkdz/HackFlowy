@@ -2,95 +2,6 @@ $(function(){
 	//alert("jquery works"); 
 	INPUT_PROCESSED = true; 
 
-
-	$("#COMMIT").click(function(){
-		socket.emit("COMMIT"); 
-	}); 
-
-	$(".getRevHistory").click(function(e){
-		var rootId = $(".root").attr("data-id")
-		socket.emit("revHistoryRequest", rootId); 
-		$(e.target).attr("data-id", rootId); 
-	});
-
-	$("body").on("click", ".snapLI", function(e){
-		$(e.target).addClass("selectedSnap"); 
-	});
-
-	$(".toggleSidebar").click(function(){
-		$("#mainPanel").toggleClass("floatRight centering"); 
-		$("#metaSidebar").toggleClass("hideBar"); 
-	}); 
-
-	
-
-
-
-
-
-	$("#markdownButton").click(function(){
-		vo.thisView.createMarkDownBullet(); 
-	}); 
-
-	//grab the rendered div. 
-	//(remove the content of everything else)
-	//remove the classes. 
-	$("body").on("blur", "#marked-mathjax-input", function(){
-  		var editor = $("#marked-mathjax-input"); //(this is the text-area)
-  		var wrapper = editor.closest(".hoverWrap"); 
-  		var text = editor.siblings(".Current").html(); 
-  		var html = "<div>" + text  + "</div>"; 
-  		
-  		wrapper.html(html).addClass('markdown'); 
-  		//editor.remove() is redundant. 
-  	}); 
-
-
-
-
-
-
-	$("body").on("mouseover", "a.expandCollapse", function(event){
-		$(event.target).find("a.expandCollapse").css("opacity", "1"); 
-		$(event.target).closest("a.expandCollapse").css("opacity", "1"); 
-		// $(event.target).siblings("a.expandCollapse").css("opacity", "1")
-	}); 
-	$("body").on("mouseleave", "a.expandCollapse", function(event){
-		$(event.target).find("a.expandCollapse").css("opacity", ".001"); 
-		$(event.target).closest("a.expandCollapse").css("opacity", ".001"); 
-		// $(event.target).siblings("a.expandCollapse").css("opacity", ".001")
-	}); 
-
-	$("body").on("click", ".expandCollapse", function(event){
-		var LI = $(event.target).parent(); 
-		LI.children("ul").slideToggle(110); 
-		LI.children(".zoomButton").toggleClass("collapsed"); 
-	}); 
-	$("body").on("click", ".splitScreen", function(){
-		$(".main2").remove();
-	})
-	$("body").on("keydown", "textarea", keydownHandler);
-	$("body").on("focus", "textarea", function(event){
-		var that = this;
-		voInitializer(that, event);
-		var id = $(event.target).closest("li").attr("data-id");
-		keydownHandler(event); 
-
-		socket.emit("editing", [id, CurrentUser.google.name]);
-	}); 
-	$("body").on("blur", "textarea", function(event){
-		var thisLI = $(event.target).closest("li");
-		var id = thisLI.attr("data-id");
-		var text = thisLI.children().children("textarea").val();
-		$("textarea").textareaAutoExpand();
-		socket.emit("blurred", [id, text, CurrentUser]);
-		 
-	});
-	$("body").on("click", ".transclude", function(event){
-		alert("Transclusion syncing with the server has not been implemented. KnownBugs:\n0.Don't make infinite loops.\n1."); 
-		transclude();  
-	}); 
-
 	myRouter = new AppRouter; 
 	Backbone.history.start();
 	//this calls initialize twice. 
@@ -119,8 +30,6 @@ function createPathMenu(event){
 
 }
 
-
-
 Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
@@ -148,13 +57,6 @@ Array.prototype.removeOne = function(parId){
 	var parIndex = this.indexOf(parId);
 	this.remove(parIndex);
 }
-
-
-
-
-
-
-
 
 voInitializer = function(that, event){
 	//var that = this;
@@ -211,12 +113,6 @@ voInitializer = function(that, event){
 	vo.grandParentModel = nodesCollection.findWhere({_id: vo.grandParentId});
 	vo.parentModel = nodesCollection.findWhere({_id: vo.parentId});
 }
-
-
-
-
-
-
 
 
 

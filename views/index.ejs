@@ -11,13 +11,18 @@
 
 
 <script src="js/libs/externalLibs/jquery-2.0.3.js"></script>
+
 <script src="socket.io/socket.io.js"></script>
-<script src="js/libs/myLib/addNode.js"></script>
-<script src="js/libs/myLib/removeNode.js"></script>
-<script src="js/libs/myLib/KeyBoardLogic.js"></script>
-<script src="js/libs/myLib/moveNode.js"></script>
-<script src="js/libs/myLib/revControl.js"></script>
+<script src="js/libs/myLogic/addNode.js"></script>
+<script src="js/libs/myLogic/removeNode.js"></script>
+<script src="js/libs/myLogic/KeyBoardLogic.js"></script>
+<script src="js/libs/myLogic/moveNode.js"></script>
+<script src="js/libs/myLogic/revControl.js"></script>
+
+
 <script src="js/app.js"></script> 
+<script src="js/listeners/revListeners.js"></script> 
+<script src="js/listeners/editorListeners.js"></script>
 
 
 
@@ -42,11 +47,11 @@
 <script src="js/libs/externalLibs/markdowneditor.js"></script>
 
 
-<script src="js/models/node.js"></script>
-<script src="js/collections/nodesCollection.js"></script>
-<script src="js/views/listView.js"></script>
-<script src="js/views/showView.js"></script>
-<script src="js/router.js"></script>
+<script src="js/backbone/models/node.js"></script>
+<script src="js/backbone/collections/nodesCollection.js"></script>
+<script src="js/backbone/views/listView.js"></script>
+<script src="js/backbone/views/showView.js"></script>
+<script src="js/backbone/router.js"></script>
 
 
 
@@ -95,8 +100,7 @@
   </div>
 </div>
 
- <script src="js/tempFolder/bootstrap.js"></script>
- <!-- <script src="js/tempFolder/startup.js"></script> -->
+ 
 </body>
 <script>
 $(function(){
