@@ -1,5 +1,5 @@
 body {
-	background-color: rgb(245, 245, 245);
+  background-color: rgb(245, 245, 245);
 }
 
 /* Fix for Firefox dotted outline */
@@ -124,12 +124,12 @@ ul.navbar-right {
 }
 
 .panel {
-	background: none repeat scroll 0% 0% rgb(252, 252, 252);
-	padding: 20px;
-	min-height: 800px;
-	border: 1px solid rgb(217, 217, 217);
-	border-radius: 5px;
-	box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.05);
+  background: none repeat scroll 0% 0% rgb(252, 252, 252);
+  padding: 20px;
+  min-height: 800px;
+  border: 1px solid rgb(217, 217, 217);
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.05);
   /*box-shadow: h-shadow v-shadow blur spread color inset;*/
 }
 .col-sidebar-panel {
@@ -157,6 +157,15 @@ ul.navbar-right {
   border: 2px solid red;
 }
 
+.selectedAboveDrop {
+  /*border-top: 2px solid red;*/
+  box-shadow: 0 -1px 0 red;
+}
+
+.selectedBelowDrop { /*change to boxShadow*/
+  border-bottom: 1px solid red;
+}
+
 
 #marked-mathjax-input{
   border: 2px dotted black;
@@ -170,10 +179,10 @@ ul {
   padding: 0;
 }
 .node {
-	padding: 0;
-	padding-top: 0;
-	margin-left: 0;
-	list-style: none;
+  padding: 0;
+  padding-top: 0;
+  margin-left: 0;
+  list-style: none;
 }
 .leaf {
   margin-left: 20px;
@@ -273,6 +282,7 @@ ul {
     padding-top: 0px;
     margin: 0;
     margin-left: 10px;
+    /*margin-bottom: 5px;*/
     background-repeat: no-repeat;
     list-style: none;
     /*background-image: url(smiley.png); */
