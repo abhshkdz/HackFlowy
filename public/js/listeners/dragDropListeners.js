@@ -17,6 +17,12 @@ tempEvents = [];
 tempEntries = []; 
 selectedLI = $($(".node")[0]); //random initialization
 clicking=false;
+dragging=false; 
+dragState = {}; 
+dragState.thisModel = null; 
+dragState.thisLI = null; 
+dragState.dragIndex = null; 
+
 
 
 $('body').on("mousedown", ".handle", function(e){
@@ -24,6 +30,12 @@ $('body').on("mousedown", ".handle", function(e){
     clicking = true;
     e.preventDefault(); 
     $('.clickStatus').text('mousedown');
+
+    dragState.thisLI = $(e.target).parent(); 
+    var thisId = dragState.thisLI.attr('data-id');  
+    dragState.thisModel = nodesCollection.findWhere({_id: thisId}); 
+    dragState.dragIndex = dragState.thisLI.index();
+    dragState.oldParModel = nodesCollection.findWhere({_id: dragState.thisLI.parent().attr("data-id") }); 
 
 
     var firstLI = $(".root").children(":first-child"); 
@@ -74,7 +86,7 @@ $('body').on("mousedown", ".handle", function(e){
     	}
     	// var height = li.getBoundingClientRect().top //rec.top, rec.bottom
     	// liHeights.push([height, li]); 
-    	$(li).children().children("textarea").val(thisTop); 
+    	// $(li).children().children("textarea").val(thisTop); 
     });//.each
 	
 	//http://stackoverflow.com/questions/5435228/sort-an-array-with-arrays-in-it-by-string
@@ -84,10 +96,36 @@ $('body').on("mousedown", ".handle", function(e){
 
 });//.mouseDown
 
+// $(document).click(){
+//     if(dragging){
+//         e.preventDefault();
+//         dragging=false; 
+//     }
+// }
 
-$(document).mouseup(function(){
+
+$(document).mouseup(function(e){
     clicking = false;
     $('.clickStatus').text('mouseup');
+
+    if(!dragging){return;}
+    dragging = false; 
+
+    var entry = returnDropEntry(e.pageY);
+    var dropLI = entry[1]; 
+    var aboveBelow = entry[2]; 
+    dragState.newParModel = nodesCollection.findWhere({_id: dropLI.parent().attr("data-id") });
+
+    if(dragState.thisModel == dragState.newParModel){return;}
+    if(dragState.thisLI.attr("data-id") == dropLI.attr('data-id')){return;} 
+    dragState.dropIndex = dropLI.index() + (aboveBelow == "above" ? 0 : 1); 
+    if(dragState.newParModel == dragState.oldParModel){
+        if(dragState.thisLI.index() < dropLI.index()){
+            dragState.dropIndex--; 
+        }
+    }
+    console.log(dragState); 
+    moveNode(dragState.thisModel, dragState.dragIndex, dragState.oldParModel, dragState.newParModel, dragState.dropIndex, true); 
 });
 
 $(document).on("mousemove" ,function(e){
@@ -96,6 +134,7 @@ $(document).on("mousemove" ,function(e){
     	// $('.clickStatus').text('WHAT' + numMoves);
     	return; 
     }
+    dragging=true; 
     $(selectedLI).removeClass("selectedAboveDrop")
     $(selectedLI).removeClass("selectedBelowDrop"); 
     tempEvents.push(e.pageY); //why? //(simple debugging)

@@ -1,47 +1,55 @@
+
+
+
+
+
 .expandCollapse{
   display: block;
   position: absolute;
   left: -28px;
-  /*margin-top: -23px;*/
   top: -2px;
   opacity: 0.001;
-  /*visibility: hidden; */
+}
+  
+ul li a.zoomButton{
+  display: block;
+  position: absolute;
+  left: -17px;
+
+  height: 11px !important;
+  width: 11px;
+
+  margin-top: 4px;
+  margin-right: 8px;
+
+  
+  
+
+  border: 2px solid black;
+}
+
+.collapsed{
+  background-color: grey;
 }
 
 
 
-  
-  ul li a.zoomButton{
-    display: block;
-    position: absolute;
-    left: -17px;
 
-    height: 11px !important;
-    width: 11px;
 
-    margin-top: 4px;
-    margin-right: 8px;
 
-    /*background: url("smiley.png") no-repeat center; */
-    /*background-color: grey;*/
-    background-size: 140%;
-    
 
-    border: 2px solid black;
-  }
 
-  .collapsed{
-    background-color: grey;
-  }
 
-  ul li i{
-    position: absolute;
-    right: 0px;
-    top: 2px;
-    
-  }
 
-  .handle {
+
+
+
+
+/*OLD CRAP*/
+
+
+
+/*.handle {
   display: float;
   height: 22px;
   width: 16px;
@@ -54,4 +62,4 @@
   height: 16px;
   width: 16px;
   margin-bottom: 8px;
-}
+}*/

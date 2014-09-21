@@ -1,33 +1,48 @@
 /************** Navbar *****************/
-.myNav{
+.myNav {
   position: fixed;
   top: 0px;
   width: 100%;
-  height: 26px;
+  /*height: 26px;*/
   background-color: black;
   z-index: 9999; 
 }
 
-.btn{
-  height: 20px;
-  width: 10px;
-}
-
 ul.navbar-right {
   list-style-type: none;
+  display: inline;
 }
-
 .navbar-right > li {
   position: relative;
-  float: left;
+  float: right;
   /*border*/
 }
+.navbar-right > li:hover > a {
+  background: grey; 
+  color: black;
+}
+/*.btn{
+  height: 20px;
+  width: 10px;
+}*/
+
+
+.myNav a {
+  color: grey;
+  padding: 4px 10px;
+  display: inline-block;
+}
+
+#searchBar {
+  margin-top: 2px;
+  width: 150px;
+  height: 20px;
+}
+
 
 .navbar-right > li > a{
   display: block;
-  padding: 2px 20px;
+  padding: 4px 20px;
+  border-left: 2px solid beige;
 }
 
-.navbar-right > li:hover > a {
-  background: grey; 
-}

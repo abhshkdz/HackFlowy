@@ -5,6 +5,10 @@ $(function(){
 	myRouter = new AppRouter; 
 	Backbone.history.start();
 	//this calls initialize twice. 
+
+	setTimeout(function(){
+		$(".toggleSidebar").click();
+	}, 2); 
 });
 
 

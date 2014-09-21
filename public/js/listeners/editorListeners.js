@@ -29,6 +29,8 @@ $(function(){
 		// $(event.target).siblings("a.expandCollapse").css("opacity", ".001")
 	}); 
 
+	
+
 	$("body").on("click", ".expandCollapse", function(event){
 		var LI = $(event.target).parent(); 
 		LI.children("ul").slideToggle(110); 
