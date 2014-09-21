@@ -1,0 +1,77 @@
+ul {
+  margin-left: 20px;
+  padding: 0;
+}
+.node {
+  padding: 0;
+  padding-top: 0;
+  margin-left: 0;
+  list-style: none;
+}
+
+.subList {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+
+.root ul {
+    /*padding: 4px !important; */
+    padding-top: 1px !important;
+    margin-right: 0px !important; 
+    /*margin-left: 25px !important;*/
+    list-style-type: square;
+  }
+  
+  .root li {
+    /*background: brown;*/
+    position: relative;
+    padding: 0;
+    padding-top: 0px;
+    margin: 0;
+    margin-left: 10px;
+    /*margin-bottom: 5px;*/
+    background-repeat: no-repeat;
+    list-style: none;
+    /*background-image: url(smiley.png); */
+    /*background-size: 15px 15px; 
+    background-position: -1px 2px;*/
+  }
+/**************** List *****************/
+
+/*.leaf {
+  margin-left: 20px;
+}
+.expand {
+  display: inline-block;
+  height: 22px;
+  width: 16px;
+}
+.expand a {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  text-align: center;
+  vertical-align: center;
+  height: 20px;
+  width: 16px;
+  bottom: 3px;
+  font-size: 18px;
+  text-decoration: none;
+  color: rgb(51, 51, 51);
+}
+
+.node .content {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.node p {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  font-size: 16px;
+}
+*/

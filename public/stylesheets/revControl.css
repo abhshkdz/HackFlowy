@@ -1,0 +1,7 @@
+.snapLI > span > textarea:hover{
+  border: 1px solid black;
+}
+
+.selectedSnap {
+  border: 2px solid red;
+}

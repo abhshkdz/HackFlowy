@@ -1,0 +1,8 @@
+.selectedAboveDrop {
+  /*border-top: 2px solid red;*/
+  box-shadow: 0 -1px 0 red;
+}
+
+.selectedBelowDrop { /*change to boxShadow*/
+  border-bottom: 1px solid red;
+}

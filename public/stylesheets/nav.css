@@ -1,0 +1,33 @@
+/************** Navbar *****************/
+.myNav{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 26px;
+  background-color: black;
+  z-index: 9999; 
+}
+
+.btn{
+  height: 20px;
+  width: 10px;
+}
+
+ul.navbar-right {
+  list-style-type: none;
+}
+
+.navbar-right > li {
+  position: relative;
+  float: left;
+  /*border*/
+}
+
+.navbar-right > li > a{
+  display: block;
+  padding: 2px 20px;
+}
+
+.navbar-right > li:hover > a {
+  background: grey; 
+}
