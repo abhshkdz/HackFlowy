@@ -150,6 +150,14 @@ $(document).on("mousemove" ,function(e){
     }
 	tempEntries.push(entry); 
 
+    if(e.clientY<40){
+        console.log("SCROLL!!");
+        window.scrollBy(0, -5); 
+    }
+    if(e.clientY>$(window).height()-50){
+        window.scrollBy(0, 5); 
+    }
+
 
     // var li = returnDropLI(e.pageY);
     // selectedLI = li; 
