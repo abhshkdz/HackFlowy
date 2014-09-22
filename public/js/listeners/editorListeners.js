@@ -14,6 +14,7 @@ $(function(){
   		
   		wrapper.html(html).addClass('markdown'); 
   		//editor.remove() is redundant. 
+  		alert("blur!!"); 
   	}); 
 
 
@@ -42,11 +43,12 @@ $(function(){
 	$("body").on("keydown", "textarea", keydownHandler);
 	$("body").on("focus", "textarea", function(event){
 		var that = this;
-		voInitializer(that, event);
+		// alert("editing"); console.log("EDITING"); 
 		var id = $(event.target).closest("li").attr("data-id");
-		keydownHandler(event); 
-
 		socket.emit("editing", [id, CurrentUser.google.name]);
+		voInitializer(that, event);
+		keydownHandler(event); 
+		//(This event is not firing for some reason..(I wonder if I put it at the top)). 
 	}); 
 	$("body").on("blur", "textarea", function(event){
 		var thisLI = $(event.target).closest("li");
@@ -54,7 +56,8 @@ $(function(){
 		var text = thisLI.children().children("textarea").val();
 		$("textarea").textareaAutoExpand();
 		socket.emit("blurred", [id, text, CurrentUser]);
-		 
+		// alert("blur!!"); 
+		// editing=false; 
 	});
 	$("body").on("click", ".transclude", function(event){
 		alert("Transclusion syncing with the server has not been implemented. KnownBugs:\n0.Don't make infinite loops.\n1."); 

@@ -198,11 +198,11 @@ socket.on("editing", function(data){
 	var id = data[0]; 
 	var authorName = data[1]; 
 	console.log("EDITING RECEIVED + ID");
-	console.log(id);
-	if(id < 0){return;}
+	console.log(id, authorName);
+	if(id < 0){return;} //(ID is updated later) //(newNode is called);
 	var tempViews = nodesCollection.findWhere({_id: id}).get("views");
 	_.each(tempViews, function(tempView){
-		tempView.lock();
+		tempView.lock(authorName);
 	}); 
 }); 
 

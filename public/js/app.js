@@ -1,6 +1,7 @@
 $(function(){
 	//alert("jquery works"); 
 	INPUT_PROCESSED = true; 
+	// editing = false; 
 
 	myRouter = new AppRouter; 
 	Backbone.history.start();
@@ -93,6 +94,12 @@ voInitializer = function(that, event){
 	console.log(nodesCollection);
 	console.log(vo.thisModel);
 
+	// if(!editing){
+	// 	// alert("editing!"); 
+	// 	socket.emit("editing", [vo.thisId, CurrentUser.google.name]);
+	// 	editing=true; 
+	// }
+
 	
 
 	
@@ -116,7 +123,7 @@ voInitializer = function(that, event){
 	}
 	vo.grandParentModel = nodesCollection.findWhere({_id: vo.grandParentId});
 	vo.parentModel = nodesCollection.findWhere({_id: vo.parentId});
-}
+} //(vo-initializer)
 
 
 

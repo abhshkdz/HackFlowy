@@ -29,7 +29,8 @@
 
   background-repeat: no-repeat;
   list-style: none;
-  /*background-image: url(smiley.png);
-  /*background-size: 15px 15px; 
-  background-position: -1px 2px;
+}
+
+.root li.editing {
+  outline: 1px dotted black;
 }

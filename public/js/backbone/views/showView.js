@@ -170,10 +170,12 @@ var showView = Backbone.View.extend({
  	lock: function(name){ //for concurrent editing...
  		this.$el.children().children("textarea").attr("readonly", "readonly");
  		this.$el.children().children("textarea").val(name + " is editing."); 
+ 		this.$el.addClass("editing"); 
  	},
  	unlock: function(){
  		this.$el.children().children("textarea").removeAttr("readonly");
  		this.$el.children().children("textarea").val(this.model.get("text"));
+ 		this.$el.removeClass("editing"); 
  	},
  	removeNode: function(index){
  		var that = this;
