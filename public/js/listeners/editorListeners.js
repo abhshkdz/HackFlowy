@@ -45,7 +45,7 @@ $(function(){
 		var that = this;
 		// alert("editing"); console.log("EDITING"); 
 		var id = $(event.target).closest("li").attr("data-id");
-		socket.emit("editing", [id, CurrentUser.google.name]);
+		socket.emitWrapper("editing", [id, CurrentUser.google.name]);
 		voInitializer(that, event);
 		keydownHandler(event); 
 		//(This event is not firing for some reason..(I wonder if I put it at the top)). 
@@ -55,7 +55,7 @@ $(function(){
 		var id = thisLI.attr("data-id");
 		var text = thisLI.children().children("textarea").val();
 		$("textarea").textareaAutoExpand();
-		socket.emit("blurred", [id, text, CurrentUser]);
+		socket.emitWrapper("blurred", [id, text, CurrentUser]);
 		// alert("blur!!"); 
 		// editing=false; 
 	});

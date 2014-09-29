@@ -10,7 +10,7 @@
 		});
 		vo.thisModel.set("parents", newParents);
 		if(!broadcast){ //broadCast=true means we received this update from somebody else. 
-			socket.emit("removeNode", [vo.thisId, vo.thisIndex, vo.parentId, CurrentUser]);
+			socket.emitWrapper("removeNode", [vo.thisId, vo.thisIndex, vo.parentId, CurrentUser]);
 		}
 	}
 

@@ -29,7 +29,7 @@ var moveNode = function(thisModel, dragIndex, oldParModel, newParModel, dropInde
 	var data = [ids, arrays, indices, CurrentUser];
 
 	if(chr){ 
-		socket.emit("movedNode", data);
+		socket.emitWrapper("movedNode", data);
 	}
 	
 	INPUT_PROCESSED=true; 

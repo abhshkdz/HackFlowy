@@ -16,7 +16,7 @@ addNode = function(botStr, topStr){
 		_.each(vo.thisModel.get("views"), function(view){
 			view.updateText(topStr);
 		});
-		socket.emit("edit", [vo.thisId, topStr]);
+		socket.emitWrapper("edit", [vo.thisId, topStr]);
 	}
 
 	
@@ -27,7 +27,7 @@ addNode = function(botStr, topStr){
 	
 	var data = [ [vo.parentId, vo.thisIndex+1] , modelJSON ]; 
 	console.log("AddNode DATA"); console.log(data); 
-	socket.emit("newNode", data);
+	socket.emitWrapper("newNode", data);
 	
 	var parentViews = vo.parentModel.get("views");
 	
@@ -73,7 +73,7 @@ transclude = function(){
 		, parents: vo.thisModel.get("parents")
 		, children: vo.thisModel.get("children")
 	}
-	socket.emit("transclude" , [vo.parentId, vo.thisIndex+1, vo.thisId]); 
+	socket.emitWrapper("transclude" , [vo.parentId, vo.thisIndex+1, vo.thisId]); 
 	var parentViews = vo.parentModel.get("views"); 
 	var tempIndex = vo.thisIndex+1; //adding nodes alters the index.
 	_.each(parentViews, function(parentView){

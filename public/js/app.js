@@ -13,6 +13,10 @@ $(function(){
 });
 
 
+
+
+
+
 function createPathMenu(event){
 	//console.log($(event.target).attr("data-id"));
 	var pathDiv = $(event.target).parent().children("#pathDiv")

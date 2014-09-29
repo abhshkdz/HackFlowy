@@ -1,111 +1,119 @@
 
-	var socket = null; 
-	var AppRouter = Backbone.Router.extend({
+var socket = null; 
 
-		socketEvents: _.extend({}, Backbone.Events),
+var AppRouter = Backbone.Router.extend({
 
-		routes: {
-			'': 'initialize', 
-			':id': "viewRoot"
-		}, 
+	socketEvents: _.extend({}, Backbone.Events),
 
-		initialize: function(){ 
+	routes: {
+		'': 'initialize', 
+		':id': "viewRoot"
+	}, 
 
-			if(socket){ return; }//prevents double-initialization. 
-			socket = io.connect(); 
-			this.setUpSocket(); 
-			
+	initialize: function(){ 
+		this.socketInitialize();
+	},
 
-			$.ajax({
-				url: "/ajaxlogin", 
-				type: "POST", 
+	socketInitialize: function(){
+		if(socket){ return; }//prevents double-initialization. 
+		socket = io.connect(); 
+		this.setUpSocket(); 
+		
+		$.ajax({
+			url: "/ajaxlogin", 
+			type: "POST", 
 
-				complete: function(){
-				},
-				success: function(data){
-					console.log("AjaxLoginDATA"); 
-					if(typeof data == "string"){
-						$("textarea").attr("disabled", true); 
-					} //User is not logged in. 
-					if(typeof data == "object"){//we've got the userObject. 
-						$("#googleButton").parent().html("<a href='logout'>Logout</a> "); 
-						socket.emit("logIn", data); //logs the user into the socket.
-
-
-						data.google.id = null; 
-						data.google.token = null; 
-						data.google.email = null; 
-						CurrentUser = data; 
-
-						console.log("CURRENT USER"); 
-						console.log(CurrentUser); 
-					}
-				},
+			complete: function(){
+			},
+			success: function(data){
+				console.log("AjaxLoginDATA"); 
+				if(typeof data == "string"){
+					$("textarea").attr("disabled", true); 
+				} //User is not logged in. 
+				if(typeof data == "object"){//we've got the userObject. 
+					$("#googleButton").parent().html("<a href='logout'>Logout</a> "); 
+					socket.emit("logIn", data); //logs the user into the socket.
 
 
-				error: function(data){
-				console.log("ERROR- AjaxLoginDATA");
+					data.google.id = null; 
+					data.google.token = null; 
+					data.google.email = null; 
+					CurrentUser = data; 
+
+					console.log("CURRENT USER"); 
+					console.log(CurrentUser); 
 				}
-		    }); 
+			},
 
-		},
 
-		// index: function(otherID){
-		// 	var that = this;
-			
-		// 	otherID = otherID || 
-
-		// }, 
-
-		viewRoot: function(id, snapCollection){
-
-			var rootModel; 
-			var metaCollection; 
-			var snapView = 0; 
-			if(snapCollection){
-				rootModel = snapCollection.findWhere({cur_id: id});
-				metaCollection = snapCollection
-				snapView = 1; 
+			error: function(data){
+				console.log("ERROR- AjaxLoginDATA");
 			}
-			else{
-				rootModel = nodesCollection.findWhere({_id: id});
-				metaCollection = nodesCollection; 
-			}
+	    });//ajax
+	}, 
 
-			var rootView = new listView({
-					viewWindow: ".main1",
-					model: rootModel, 
-					metaCollection: metaCollection,
-					snapView: snapView
-				})
-			this.changeView(rootView);
-		}, 
+	// index: function(otherID){
+	// 	var that = this;
+		
+	// 	otherID = otherID || 
 
-		changeView: function(view) {
-	     	if ( null != this.currentView ) {
-	        	this.currentView.undelegateEvents();
-	      	}
-	      	
-	      	this.currentView = view;
-	      	$("textarea").textareaAutoExpand(); 
-	      	
+	// }, 
 
-	    }, 
+	viewRoot: function(id, snapCollection){
+
+		var rootModel; 
+		var metaCollection; 
+		var snapView = 0; 
+		if(snapCollection){
+			rootModel = snapCollection.findWhere({cur_id: id});
+			metaCollection = snapCollection
+			snapView = 1; 
+		}
+		else{
+			rootModel = nodesCollection.findWhere({_id: id});
+			metaCollection = nodesCollection; 
+		}
+
+		var rootView = new listView({
+				viewWindow: ".main1",
+				model: rootModel, 
+				metaCollection: metaCollection,
+				snapView: snapView
+			})
+		this.changeView(rootView);
+	}, 
+
+	changeView: function(view) {
+     	if ( null != this.currentView ) {
+        	this.currentView.undelegateEvents();
+      	}
+      	
+      	this.currentView = view;
+      	$("textarea").textareaAutoExpand(); 
+      	
+
+    }, 
 
 setUpSocket: function(){
 var that = this; 
+
+socket.emitWrapper = function(eventName, data){
+	console.log(this); 
+	if(this.socket.connected){ this.emit(eventName, data); }
+	else{ //(alert + lock)
+		alert("Internet connection down. Edits not synced. Refresh when back online."); 
+	}
+}
+
 socket.on('nodeData', function(data){
-//alert("data");
-
-console.log(data);
-nodesCollection = new NodesCollection(data); 
-var id = nodesCollection.findWhere({text: "0root"}).get("_id");
-// if(otherID){
-// 	id = otherID
-// }
-
-
-that.viewRoot(id);
+	//alert("data");
+	console.log(data);
+	nodesCollection = new NodesCollection(data); 
+	var id = nodesCollection.findWhere({text: "0root"}).get("_id");
+	// if(otherID){
+	// 	id = otherID
+	// }
+	that.viewRoot(id);
 });
 
 

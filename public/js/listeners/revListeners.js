@@ -1,11 +1,11 @@
 $(function(){
 	$("#COMMIT").click(function(){
-		socket.emit("COMMIT"); 
+		socket.emitWrapper("COMMIT"); 
 	}); 
 
 	$(".getRevHistory").click(function(e){
 		var rootId = $(".root").attr("data-id")
-		socket.emit("revHistoryRequest", rootId); 
+		socket.emitWrapper("revHistoryRequest", rootId); 
 		$(e.target).attr("data-id", rootId); 
 	});
 
