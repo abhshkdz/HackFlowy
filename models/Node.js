@@ -111,6 +111,7 @@ function moveNode(ids, arrays, authorId){
   MyNode.findById(oldParId, null, function(err, node){
     node.timestamp = now; 
     node.children = arrays[1];
+    helperLib.validateParArr(oldParId, node.children); 
     node.save(parallelExecutionHelper);
   });
 
@@ -118,6 +119,7 @@ function moveNode(ids, arrays, authorId){
   MyNode.findById(newParId, null, function(err, node){
     node.timestamp = now; 
     node.children = arrays[2];
+    helperLib.validateParArr(newParId, node.children); 
     node.save(parallelExecutionHelper);
   });
 
@@ -139,11 +141,13 @@ function removeNode(thisId, thisIndex, parId, authorId){
     if(err || parNode == null){
       return;
     }
-    var temp = parNode.children;
-    temp.splice(thisIndex, 1); //remove thisIndex. 
-    parNode.children = temp;
+    // var temp = parNode.children;
+    // temp.splice(thisIndex, 1); //remove thisIndex. 
+    // parNode.children = temp;
+    parNode.children.splice(thisIndex,1); 
     parNode.timestamp = now; 
 
+    helperLib.validateParArr(parId, parNode.children); 
     parNode.save(function(){helperLib.iterateQueue()});
   });
 
@@ -179,7 +183,9 @@ function updateParent(parId, newId ,newIndex,now){
       return;
     }
     parNode.children.insert(newIndex, newId);
-    parNode.timestamp = Date.now(); 
+    parNode.timestamp = now; 
+
+    helperLib.validateParArr(parId, parNode.children); 
     parNode.save();
   })
 }
@@ -200,7 +206,7 @@ function addNode(text, children, parents, authorId, callback){
     }
   else {
       helperLib.iterateQueue(); 
-      callback(null, instance); 
+      callback(null, instance, instance.timestamp); 
     }
   }); 
 }

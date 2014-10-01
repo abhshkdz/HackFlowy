@@ -265,11 +265,18 @@ socket.on("revControl", function(data){
 	var timeStamps = timeHash.keys; 
 
 	//To be continued...
-
-
-
-
 }); 
+
+socket.on("VALIDATE", function(data){
+	var parId = data[0]; 
+	var parArr = data[1]; 
+	var thisParArr = nodesCollection.findWhere({_id: parId}).get("children"); 
+	if(!_.isEqual(thisParArr, parArr)){
+		alert("syncing error.Edits no longer synced. Please refresh browser"); 
+		socket = null;  
+	}
+});
+
 
 socket.emit("nodeRequest"); 
 }
