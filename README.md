@@ -21,7 +21,7 @@ Or proceed manually as follow:
 * heroku create --stack cedar
 * heroku addons:add heroku-postgresql:dev
 * heroku config:set NODE_ENV=production
-* git push heroku heroku-integration:master
+* git push heroku master
 
 ##Controls
 
