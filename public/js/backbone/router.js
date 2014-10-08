@@ -1,4 +1,4 @@
-
+var CURRENT_TIMESTAMP; 
 var socket = null; 
 
 var AppRouter = Backbone.Router.extend({
@@ -99,14 +99,19 @@ var that = this;
 
 socket.emitWrapper = function(eventName, data){
 	console.log(this); 
-	if(this.socket.connected){ this.emit(eventName, data); }
+	if(this.socket.connected){
+		var oldTime = CURRENT_TIMESTAMP; 
+		CURRENT_TIMESTAMP = Date.now(); 
+		this.emit(eventName, data, [CURRENT_TIMESTAMP, oldTime]); 
+	}
 	else{ //(alert + lock)
 		alert("Internet connection down. Edits not synced. Refresh when back online."); 
 	}
 }
 
-socket.on('nodeData', function(data){
+socket.on('nodeData', function(data, SERVER_TIMESTAMP){
 	//alert("data");
+	CURRENT_TIMESTAMP = SERVER_TIMESTAMP; 
 	console.log(data);
 	nodesCollection = new NodesCollection(data); 
 	var id = nodesCollection.findWhere({text: "0root"}).get("_id");
@@ -267,15 +272,20 @@ socket.on("revControl", function(data){
 	//To be continued...
 }); 
 
-socket.on("VALIDATE", function(data){
-	var parId = data[0]; 
-	var parArr = data[1]; 
-	var thisParArr = nodesCollection.findWhere({_id: parId}).get("children"); 
-	if(!_.isEqual(thisParArr, parArr)){
-		alert("syncing error.Edits no longer synced. Please refresh browser"); 
-		socket = null;  
-	}
-});
+socket.on("OFF_SYNC", function(){
+	alert("syncing error.Edits no longer synced. Please refresh browser"); 
+	socket = null;  
+}); 
+
+// socket.on("VALIDATE", function(data){
+// 	var parId = data[0]; 
+// 	var parArr = data[1]; 
+// 	var thisParArr = nodesCollection.findWhere({_id: parId}).get("children"); 
+// 	if(!_.isEqual(thisParArr, parArr)){
+// 		alert("syncing error.Edits no longer synced. Please refresh browser"); 
+// 		socket = null;  
+// 	}
+// });
 
 
 socket.emit("nodeRequest"); 

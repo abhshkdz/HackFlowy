@@ -40,12 +40,12 @@ module.exports.addNode = addNode;
 //   return rootID;
 // }
 
-function findAndSocketSend(socket){
+function findAndSocketSend(socket, CURRENT_TIMESTAMP){
   var nodes = {'keeping': 'calm'}
   MyNode.find().populate('authorId','_id google.name' ).exec(function(err, nodes){
     if(!err){
       // require("underscore").each(nodes, function(node){console.log(node)}); 
-      socket.emit('nodeData', nodes)
+      socket.emit('nodeData', nodes, CURRENT_TIMESTAMP)
       return {'hell': 'yes'}
     }else{
       socket.emit('nodeData', "error!!!")
