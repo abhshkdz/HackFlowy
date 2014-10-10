@@ -1,5 +1,12 @@
+var guidGenerator = function() {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
 addNode = function(botStr, topStr){
-	var randomId = ( -1 * Math.floor( Math.random() * 100000000) )
+	var randomId = guidGenerator(); 
 	var modelJSON = {
 		_id: randomId 
 	  , text: botStr 

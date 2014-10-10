@@ -7,7 +7,8 @@ var NodeSchema = new mongoose.Schema({
     parents: {type: Array}, 
     markdown: {type: Boolean},
     timestamp: {type: Number}, 
-    author: {type: String, ref: 'User'} //authorId is populated with limited AuthorObject
+    author: {type: String, ref: 'User'}, //authorId is populated with limited AuthorObject
+    _id: String
 }); 
 
 var MyNode = mongoose.model('nodes', NodeSchema);
@@ -62,8 +63,9 @@ function setUpDB(){
   MySnap.remove({}, function(err) { console.log('collection removed') });
   var curtisId = "53e4079cd7dbc73d16c87c53"; 
   
-  addNode("0root", [], ["123456"], curtisId ,function(err, rootNode){ 
-    addNode("Welcolme!", [], [rootNode._id], curtisId ,function(err, firstBullet){
+  addNode("0root", [], ["123456"], curtisId , "a42a" , function(err, rootNode){ 
+    console.log("rootNode", rootNode); 
+    addNode("Welcolme!", [], [rootNode._id], curtisId , "b42b", function(err, firstBullet){
       rootNode.children = [firstBullet._id]
       var now = rootNode.timestamp = firstBullet.timestamp
       addSnap(rootNode, now); 
@@ -191,7 +193,7 @@ function updateParent(parId, newId ,newIndex,now){
 }
 
 //add Node to the DB. 
-function addNode(text, children, parents, authorId, callback){
+function addNode(text, children, parents, authorId, ID ,callback){
   var instance = new MyNode();
   instance.text = text; 
   instance.children = children;
@@ -199,6 +201,7 @@ function addNode(text, children, parents, authorId, callback){
   instance.markdown = 0; 
   instance.timestamp = Date.now(); 
   instance.authorId = authorId; 
+  instance._id = ID; 
 
   instance.save(function (err) { 
     if (err) {

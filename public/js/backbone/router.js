@@ -100,9 +100,13 @@ var that = this;
 socket.emitWrapper = function(eventName, data){
 	console.log(this); 
 	if(this.socket.connected){
-		var oldTime = CURRENT_TIMESTAMP; 
-		CURRENT_TIMESTAMP = Date.now(); 
-		this.emit(eventName, data, [CURRENT_TIMESTAMP, oldTime]); 
+		if(eventName=="newNode" || eventName=="movedNode" || eventName=="removeNode"){
+			var oldTime = CURRENT_TIMESTAMP; 
+			CURRENT_TIMESTAMP = Date.now();
+			this.emit(eventName, data, [CURRENT_TIMESTAMP, oldTime]); 
+			return;
+		}
+		this.emit(eventName, data); 
 	}
 	else{ //(alert + lock)
 		alert("Internet connection down. Edits not synced. Refresh when back online."); 
@@ -190,11 +194,12 @@ socket.on("updateReceived", function(data){
 	parentModel.get("children")[newIndex] = instance._id;
 })
 
-socket.on("newNode", function(data){
+socket.on("newNode", function(data, newTime){
 	//need the instance + the index. 
 	var modelJson = data[1]; //(includes the negative ID to find later);
 	var parId = data[0][0];
 	var newIndex = data[0][1];
+	CURRENT_TIMESTAMP = newTime; 
 
 	var newNode = new NodeModel(modelJson);
 	nodesCollection.add(newNode);
@@ -234,8 +239,9 @@ socket.on("blurred", function(data){
 	}); 
 });
 
-socket.on("removeNode", function(data){
+socket.on("removeNode", function(data, newTime){
 	var tempVo = {}; //PROTECTING STATE!!
+	CURRENT_TIMESTAMP = newTime; 
 
 	// tempVo.author = data[3]; //(actually, unnecessary...)
 	tempVo.thisId = data[0];
@@ -248,7 +254,8 @@ socket.on("removeNode", function(data){
     removeNode(tempVo, true); //true means came from broadcast.  
 });
 
-socket.on("movedNode", function(data){
+socket.on("movedNode", function(data, newTime){
+	CURRENT_TIMESTAMP = newTime; 
 	var ids = data[0];
 	var indices = data[1];
 	var author = data[2]; 
