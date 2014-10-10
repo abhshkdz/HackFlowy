@@ -226,12 +226,19 @@ socket.on("editing", function(data){
 
 socket.on("blurred", function(data){
 	var id = data[0];
-	var text = data[1];
-	var author = data[2]; 
-	
 	var tempModel = nodesCollection.findWhere({_id: id}); 
-	tempModel.set("text", text);
-	tempModel.set("author", author); 
+	// alert("blurred"); 
+	console.log("blurred"); 
+	console.log(data); 
+	if(data[1] != null){
+		var text = data[1];
+		var author = data[2]; 
+		
+		
+		tempModel.set("text", text);
+		tempModel.set("author", author);
+	}
+
 	var tempViews = tempModel.get("views");
 	_.each(tempViews, function(tempView){
 		tempView.unlock();

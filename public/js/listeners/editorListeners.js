@@ -63,4 +63,28 @@ $(function(){
 		alert("Transclusion syncing with the server has not been implemented. KnownBugs:\n0.Don't make infinite loops.\n1."); 
 		transclude();  
 	}); 
-})
+}); 
+
+// window.addEventListener("unload", function (e) {
+//   var confirmationMessage = "\o/";
+//   //socket.emitWrapper("blurred", [vo.thisLI, vo.thisModel.get("text"), CurrentUser]); 
+//   (e || window.event).returnValue = confirmationMessage;     //Gecko + IE
+//   return confirmationMessage;                                //Webkit, Safari, Chrome etc.
+// });
+
+// $(window).on("beforeunload", function(){
+// 	socket.emitWrapper("blurred", [vo.thisLI, vo.thisModel.get("text"), CurrentUser]); 
+// 	return "areYouSure?"
+// });
+
+// $(window).beforeunload(function(){
+//   return "are you sure?"
+// });
+
+// window.onbeforeunload = exitHandler; 
+// function exitHandler(){
+//    alert(vo); 
+//    socket.emitWrapper("blurred", vo.thisLI, vo.thisModel.get("text"), CurrentUser); 
+//    return false; 
+// }
+
