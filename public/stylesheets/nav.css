@@ -11,6 +11,7 @@
 ul.navbar-right {
   list-style-type: none;
   display: inline;
+  /*position: fixed; */
 }
 .navbar-right > li {
   position: relative;

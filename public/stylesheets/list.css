@@ -31,6 +31,6 @@
   list-style: none;
 }
 
-.root li.editing {
+.root li.editing > .hoverWrap > textarea{
   outline: 1px dotted black;
 }
