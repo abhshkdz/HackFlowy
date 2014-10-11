@@ -26,7 +26,7 @@ var AppRouter = Backbone.Router.extend({
 			complete: function(){
 			},
 			success: function(data){
-				console.log("AjaxLoginDATA"); 
+				// console.log("AjaxLoginDATA"); 
 				if(typeof data == "string"){
 					$("textarea").attr("disabled", true); 
 				} //User is not logged in. 
@@ -40,8 +40,8 @@ var AppRouter = Backbone.Router.extend({
 					data.google.email = null; 
 					CurrentUser = data; 
 
-					console.log("CURRENT USER"); 
-					console.log(CurrentUser); 
+					// console.log("CURRENT USER"); 
+					// console.log(CurrentUser); 
 				}
 			},
 
@@ -98,7 +98,7 @@ setUpSocket: function(){
 var that = this; 
 
 socket.emitWrapper = function(eventName, data){
-	console.log(this); 
+	// console.log(this); 
 	if(this.socket.connected){
 		if(eventName=="newNode" || eventName=="movedNode" || eventName=="removeNode"){
 			var oldTime = CURRENT_TIMESTAMP; 
@@ -116,7 +116,7 @@ socket.emitWrapper = function(eventName, data){
 socket.on('nodeData', function(data, SERVER_TIMESTAMP){
 	//alert("data");
 	CURRENT_TIMESTAMP = SERVER_TIMESTAMP; 
-	console.log(data);
+	// console.log(data);
 	nodesCollection = new NodesCollection(data); 
 	var id = nodesCollection.findWhere({text: "0root"}).get("_id");
 	// if(otherID){

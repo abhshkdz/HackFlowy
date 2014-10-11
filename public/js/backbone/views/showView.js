@@ -45,7 +45,7 @@ var showView = Backbone.View.extend({
 			that.$el.children().children("textarea").prop("disabled", true);
 			that.$el.addClass("snapLI"); 
 		}
-		console.log("about to render textarea")
+		// console.log("about to render textarea")
 		
 		that.renderChildren(); 
 
@@ -73,12 +73,12 @@ var showView = Backbone.View.extend({
 		alert("bleh"); 
 	}, 
 
-	//Moved to app.js to handle bubbling issues. 
-	// collapse: function(){
-	// 	var that = this;
-	// 	that.$el.children("ul").slideToggle(110);
-	// 	that.$el.children(".zoomButton").toggleClass("collapsed"); 
-	// },
+	// Moved to app.js to handle bubbling issues. 
+	collapse: function(){
+		var that = this;
+		that.$el.children("ul").slideToggle(110);
+		that.$el.children(".zoomButton").toggleClass("collapsed"); 
+	},
 
 	createUIBullet: function( id , text, depth) {
 		var that = this;

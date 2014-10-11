@@ -1,4 +1,5 @@
  var removeNode = function(vo, broadcast) {
+ 	// debugger; 
 	upDateParentModelViews(vo, broadcast);
 	//#TODO => This won't work for transcluded nodes with the same parent...
 	if( hasDuplicates(vo.thisModel.get("parents"))){ //later. 
@@ -25,15 +26,25 @@ var upDateParentModelViews = function(vo, broadcast){
 
 	if(!broadcast){ //broadCast=true means we received this update from somebody else.
 		//UI STUFF
-		console.log("what");
-		if( !vo.thisLI.is(":first-child") ){
-			var len = vo.thisLI.prev().children().children("textarea").val().length;
-			vo.thisLI.prev().children().children("textarea").focus();
-			vo.thisLI.prev().children().children("textarea").setSelection(len, len);
+		// console.log("what");
+		if( vo.thisLI.is(":first-child") ){
+			if(vo.thisLI.attr('data-depth')!=0){
+				var len = vo.thisLI.parent().parent().children().children("textarea").val().length;
+				vo.thisLI.parent().parent().children().children("textarea").focus();
+				vo.thisLI.parent().parent().children().children("textarea").setSelection(len, len);
+			}
+			else{
+				vo.thisLI.next().children().children('textarea').focus();
+			}
 		}else{
-			var len = vo.thisLI.parent().parent().children().children("textarea").val().length;
-			vo.thisLI.parent().parent().children().children("textarea").focus();
-			vo.thisLI.parent().parent().children().children("textarea").setSelection(len, len);
+			if(!vo.cursorHack){
+				var len = vo.thisLI.prev().children().children("textarea").val().length;
+				vo.thisLI.prev().children().children("textarea").focus();
+				vo.thisLI.prev().children().children("textarea").setSelection(len, len);
+			}
+			else{
+				vo.thisLI.next().children().children('textarea').focus();
+			}
 		}
 	}
 

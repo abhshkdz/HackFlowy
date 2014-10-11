@@ -16,7 +16,7 @@ addNode = function(botStr, topStr){
 	};
 
 	
-	if(topStr){
+	if(topStr || topStr==""){
 		console.log("TOPSTR IS");
 		console.log(topStr);
 		vo.thisModel.set("text", topStr);
@@ -42,19 +42,24 @@ addNode = function(botStr, topStr){
 	_.each(parentViews, function(parentView){
 		parentView.addNode(newNode, tempIndex, true);
 	});
-	vo.thisLI.next().children().children("textarea").focus();
+	// vo.thisLI.next().children().children("textarea").focus();
 	INPUT_PROCESSED=true; 
 	console.log("FINISHED- ADD NODE")
-}
 
-//topStr is to the left. (also, the bottom part will be to the right. )
-splitText = function(that, botStr, topStr, callback){
+}
+/*
+topStr is to the left. (also, the bottom part will be to the right. )
+before: Textarea= topStr + botStr
+after: 
+-T1: TopStr
+-T2: BotStr
+*/
+splitText = function(that, callback){
+	var topStr = ''; var botStr=''; 
 	var cur = $(that).getSelection().start;
 	var cur1 = cur;
 	var len = $(that).val().length;
 	var bigStr = $(that).val();
-	// var botStr = '';
-	// var topStr = '';
 	var x =0;
 
 	//this is the first half of the string. 
@@ -68,8 +73,7 @@ splitText = function(that, botStr, topStr, callback){
 		botStr += bigStr[cur];
 		cur++;
 	}
-
-	callback(botStr, topStr); //addNode();		
+	callback(botStr, topStr); //addNode(botStr, topStr);		
 }
 
 transclude = function(){

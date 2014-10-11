@@ -138,6 +138,7 @@ function moveNode(ids, arrays, authorId){
 
 function removeNode(thisId, thisIndex, parId, authorId){
   var now = Date.now();
+  console.log("removing Node"); 
 
   MyNode.findById(parId, null, function(err, parNode){
     if(err || parNode == null){

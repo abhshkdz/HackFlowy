@@ -103,6 +103,7 @@ var listView = Backbone.View.extend({
   		that.childViews.insert(index , newView);
   		cur = true; 
   		if(cur){
+  				if(vo.cursorHack){ return newView; }
 				newLI.children().children("textarea").focus();
 			}
 			else{
