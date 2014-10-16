@@ -63,7 +63,7 @@ function setUpDB(){
   MySnap.remove({}, function(err) { console.log('collection removed') });
   var curtisId = "53e4079cd7dbc73d16c87c53"; 
   
-  addNode("0root", [], ["123456"], curtisId , "a42a" , function(err, rootNode){ 
+  addNode("0root", [], [], curtisId , "a42a" , function(err, rootNode){ 
     console.log("rootNode", rootNode); 
     addNode("Welcolme!", [], [rootNode._id], curtisId , "b42b", function(err, firstBullet){
       rootNode.children = [firstBullet._id]

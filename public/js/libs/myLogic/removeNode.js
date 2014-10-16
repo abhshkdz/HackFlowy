@@ -27,7 +27,7 @@ var upDateParentModelViews = function(vo, broadcast){
 	if(!broadcast){ //broadCast=true means we received this update from somebody else.
 		//UI STUFF
 		// console.log("what");
-		if( vo.thisLI.is(":first-child") ){
+		if( vo.thisLI.isFirstViz() ){
 			if(vo.thisLI.attr('data-depth')!=0){
 				var len = vo.thisLI.parent().parent().children().children("textarea").val().length;
 				vo.thisLI.parent().parent().children().children("textarea").focus();

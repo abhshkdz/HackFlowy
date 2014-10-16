@@ -1,8 +1,24 @@
+
+
+searchHandler = function(event){
+	console.log("searchHandler");
+	if(event.which != 13){return;}
+	event.preventDefault();
+	var search = event.target.value; 
+
+	var SUBSET = nodesCollection.filter(function(model){
+		return model.get('text').indexOf(search) != -1;
+	});  
+	myRouter.viewSearchSubset(SUBSET); 
+	
+}
+
 keydownHandler = function(event){ //the entire body is wrapped in this. 
 	var that = this;
 	// console.log("keyDownHandler"); 
-	INPUT_PROCESSED=true; 
 
+	INPUT_PROCESSED=true; 
+	if(event.target.id == 'searchBar'){searchHandler(event); return;}
 	if(event.which == undefined){ console.log("ABORTED- event.which==undefined"); return; }
 	if(!CurrentUser){ alert("only logged in users can edit"); return;}//prevent non-logged in users from editing. 
 
@@ -60,17 +76,13 @@ keydownHandler = function(event){ //the entire body is wrapped in this.
 						return;
 					}//
 					if(!vo.atEnd && !vo.atBeg){ //split bullet(Works correctly)
-						// var topStr = '';
-						// var botStr = '';
-						splitText(that, /*botStr, topStr,*/ addNode);
+						splitText(that, addNode);
 						return;
-						//addNode(botStr, topStr);
 					}
 					if(!vo.atEnd && vo.atBeg){//addNode (before). (equivalent to splitting bullet)
 						vo.thisIndex--; //a hack that works.
 						//var myLI = vo.thisLI; 
 						// setTimeout(function(){myLI.children().children("textarea").focus()}, 3); 
-						vo.cursorHack=true; 
 						addNode(""); 
 						
 						return;
@@ -155,26 +167,26 @@ if((vo.hitTab && event.shiftKey) || (event.keyCode == 37 && event.shiftKey)){// 
 	}
 }
 
-	if(event.keyCode == 38 && event.shiftKey) { 
-			if(vo.thisLI.is(":first-child")){return;}//don't factor this out into the above if-statement
+	if(event.keyCode == 38 && event.shiftKey) { //move up
+			if(vo.thisLI.isFirstViz()){return;}//don't factor this out into the above if-statement
 			moveNode(vo.thisModel, vo.thisIndex, vo.parentModel, vo.parentModel, vo.thisIndex-1, true);
 			return; 
 	}
-	if(event.keyCode == 40 && event.shiftKey) { 
-			if(vo.thisLI.is(":last-child")){return;}
+	if(event.keyCode == 40 && event.shiftKey) { //move down
+			if( vo.thisLI.isLastViz() ){return;}
 			moveNode(vo.thisModel, vo.thisIndex, vo.parentModel, vo.parentModel, vo.thisIndex+1, true);
 			return; 
 	}
 
 	if(event.keyCode == 38){//up
-		if(vo.thisLI.is(":first-child")){
+		if( vo.thisLI.isLastViz() ){
 			vo.thisLI.parent().parent().children().children("textarea").focus();
 		}
 		else{
 			vo.thisLI.prev().children().children("textarea").focus();
 		}
 	}
-	if(event.keyCode == 40){
+	if(event.keyCode == 40){ //down
 		vo.thisLI.next().children().children("textarea").focus();
 	}
 

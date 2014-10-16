@@ -1,31 +1,12 @@
 var showView = Backbone.View.extend({
 	initialize: function(options){
-		var that = this;
-		that.metaCollection = options["metaCollection"]; 
-		that.snapView = options["snapView"]; 
-
-		this.model = options["model"];
-		this.depth = options["depth"];
-		(that.model.attributes["views"] = this.model.attributes["views"] || []).push(that);
-		that.$el.attr("data-id", that.model.get("_id")); //booya!
-		this.childViews = [];
-
+		//that.UL; 
+		assignProperties(this, options); 
 	},
 
 	tagName: 'li',
 	className: "herez node",
-	events: {"click .markdown" : "showMarkDownEditor"}, 
-
-
-	findModel: function(id){
-		if(this.snapView){
-			return this.metaCollection.findWhere({cur_id: id}); 
-		}
-		else{
-			return this.metaCollection.findWhere({_id: id}); 
-		}
-	},
-
+	events: {"click .markdown" : "showMarkDownEditor"},
 
 	//todo = refactor this function.
 	render: function(){
@@ -41,6 +22,7 @@ var showView = Backbone.View.extend({
 		that.$el.attr("data-id", id);
 
 		that.$el.html(html);
+		that.UL = that.$el.children("ul"); 
 		if(that.snapView){
 			that.$el.children().children("textarea").prop("disabled", true);
 			that.$el.addClass("snapLI"); 
@@ -51,27 +33,6 @@ var showView = Backbone.View.extend({
 
 		return that;
 	},
-	renderChildren: function(){
-		var that = this;
-		var childrenIds = that.model.get("children");
-
-		_.each(childrenIds, function(childId, index){
-			var childModel = that.findModel(childId); 
-			var tempView = new showView({
-				depth: that.depth + 1,
-				model: childModel, 
-				metaCollection: that.metaCollection, 
-				snapView: that.snapView
-			});
-			that.childViews.push(tempView)
-			that.$el.children("ul").append(tempView.render().$el);
-		}); 
-
-	},
-
-	unhide: function(){
-		alert("bleh"); 
-	}, 
 
 	// Moved to app.js to handle bubbling issues. 
 	collapse: function(){
@@ -128,37 +89,6 @@ var showView = Backbone.View.extend({
 	  	// setTimeout(function(){ MathJax.Callback(["CreatePreview",Preview]); }, 300); 
 	},
 
- 	addNode: function(newNode, index, cur){
- 		var that = this;
- 		console.log("addNodeText" + newNode.get("text"))
-  		var newView = new showView({
-  			model: newNode,
-  			depth: that.depth +1, 
-  			metaCollection: that.metaCollection, 
-  			snapView: that.snapView
-
-  		});
-
-  		var newLI = newView.render().$el;
-
-
-  		//var empty = (that.$el.children("ul").children().length == 0);
-	  	if(index == 0){	//just handles edge case where you're using this for indent
-  			that.$el.children("ul").prepend(newLI);
-  		}else{
-  			that.$el.children("ul").children(":nth-child(" + (index) + ")").after(newLI);
-  		}
-
-  		that.childViews.insert(index , newView);
-  		if(cur){
-  			newLI.children().children("textarea").focus().textareaAutoExpand(); 
-  		}
-  		else{
-  			newView.lock();
-  		}
-  		return newView; 
- 	},
-
  	updateId: function(newId){
   		this.$el.attr("data-id", newId);
   		this.$el.children("ul").attr("data-id", newId);
@@ -176,15 +106,6 @@ var showView = Backbone.View.extend({
  		this.$el.children().children("textarea").removeAttr("readonly");
  		this.$el.children().children("textarea").val(this.model.get("text"));
  		this.$el.removeClass("editing"); 
- 	},
- 	removeNode: function(index){
- 		var that = this;
- 		that.childViews[index].remove();
- 		that.childViews.remove(index);
- 	},
- 	pushView: function(view){
- 		this.childViews.push(view);
- 		this.$el.children("ul").children().last().after(view.$el);
  	}
 
 

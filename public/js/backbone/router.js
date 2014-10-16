@@ -38,32 +38,21 @@ var AppRouter = Backbone.Router.extend({
 					data.google.id = null; 
 					data.google.token = null; 
 					data.google.email = null; 
-					CurrentUser = data; 
-
-					// console.log("CURRENT USER"); 
-					// console.log(CurrentUser); 
+					CurrentUser = data;  
 				}
 			},
-
-
 			error: function(data){
 				console.log("ERROR- AjaxLoginDATA");
 			}
 	    });//ajax
 	}, 
 
-	// index: function(otherID){
-	// 	var that = this;
-		
-	// 	otherID = otherID || 
-
-	// }, 
-
 	viewRoot: function(id, snapCollection){
 
 		var rootModel; 
 		var metaCollection; 
-		var snapView = 0; 
+		var snapView = 0;
+
 		if(snapCollection){
 			rootModel = snapCollection.findWhere({cur_id: id});
 			metaCollection = snapCollection
@@ -73,26 +62,61 @@ var AppRouter = Backbone.Router.extend({
 			rootModel = nodesCollection.findWhere({_id: id});
 			metaCollection = nodesCollection; 
 		}
-
 		var rootView = new listView({
-				viewWindow: ".main1",
+				depth: -1,
 				model: rootModel, 
 				metaCollection: metaCollection,
 				snapView: snapView
 			})
+		$(".main1").html(rootView.render().$el); 
 		this.changeView(rootView);
 	}, 
 
 	changeView: function(view) {
-     	if ( null != this.currentView ) {
+     	if ( this.currentView != null ) {
         	this.currentView.undelegateEvents();
       	}
       	
       	this.currentView = view;
       	$("textarea").textareaAutoExpand(); 
-      	
-
     }, 
+
+    viewSearchSubset: function(matchedNodes){
+    	console.log("matchedNodes", matchedNodes); 
+    	var SUBSET = matchedNodes
+
+    	augmentedSet = []
+		_.each(SUBSET, function(matchedNode){
+			augmentedSet.push([matchedNode.get("_id")]); 
+			augmentedSet.push(matchedNode.getAncestry()); 
+		});
+		var finalSet = _.union(_.flatten(augmentedSet));
+		var rootView = new listView({
+				depth: -1,
+				model: nodesCollection.findWhere({_id: $('.root').attr('data-id')}),
+				metaCollection: nodesCollection,
+				snapView: 0 , 
+				searchSet: finalSet
+			})
+		$(".main1").html(rootView.render().$el); 
+		this.changeView(rootView);
+    }, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 setUpSocket: function(){
 var that = this; 

@@ -38,7 +38,7 @@ $('body').on("mousedown", ".handle", function(e){
     dragState.oldParModel = nodesCollection.findWhere({_id: dragState.thisLI.parent().attr("data-id") }); 
 
 
-    var firstLI = $(".root").children(":first-child"); 
+    var firstLI = $(".root").children(":visible:first"); 
 	var firstEntry = [0, firstLI, "above"]; 
 	containerArray.push(firstEntry); 
 
@@ -59,7 +59,7 @@ $('body').on("mousedown", ".handle", function(e){
 		li = $(li); 
         var collapsed = (li.children(".zoomButton").hasClass("collapsed") || li.children("ul").children().length == 0); 
 		var opened = !collapsed; 
-    	var last = li.is(":last-child"); 
+    	var last = li.isLastViz(); 
 
     	if( !(opened || last) ){
     		var entry = [ thisTop , li , "below" ]; 
@@ -68,7 +68,7 @@ $('body').on("mousedown", ".handle", function(e){
     	else{
     		if(opened){
     			console.log("opened"); 
-    			var firstChild = li.children("ul").children(":first-child")
+    			var firstChild = li.children("ul").children(":visible:first")
     			var firstEntry = [ thisTop , firstChild, "above"]; 
     			containerArray.push(firstEntry); 
     			

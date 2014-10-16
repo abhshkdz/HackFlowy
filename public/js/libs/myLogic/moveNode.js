@@ -1,13 +1,9 @@
 //Handles indenting,outdenting,moving up/down, and drag-n-drop. 
 var moveNode = function(thisModel, dragIndex, oldParModel, newParModel, dropIndex, chr){
+
 	//removeNode from OldParent part 1 = #models
-	console.log("\n\n");
-	console.log(dragIndex);
-	console.log(oldParModel.get("children"));
 	oldParModel.get("children").remove(dragIndex);
 	thisModel.get("parents").removeOne(oldParModel.get("_id"));
-	console.log(oldParModel.get("children"));
-	console.log("\n\n");
 
 	//removeNode from OldParent part 2 = #views
 	_.each(oldParModel.get("views"), function(oldParView){
@@ -22,6 +18,10 @@ var moveNode = function(thisModel, dragIndex, oldParModel, newParModel, dropInde
 	_.each(newParModel.get("views"), function(newParView){
 		newParView.addNode(thisModel, dropIndex, chr);
 	});
+
+
+
+
 
 	var ids = [thisModel.get("_id"), oldParModel.get("_id"), newParModel.get("_id")];
 	var arrays = [thisModel.get("parents"), oldParModel.get("children"), newParModel.get("children")];

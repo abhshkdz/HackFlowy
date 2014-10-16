@@ -1,11 +1,50 @@
-var guidGenerator = function() {
-    var S4 = function() {
-       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+addNode = function(botStr, topStr){ 
+	var modelJSON = generateJSON(botStr);
+	var newNode = new NodeModel(modelJSON);
+	nodesCollection.add(newNode);
+
+	if(topStr || topStr==""){
+		vo.thisModel.set("text", topStr);
+		_.each(vo.thisModel.get("views"), function(view){ view.updateText(topStr); });
+		socket.emitWrapper("edit", [vo.thisId, topStr]);
+	}
+	
+	var data = [ [vo.parentId, vo.thisIndex+1] , modelJSON ]; 
+	socket.emitWrapper("newNode", data);
+
+	
+
+	vo.parentModel.get("children").insert(vo.thisIndex + 1, modelJSON._id);
+	
+	
+	var parentViews = vo.parentModel.get("views");
+	var tempIndex = vo.thisIndex+1; //adding nodes alters the index.
+	_.each(parentViews, function(parentView){
+		parentView.addNode(newNode, tempIndex, true);
+	});
+
+	INPUT_PROCESSED=true; 
+
 }
 
-addNode = function(botStr, topStr){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+generateJSON = function(botStr){
 	var randomId = guidGenerator(); 
 	var modelJSON = {
 		_id: randomId 
@@ -14,39 +53,19 @@ addNode = function(botStr, topStr){
 	  , children: []
 	  , author: CurrentUser
 	};
-
-	
-	if(topStr || topStr==""){
-		console.log("TOPSTR IS");
-		console.log(topStr);
-		vo.thisModel.set("text", topStr);
-		_.each(vo.thisModel.get("views"), function(view){
-			view.updateText(topStr);
-		});
-		socket.emitWrapper("edit", [vo.thisId, topStr]);
-	}
-
-	
-	var newNode = new NodeModel(modelJSON);
-	nodesCollection.add(newNode);
-
-	vo.parentModel.get("children").insert(vo.thisIndex + 1, randomId);
-	
-	var data = [ [vo.parentId, vo.thisIndex+1] , modelJSON ]; 
-	console.log("AddNode DATA"); console.log(data); 
-	socket.emitWrapper("newNode", data);
-	
-	var parentViews = vo.parentModel.get("views");
-	
-	var tempIndex = vo.thisIndex+1; //adding nodes alters the index.
-	_.each(parentViews, function(parentView){
-		parentView.addNode(newNode, tempIndex, true);
-	});
-	// vo.thisLI.next().children().children("textarea").focus();
-	INPUT_PROCESSED=true; 
-	console.log("FINISHED- ADD NODE")
-
+	return modelJSON; 
 }
+
+
+
+guidGenerator = function() {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
+
 /*
 topStr is to the left. (also, the bottom part will be to the right. )
 before: Textarea= topStr + botStr
@@ -75,6 +94,9 @@ splitText = function(that, callback){
 	}
 	callback(botStr, topStr); //addNode(botStr, topStr);		
 }
+
+
+
 
 transclude = function(){
 	vo.parentModel.get("children").insert(vo.thisIndex+1, vo.thisId); 
