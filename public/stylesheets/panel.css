@@ -9,8 +9,10 @@ body {
 /******* Body ********/
 
 /**************** Panel ****************/
+
+/*revListeners.js , index.ejs*/
 .floatRight{
-  float: right;
+  float: left;
   margin-top: 40px;
   width: 760px;
 }

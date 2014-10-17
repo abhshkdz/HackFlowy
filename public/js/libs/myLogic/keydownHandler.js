@@ -187,7 +187,10 @@ if((vo.hitTab && event.shiftKey) || (event.keyCode == 37 && event.shiftKey)){// 
 		}
 	}
 	if(event.keyCode == 40){ //down
+		//if(thisLI.collapsed || empty)
 		vo.thisLI.next().children().children("textarea").focus();
+		//else => (focus on next El)
+
 	}
 
 	// if(event.keyCode)

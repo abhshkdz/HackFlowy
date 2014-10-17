@@ -2,3 +2,59 @@
 /*
 //@ sourceMappingURL=dist/jquery.textcomplete.min.map
 */
+
+/*! jquery-overlay - v0.0.4 - 2014-06-11 */!function(a){"use strict";var b=function(){var b;return b=a("<div></div>").css(["color"]).color,"undefined"!=typeof b?function(a,b){return a.css(b)}:function(b,c){var d;return d={},a.each(c,function(a,c){d[c]=b.css(c)}),d}}(),c={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"},d=/[&<>"'\/]/g,e=function(a){return a.replace(d,function(a){return c[a]})},f=function(){function c(c){var e,i;i=c.css("position"),"static"===i&&(i="relative"),e=a(d.wrapper).css(a.extend({},f.wrapper,b(c,g),{position:i})),this.textareaTop=parseInt(c.css("border-top-width")),this.$el=a(d.overlay).css(a.extend({},f.overlay,b(c,h),{top:this.textareaTop,right:parseInt(c.css("border-right-width")),bottom:parseInt(c.css("border-bottom-width")),left:parseInt(c.css("border-left-width"))})),this.$textarea=c.css(f.textarea),this.$textarea.wrap(e).before(this.$el),this.$textarea.origVal=c.val,this.$textarea.val=a.proxy(this.val,this),this.$textarea.on({"input.overlay":a.proxy(this.onInput,this),"change.overlay":a.proxy(this.onInput,this),"scroll.overlay":a.proxy(this.resizeOverlay,this),"resize.overlay":a.proxy(this.resizeOverlay,this)}),this.strategies=[]}var d,f,g,h;return d={wrapper:'<div class="textoverlay-wrapper"></div>',overlay:'<div class="textoverlay"></div>'},f={wrapper:{margin:0,padding:0,overflow:"hidden"},overlay:{position:"absolute",color:"transparent","white-space":"pre-wrap","word-wrap":"break-word",overflow:"hidden"},textarea:{background:"transparent",position:"relative",outline:0}},g=["display"],h=["margin-top","margin-right","margin-bottom","margin-left","padding-top","padding-right","padding-bottom","padding-left","font-family","font-weight","font-size","background-color"],a.extend(c.prototype,{val:function(a){return null==a?this.$textarea.origVal():this.setVal(a)},setVal:function(a){return this.$textarea.origVal(a),this.renderTextOnOverlay(),this.$textarea},onInput:function(){this.renderTextOnOverlay()},renderTextOnOverlay:function(){var b,c,d,f,g,h;for(b=a("<div></div>").text(this.$textarea.val()),c=0,d=this.strategies.length;d>c;c++)f=this.strategies[c],g=f.match,a.isArray(g)&&(g=a.map(g,function(a){return a.replace(/(\(|\)|\|)/g,"$1")}),g=new RegExp("("+g.join("|")+")","g")),h="background-color:"+f.css["background-color"],b.contents().each(function(){var b,c,d,f;if(this.nodeType==Node.TEXT_NODE){for(b=this.textContent,c="",f=g.lastIndex=0;;f=g.lastIndex){if(d=g.exec(b),!d){f&&(c+=e(b.substr(f)));break}d=d[0],c+=e(b.substr(f,g.lastIndex-f-d.length)),c+='<span style="'+h+'">'+e(d)+"</span>"}f&&a(this).replaceWith(c)}});return this.$el.html(b.contents()),this},resizeOverlay:function(){this.$el.css({top:this.textareaTop-this.$textarea.scrollTop()})},register:function(b){return b=a.isArray(b)?b:[b],this.strategies=this.strategies.concat(b),this.renderTextOnOverlay()},destroy:function(){var a;this.$textarea.off(".overlay"),a=this.$textarea.parent(),a.after(this.$textarea).remove(),this.$textarea.removeData("overlay"),this.$textarea=null}}),c}();a.fn.overlay=function(b){var c;return c="overlay","destroy"===b?this.each(function(){var b=a(this).data(c);b&&b.destroy()}):this.each(function(){var d,e;d=a(this),e=d.data(c),e||(e=new f(d),d.data(c,e)),e.register(b)})}}(window.jQuery);
+//# sourceMappingURL=jquery.overlay.min.map
+
+// (function($) {
+	$.fn.attachAutoComplete = function(){
+		$(this).textcomplete([
+		    { // html
+		        mentions: ['yuku_t'],
+		        match: /\B@(\w*)$/,
+		        search: function (term, callback) {
+		            callback($.map(this.mentions, function (mention) {
+		                return mention.indexOf(term) === 0 ? mention : null;
+		            }));
+		        },
+		        index: 1,
+		        replace: function (mention) {
+		            return '@' + mention + ' ';
+		        }
+		    }
+		], { appendTo: 'body' }).overlay([
+		    {
+		        match: /\B@\w+/g,
+		        css: {
+		            'background-color': '#d8dfea'
+		        }
+		    }
+		]); //first text-complete
+
+		$(this).textcomplete([
+		    { // html
+		        mentions: ['fuckYeah', "booyea"],
+		        match: /\B#(\w*)$/,
+		        search: function (term, callback) {
+		            callback($.map(this.mentions, function (mention) {
+		                return mention.indexOf(term) === 0 ? mention : null;
+		            }));
+		        },
+		        index: 1,
+		        replace: function (mention) {
+		            return '#' + mention + ' ';
+		        }
+		    }
+		], { appendTo: 'body' }).overlay([
+		    {
+		        match: /\B#\w+/g,
+		        css: {
+		            'background-color': '#d8dfea'
+		        }
+		    }
+		]);
+
+	}//outerFN
+// }(jQuery));
+
+

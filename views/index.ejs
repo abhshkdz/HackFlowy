@@ -17,6 +17,7 @@
 <link href="stylesheets/panel.css" rel="stylesheet" type="text/css">
 <link href="stylesheets/revControl.css" rel="stylesheet" type="text/css">
 <link href="stylesheets/sidebar.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/autoComplete.css" rel="stylesheet" type="text/css">
 
 
 
@@ -88,11 +89,11 @@
 
 <div id='metaSidebar'>
   <div class='nodeAttributes'>
-    Node Attributes
+    <b>Node Attributes</b>
+    <br><br>
     <ul>
-      <li>author: you</li>
-      <li>timeStamp: now</li>
-      <li>etc</li>
+      <li id='authorLI'>author: you</li>
+      <li id='timestampLI'>timeStamp: now</li>
     </ul>
   </div>
   <div class='revHistory'>
@@ -116,32 +117,6 @@
 <script>
 $(function(){
 	$('textarea').textareaAutoExpand();
-
-
-  $('#searchBar').textcomplete([
-    { // html
-        mentions: ['yuku_t'],
-        match: /\B@(\w*)$/,
-        search: function (term, callback) {
-            callback($.map(this.mentions, function (mention) {
-                return mention.indexOf(term) === 0 ? mention : null;
-            }));
-        },
-        index: 1,
-        replace: function (mention) {
-            return '@' + mention + ' ';
-        }
-    }
-], { appendTo: 'body' }).overlay([
-    {
-        match: /\B@\w+/g,
-        css: {
-            'background-color': '#d8dfea'
-        }
-    }
-]);
-
-
  }); 
 
 var width;

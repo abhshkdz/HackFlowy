@@ -7,9 +7,9 @@ var NodeSchema = new mongoose.Schema({
     parents: {type: Array}, 
     markdown: {type: Boolean},
     timestamp: {type: Number}, 
-    author: {type: String, ref: 'User'}, //authorId is populated with limited AuthorObject
+    authorId: {type: String, ref: 'User'}, //authorId is populated with limited AuthorObject
     _id: String
-}); 
+}); //mongoose.Schema.Types.ObjectId
 
 var MyNode = mongoose.model('nodes', NodeSchema);
 
@@ -41,9 +41,13 @@ module.exports.addNode = addNode;
 //   return rootID;
 // }
 
+//http://mongoosejs.com/docs/populate.html
 function findAndSocketSend(socket, CURRENT_TIMESTAMP){
   var nodes = {'keeping': 'calm'}
-  MyNode.find().populate('authorId','_id google.name' ).exec(function(err, nodes){
+  // .populate('authorId').populate('google.name')
+  MyNode.find().exec(function(err, nodes){
+    console.log("NODES"); 
+    console.log(nodes); 
     if(!err){
       // require("underscore").each(nodes, function(node){console.log(node)}); 
       socket.emit('nodeData', nodes, CURRENT_TIMESTAMP)
@@ -61,9 +65,10 @@ function findAndSocketSend(socket, CURRENT_TIMESTAMP){
 function setUpDB(){
   MyNode.remove({}, function(err) { console.log('collection removed') });
   MySnap.remove({}, function(err) { console.log('collection removed') });
-  var curtisId = "53e4079cd7dbc73d16c87c53"; 
+  var curtisId = "54412cf9d7018300009d42c7"; 
   
-  addNode("0root", [], [], curtisId , "a42a" , function(err, rootNode){ 
+  //"42" is there, so that it doesn't get deleted during snapCommits (for not having a parent). 
+  addNode("0root", [], ["42"], curtisId , "a42a" , function(err, rootNode){ 
     console.log("rootNode", rootNode); 
     addNode("Welcolme!", [], [rootNode._id], curtisId , "b42b", function(err, firstBullet){
       rootNode.children = [firstBullet._id]

@@ -5,3 +5,7 @@
 .selectedSnap {
   border: 2px solid red;
 }
+
+.recentSnap {
+	border: 1px dotted grey;
+}

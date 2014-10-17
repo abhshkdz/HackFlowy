@@ -27,7 +27,7 @@
   position: fixed;
   height: 100%;
   top: 60px;
-  left: 15px;
+  right: 15px;
   width: 200px;
   background-color: beige; 
   z-index: 999999;
@@ -36,6 +36,11 @@
 #metaSidebar.hideBar{
   display: none;
 }
+
+
+
+
+
 
 .nodeAttributes{
   background-color: rgb(147, 213, 202);

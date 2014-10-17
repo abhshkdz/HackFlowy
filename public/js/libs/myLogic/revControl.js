@@ -1,19 +1,18 @@
 renderRevControl = function(rootNode, timeStamp){
+	rootSnap = fetchLTE(rootNode, timeStamp ); //var?
+
 	var finalCollection = []; 
-	rootSnap = fetchLTE(rootNode, timeStamp ); 
 
 	var queue = [rootSnap]; 
 	while(queue.length > 0){
 		snap = queue.shift(); 
 		finalCollection.push(snap); 
-		childrenSnaps = fetchChildren(snap); 
+		childrenSnaps = fetchChildren(snap,timeStamp); 
 		_.each(childrenSnaps, function(childSnap){queue.push(childSnap)}); 
-	}
-	console.log("FINALCOLLECTION"); 
-	console.log(finalCollection); 
-	var snapCollection = new NodesCollection(finalCollection); 
-	return snapCollection; 
+	} 
 
+
+	return new NodesCollection(finalCollection); //snapCollection
 }
 
 
@@ -29,9 +28,9 @@ function fetchLTE(nodeId, timeStamp){
 	alert("error!!"); 
 }
 
-function fetchChildren(subRootSnap){
+function fetchChildren(subRootSnap,timeStamp){
 	childrenSnaps = []; 
-	var timeStamp = snap.timestamp; 
+	// var timeStamp = snap.timestamp; 
 	_.each(subRootSnap.children, function(childId){
 		childrenSnaps.push( fetchLTE(childId, timeStamp) );
 	}); 

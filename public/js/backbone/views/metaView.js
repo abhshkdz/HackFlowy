@@ -29,11 +29,14 @@ function assignProperties(object, options){ //object is a showView or listView
 	}
 
 	object.pushView = function(tempView, childId){
-		debugger; 
+		// debugger; 
 		var searchSet= object.searchSet; 
 		that.childViews.push(tempView);
 		var tempLI = tempView.render().$el
 		that.UL.append(tempLI);
+		if(that.snapView==1 && _.contains(thisTimeStampSnaps , childId) ){
+			$(tempLI).addClass("recentSnap"); 
+		}
 		if(searchSet && !_.contains(searchSet, childId)){
 			$(tempLI).hide();
 		}

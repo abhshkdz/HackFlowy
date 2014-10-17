@@ -35,7 +35,7 @@ var AppRouter = Backbone.Router.extend({
 					socket.emit("logIn", data); //logs the user into the socket.
 
 
-					data.google.id = null; 
+					data.google.id = null; //why?
 					data.google.token = null; 
 					data.google.email = null; 
 					CurrentUser = data;  
@@ -140,7 +140,7 @@ socket.emitWrapper = function(eventName, data){
 socket.on('nodeData', function(data, SERVER_TIMESTAMP){
 	//alert("data");
 	CURRENT_TIMESTAMP = SERVER_TIMESTAMP; 
-	// console.log(data);
+	console.log(data[0]);
 	nodesCollection = new NodesCollection(data); 
 	var id = nodesCollection.findWhere({text: "0root"}).get("_id");
 	// if(otherID){
@@ -170,23 +170,14 @@ socket.on("revHistory", function(data){
 	})
 
 	$("#revTimestamps").html(list); 
-})
-
-
-$("#revTimestamps").on("click", "a.timestamp", function(event){
-	// debugger; 
-	var a = event.target; 
-	var timestamp = parseInt($(a).html()); 
-	var subRootId = $(".getRevHistory").attr("data-id"); 
-
-	var snapCollection = renderRevControl(subRootId, timestamp); 
-
-	console.log("snapCollection")
-	console.log(snapCollection); 
-
-	that.viewRoot(subRootId, snapCollection); 
 }); 
 
+UserHash = {};  
+socket.on("UserList", function(data){
+	_.each(data, function(user){
+		UserHash[user._id] = user.google.name; 
+	}); 
+}); 
 
 socket.on('edit', function(data){
 	var id = data[0];
