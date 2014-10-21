@@ -84,6 +84,7 @@ function updateText(id, newText, authorId){
     if(err || node == null){
       return;
     }
+    if(node.text==newText){return;}
     node.timestamp = Date.now();
     node.text = newText;
     node.authorId = authorId; 
