@@ -165,7 +165,7 @@ socket.on("revHistory", function(data){
 	console.log(timeHash); 
 
 	var list = ""; 
-	_.each(Object.keys(timeHash), function(timestamp){
+	_.each(Object.keys(timeHash).sort(), function(timestamp){
 		list += "<li><a class='timestamp'>"+timestamp+"</a></li>"; 
 	})
 

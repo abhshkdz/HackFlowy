@@ -23,6 +23,10 @@ dragState.thisModel = null;
 dragState.thisLI = null; 
 dragState.dragIndex = null; 
 
+$('body').on('click', ".handle", function(e){
+    if(dragging){e.preventDefault()}
+}); 
+
 
 
 $('body').on("mousedown", ".handle", function(e){
@@ -37,6 +41,8 @@ $('body').on("mousedown", ".handle", function(e){
     dragState.dragIndex = dragState.thisLI.index();
     dragState.oldParModel = nodesCollection.findWhere({_id: dragState.thisLI.parent().attr("data-id") }); 
 
+    dragState.topPos = $(dragState.thisLI).offset().top; //rec.top;
+    dragState.botPos = dragState.topPos + $(dragState.thisLI).outerHeight(); 
 
     var firstLI = $(".root").children(":visible:first"); 
 	var firstEntry = [0, firstLI, "above"]; 
@@ -60,6 +66,10 @@ $('body').on("mousedown", ".handle", function(e){
         var collapsed = (li.children(".zoomButton").hasClass("collapsed") || li.children("ul").children().length == 0); 
 		var opened = !collapsed; 
     	var last = li.isLastViz(); 
+
+        if(thisTop>=dragState.topPos && thisTop<=dragState.botPos){//it's in the dragged sub-tree
+            return;
+        }
 
     	if( !(opened || last) ){
     		var entry = [ thisTop , li , "below" ]; 
@@ -105,11 +115,12 @@ $('body').on("mousedown", ".handle", function(e){
 
 
 $(document).mouseup(function(e){
+    e.stopPropagation();
     clicking = false;
     $('.clickStatus').text('mouseup');
 
     if(!dragging){return;}
-    dragging = false; 
+    setTimeout(function(){dragging = false}, 1); 
 
     var entry = returnDropEntry(e.pageY);
     var dropLI = entry[1]; 
@@ -126,6 +137,9 @@ $(document).mouseup(function(e){
     }
     console.log(dragState); 
     moveNode(dragState.thisModel, dragState.dragIndex, dragState.oldParModel, dragState.newParModel, dragState.dropIndex, true); 
+
+    $(dropLI).removeClass("selectedAboveDrop")
+    $(dropLI).removeClass("selectedBelowDrop"); 
 });
 
 $(document).on("mousemove" ,function(e){

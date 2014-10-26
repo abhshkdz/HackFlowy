@@ -26,7 +26,7 @@ keydownHandler = function(event){ //the entire body is wrapped in this.
 	if(event.which == 13){event.preventDefault();}
 
 	voInitializer(that, event);
-	console.log("ABOUT TO PROCESS INPUT"); 
+	// console.log("ABOUT TO PROCESS INPUT"); 
 
 	/*
 	// INPUT_PROCESSED = false; 
@@ -178,8 +178,10 @@ if((vo.hitTab && event.shiftKey) || (event.keyCode == 37 && event.shiftKey)){// 
 			return; 
 	}
 
-	if(event.keyCode == 38){//up
-		if( vo.thisLI.isLastViz() ){
+
+	if(event.keyCode == 38){//cursor Up
+		debugger; 
+		if( vo.thisLI.isFirstViz()){
 			vo.thisLI.parent().parent().children().children("textarea").focus();
 		}
 		else{
@@ -187,9 +189,13 @@ if((vo.hitTab && event.shiftKey) || (event.keyCode == 37 && event.shiftKey)){// 
 		}
 	}
 	if(event.keyCode == 40){ //down
-		//if(thisLI.collapsed || empty)
-		vo.thisLI.next().children().children("textarea").focus();
-		//else => (focus on next El)
+		debugger; 
+		if(vo.thisLI.children("ul").children(":visible").length != 0){
+			vo.thisLI.children("ul").children(":first").children().children("textarea").focus();
+		}
+		else{
+			vo.thisLI.next().children().children("textarea").focus();
+		}
 
 	}
 
