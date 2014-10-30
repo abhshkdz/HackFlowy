@@ -93,6 +93,7 @@ keydownHandler = function(event){ //the entire body is wrapped in this.
 	} //hitEnter
 
 	if(vo.hitBack && vo.empty){ 
+		if(vo.rootLevel && vo.parentModel.get("children").length == 1){return;}
 		if(vo.thisModel.get('children').length != 0){INPUT_PROCESSED=true; return;}
 		event.preventDefault();
 		removeNode(vo);
