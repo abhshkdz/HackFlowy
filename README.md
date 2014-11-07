@@ -1,26 +1,31 @@
-**Live Demo:** http://glacial-island-2506.herokuapp.com/
+**Live Demo:** http://cryptic-falls-9359.herokuapp.com/
 
-Features ndentJS has that workflowy doesn't have:
+
+Current Features that workflowy doesn't have: 
 --------
- - Live googleDocs-esque editing.
-	
+  - Real-time editing. 
+  - Revision Control. 
+  - (Support for aliasing/Multiple-parents is basically done). 
+  - (Latex+Markdown Editor is basically done.)
 
-Pending features that workflowy has:
---------
- - Several small bug fixes. 
- - A better UI
- - Hashtags
- - Search
- - Import/Export
-
+Features that workflowy has that I haven't implemented yet: 
+----------
+  - Editor: 
+    - Tagging. //(This is actually really hard to implement well). 
+    - Pasting,Import,Export
+  - General CSS
+  - Offline editing
+  - Undo/Redo
+  - A Mobile app
+  - A bunch of small things. 
+  - 
+  - It doesn't look that great right now, but neither did a bunch of famous sites. 
+    - http://blog.onemonthrails.com/famous-first-landing-pages/
  
-Pending features that Workflowy doesn't have:
--------
- - Split Screen: 
- - Revision Control. 
- - Transclusion/Aliasing/Graph-structure. 
- - Latex Editor. 
 
+Documentation + Todos: 
+-----
+ - https://workflowy.com/s/qFYOTilhJK
 
 
 Installation and Usage
