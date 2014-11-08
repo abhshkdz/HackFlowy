@@ -32,6 +32,19 @@ Documentation + Todos:
 Installation and Usage
 ======================
 
- - A throwaway database account is provided. But, you can edit /lib/db.js with your own credentials. 
+ - A throwaway database account is provided. But, you can edit /config/config.js with your own credentials.
  - `npm install`
  - `node app.js`
+ - You'll need to create a Google developers account in order to log-in with google, so that you can actually make changes. I'll try to remove this step so that it's easier to get up and running. 
+
+Setting up a Google API account 
+==============================
+If you look at /config/auth.js, you'll be able to find fill in your Google API credentials.
+https://console.developers.google.com/project
+
+Click on the "Apis & Auth > Credentials" tab.
+This is what you want things to look like:
+http://i.imgur.com/0UU7bF3.png
+
+You'll also want to run the --assume-unchanged command on the config directory, so you don't push up your configuration details to github.
+http://stackoverflow.com/questions/17195861/undo-a-git-update-index-assume-unchanged-file
