@@ -14,7 +14,8 @@
         "sqlite3": "~2.1.0"
     },
     "engines": {
-        "node": "0.10.x"
+        "node": "0.10.x",
+        "npm": "3.3.5"
     },
     "scripts": {
         "start": "node server.js",
