@@ -2,7 +2,7 @@ var config = require('config'),
     orm = require('../../orm').configure(config.get('database')),
     Tasks = require('../../db/models/task').instance(orm);
 
-Tasks.destroy().success(function() {
+Tasks.destroy({where: {}}).then(function() {
     Tasks.bulkCreate([
         {content: 'Welcome to HackFlowy!', isCompleted: false},
         {content: 'An open-source WorkFlowy clone', isCompleted: false},
