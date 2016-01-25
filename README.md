@@ -14,7 +14,7 @@ An open-source [Workflowy](http://workflowy.com) clone.
 
 ## Heroku deploy
 
-You can use our one-click heroku deploy:
+You can use our one-click heroku deploy (Select "United States" as region, when prompted):
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
