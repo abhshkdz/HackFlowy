@@ -3,8 +3,11 @@
   "version": "0.0.2",
   "description": "A simple WorkFlowy clone",
   "dependencies": {
+    "body-parser": "^1.14.2",
     "config": "~1.19.0",
-    "express": "<4.0.0",
+    "errorhandler": "^1.4.3",
+    "express": "^4",
+    "method-override": "^2.3.5",
     "path": "~0.12.7",
     "pg": "~3.4.1",
     "sequelize": "~3.17.3",

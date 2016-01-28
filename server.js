@@ -6,17 +6,28 @@ var application_root = __dirname,
     orm = require('./orm').configure(config.get('database')),
     Tasks = require('./db/models/task').instance(orm),
     server = require('http').createServer(app),
-    socket = require('socket.io')
+    socket = require('socket.io'),
+    bodyParser = require('body-parser'),
+    methodOverride = require('method-override'),
+    errorhandler = require('errorhandler');
 
 
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// override with the X-HTTP-Method-Override header in the request
+app.use(methodOverride('X-HTTP-Method-Override'));
+
 app.use(express.static(path.join(application_root, 'public')));
-app.use(express.errorHandler({
-    dumpExceptions: true,
-    showStack: true
-}));
+
+if (process.env.NODE_ENV === 'development') {
+  // only use in development
+  app.use(errorHandler({
+      dumpExceptions: true,
+      showStack: true
+  }));
+}
+
 
 var port = process.env.PORT || config.get('port');
 server.listen(port, function () {
