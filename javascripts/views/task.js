@@ -127,6 +127,7 @@ define(
                 var value = this.$input.val().trim();
                 if (value === '') {
                     this.model.destroy();
+                    // collection.at(this.model.get('id')).destroy();
                 } else {
                     this.model.save({
                         content: value,
