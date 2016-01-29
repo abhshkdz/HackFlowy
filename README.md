@@ -2,7 +2,7 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/abhshkdz/HackFlowy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-An open-source [Workflowy](http://workflowy.com) clone.
+An open-source [Workflowy](http://workflowy.com) clone. [Demo here](http://wassname.github.io/HackFlowy/).
 
 ![](https://dl.dropbox.com/u/19398876/screenshots/043.png)
 
