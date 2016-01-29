@@ -3,7 +3,7 @@ define(
         'backbone',
         'collections/list',
         'views/task',
-        'demoData'
+        'data/demo'
     ],
 
     function (
@@ -24,18 +24,29 @@ define(
 
             initialize: function () {
                 Tasks = this.collection = new List();
-                var fetchPromise = this.collection.fetch();
-
-                fetchPromise.fail(function (e) {
-                    // if the server isn't running load some demo data and a demo warning
-                    $('#header').append('<div class="alert-box secondary round">Warning: Running in demo mode, all work will be lost</div>');
-                    var data = demoData;
-                    for (var i = 0; i < data.length; i++) {
-                        Tasks.add(data[i]);
-                    }
-                }, this);
 
                 this.listenTo(this.collection, 'add', this.renderTask);
+
+                this.collection.fetch()
+                    .fail(function (e) {
+                        // if the server isn't running so load some demo data and a demo warning
+                        $('#header').append('<div class="alert-box secondary round">Warning: Running in demo mode, all work will be lost</div>');
+                        for (var i = 0; i < demoData.length; i++) {
+                            Tasks.add(demoData[i]);
+                        }
+                    })
+                    .always(function(data){
+                        console.log({data:data});
+                        if (data.length===0){
+                            // if the server isn't running so load some demo data and a demo warning
+                            $('#header').append('<div class="alert-box secondary round">Warning: Running in demo mode, work will be lost</div>');
+                            for (var i = 0; i < demoData.length; i++) {
+                                var task = Tasks.add(demoData[i]);
+                                task.save();
+                            }
+                        }
+                    });
+
             },
 
             render: function (data) {

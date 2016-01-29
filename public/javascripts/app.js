@@ -5,10 +5,10 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery',
         lodash: "../bower_components/lodash/dist/lodash.min",
         backbone: '../bower_components/backbone/backbone',
+        localstorage: '../bower_components/backbone.localStorage/backbone.localStorage',
         modernizr: "vendor/custom.modernizr",
         socket: "../bower_components/socket.io-client/socket.io",
         text: '../bower_components/text/text',
-        demoData: '../javascripts/data/demo_data',
     },
     map: {
         "*": {
