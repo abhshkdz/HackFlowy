@@ -17,9 +17,9 @@
     </div>
 
     <%  if(model.isCompleted){%>
-      <input value="<%= model.content %>" data-id="<%= model.id %>" class="edit task-completed">
+      <input value="<%= model.content %>" data-id="<%= model.id %>" data-parent-id="<%= model.parentId %>" data-priority="<%= model.priority %>" class="edit task-completed">
     <%}else {%>
-      <input value="<%= model.content %>" data-id="<%= model.id %>" class="edit">
+      <input value="<%= model.content %>" data-id="<%= model.id %>" data-parent-id="<%= model.parentId %>" data-priority="<%= model.priority %>" class="edit">
     <%}%>
   </div>
 </div>
