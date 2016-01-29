@@ -1,12 +1,25 @@
 define(
-['backbone'
+['backbone',
+'localforage',
+'localforagebackbone'
 ],
 
 function(
-Backbone
+Backbone,
+localforage,
+localforageBackbone
 ) {
 
   var TaskModel = Backbone.Model.extend({
+
+    offlineSync: Backbone.localforage.sync('TaskModel'),
+    /** switches sync between server and local databases **/
+    sync: function(){
+              if (window.hackflowyOffline)
+                  return this.offlineSync.apply(this,arguments);
+              else
+                  return Backbone.sync.apply(this, arguments);
+    },
 
     defaults: {
 	  parentId: 0,
@@ -25,7 +38,7 @@ Backbone
     			//REVERT BACK ON ERROR
     			self.set({'isCompleted':prev_isCompleted});
     		}
-    	})
+    	});
     }
 
  });

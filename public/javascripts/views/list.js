@@ -27,32 +27,35 @@ define(
 
                 this.listenTo(this.collection, 'add', this.renderTask);
 
-                this.collection.fetch()
-                    .fail(function (e) {
-                        // if the server isn't running so load some demo data and a demo warning
-                        $('#header').append('<div class="alert-box secondary round">Warning: Running in demo mode, all work will be lost</div>');
-                        for (var i = 0; i < demoData.length; i++) {
-                            Tasks.add(demoData[i]);
-                        }
-                    })
-                    .always(function(data){
-                        console.log({data:data});
-                        if (data.length===0){
-                            // if the server isn't running so load some demo data and a demo warning
-                            $('#header').append('<div class="alert-box secondary round">Warning: Running in demo mode, work will be lost</div>');
-                            for (var i = 0; i < demoData.length; i++) {
-                                var task = Tasks.add(demoData[i]);
-                                task.save();
-                            }
-                        }
-                    });
+                /** Load demo data and warn users **/
+                function loadDemoData() {
+                    for (var i = 0; i < demoData.length; i++) {
+                        var task = Tasks.add(demoData[i]);
+                        task.save();
+                    }
+                }
+
+                function success(data) {
+                    // load demo data if the server returns nothing
+                    if (data.length === 0)
+                        loadDemoData();
+                }
+
+                this.collection.fetch({
+                    success: success,
+                    error: function () {
+                        // switch to localforage database if server isn't present
+                        window.hackflowyOffline=true;
+                        $('#header').append('<div class="alert-box secondary round">Running in offline mode, data may be lost </div>');
+                        Tasks.fetch({
+                            success: success
+                        });
+                    }
+                });
 
             },
 
-            render: function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    Tasks.add(data[i]);
-                }
+            render: function () {
                 this.collection.each(function (task) {
                     this.renderTask(task);
                 }, this);
@@ -66,10 +69,13 @@ define(
                 if (a.model.get('parentId') === 0) {
                     this.$el.append(a.el);
                 } else {
-                    var parent = $('*[data-id="' + a.model.get('parentId')+ '"]');
-                    if (parent.length===0) {
+                    var parent = $('*[data-id="' + a.model.get('parentId') + '"]');
+                    if (parent.length === 0) {
                         // TODO deal with loading order
-                        console.error("Parent not rendered yet: ", {selector: parent.selector, task: task});
+                        console.error("Parent not rendered yet: ", {
+                            selector: parent.selector,
+                            task: task
+                        });
                         this.$el.append(a.el);
                     } else {
                         a.$el.insertBefore(parent.parents('li:first'));

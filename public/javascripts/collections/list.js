@@ -2,19 +2,30 @@ define(
 [
 'backbone',
 'models/task',
-'localstorage',
+'localforage',
+'localforagebackbone'
 ],
 
 function(
 Backbone,
 Task,
-LocalStorage
+localforage,
+localforageBackbone
 ) {
 
   var List = Backbone.Collection.extend({
 
-    localStorage: new Backbone.LocalStorage("tasks"),
+
     model: Task,
+    offlineSync: Backbone.localforage.sync("tasks"),
+    /** switches sync between server and local databases **/
+    sync: function(){
+            if (window.hackflowyOffline)
+                return this.offlineSync.apply(this, arguments);
+            else
+                return Backbone.sync.apply(this, arguments);
+    },
+
     url: '/tasks'
 
  });
