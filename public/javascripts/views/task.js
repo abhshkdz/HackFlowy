@@ -1,3 +1,5 @@
+var demoData = '[{"id":44,"content":"Welcome to HackFlowy!","parent":0,"isCompleted":false,"createdAt":"2016-01-29T00:24:42.661Z","updatedAt":"2016-01-29T01:07:02.189Z"},{"id":45,"content":"An open-source WorkFlowy clone","parent":0,"isCompleted":false,"createdAt":"2016-01-29T00:24:42.661Z","updatedAt":"2016-01-29T01:07:06.453Z"},{"id":46,"content":"Built using Backbone + Socket.IO","parent":0,"isCompleted":false,"createdAt":"2016-01-29T00:24:42.661Z","updatedAt":"2016-01-29T01:09:10.862Z"},{"id":47,"content":"I pulled this together in a few hours to learn Backbone","parent":0,"isCompleted":false,"createdAt":"2016-01-29T00:24:42.661Z","updatedAt":"2016-01-29T01:07:47.734Z"},{"id":48,"content":"Feel free to try it out and hack on it","parent":0,"isCompleted":false,"createdAt":"2016-01-29T00:24:42.661Z","updatedAt":"2016-01-29T01:07:42.292Z"},{"id":49,"content":"Good Luck!","parent":0,"isCompleted":true,"createdAt":"2016-01-29T00:24:42.661Z","updatedAt":"2016-01-29T01:08:00.533Z"},{"id":50,"content":"uyi","parent":0,"isCompleted":false,"createdAt":"2016-01-29T01:14:22.854Z","updatedAt":"2016-01-29T01:14:22.854Z"},{"id":51,"content":"uyk","parent":0,"isCompleted":false,"createdAt":"2016-01-29T01:14:25.406Z","updatedAt":"2016-01-29T01:14:25.406Z"},{"id":72,"content":"uu","parent":null,"isCompleted":false,"createdAt":"2016-01-29T02:09:38.202Z","updatedAt":"2016-01-29T02:09:38.202Z"},{"id":73,"content":"yu","parent":null,"isCompleted":false,"createdAt":"2016-01-29T02:09:39.450Z","updatedAt":"2016-01-29T02:09:39.450Z"}]';
+
 define(
     ['jquery',
         'backbone',
@@ -44,6 +46,7 @@ define(
                         });
                     }
                 });
+
             },
 
             render: function () {
@@ -53,6 +56,7 @@ define(
                     model: this.model.toJSON()
                 }));
                 if (this.model.get('parentId') != 0) {
+                    // add a shift[n] class for n-indents
                     this.$el.addClass('shift1');
                     var className = $('*[data-id="' + this.model.get('parentId') + '"]').parents('li:first').attr('class');
                     if (className != undefined && className != 0 && className.substring(0, 5) == 'shift') {
@@ -166,8 +170,8 @@ define(
              */
             addNote: function (inputEle) {
                 var $inputEle = $(inputEle);
-                var currentId = $inputEle.data('id')||0;
-                parentId = currentId!==0 ? Tasks.get(currentId).get('parentId'): 0;
+                var currentId = $inputEle.data('id') || 0;
+                parentId = currentId !== 0 ? Tasks.get(currentId).get('parentId') : 0;
 
                 Tasks.add({
                     content: '',

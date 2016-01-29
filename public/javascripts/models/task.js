@@ -11,7 +11,8 @@ Backbone
     defaults: {
 	  parentId: 0,
       content: '',
-      isCompleted: 0
+      isCompleted: 0,
+      priority: 0
     },
 
     toggelCompletedStatus:function(isCompleted){
