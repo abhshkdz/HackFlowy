@@ -5,11 +5,12 @@ define(
 function(
 Backbone
 ) {
-	
+
   var TaskModel = Backbone.Model.extend({
 
     defaults: {
       parent: 0,
+	  parentId: 0,
       content: '',
       isCompleted: 0
     },
