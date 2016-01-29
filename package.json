@@ -1,34 +1,35 @@
 {
-  "name": "hackflowy",
-  "version": "0.0.2",
-  "description": "A simple WorkFlowy clone",
-  "dependencies": {
-    "body-parser": "^1.14.2",
-    "config": "~1.19.0",
-    "errorhandler": "^1.4.3",
-    "express": "^4",
-    "method-override": "^2.3.5",
-    "path": "~0.12.7",
-    "pg": "~3.4.1",
-    "sequelize": "~3.17.3",
-    "sequelize-cli": "^2.3.1",
-    "socket.io": "~1.4.4"
-  },
-  "devDependencies": {
-    "sqlite3": "~3.1.1"
-  },
-  "engines": {
-    "node": "5.4.x",
-    "npm": "3.3.11"
-  },
-  "scripts": {
-    "start": "node server.js",
-    "db:migrate": "./node_modules/.bin/sequelize -m --config config/database.json",
-    "db:seed": "node db/seed/initial_tasks.js",
-    "postinstall": "npm run db:migrate && npm run db:seed"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/abhshkdz/HackFlowy.git"
-  }
+    "name": "hackflowy",
+    "version": "0.0.2",
+    "description": "A simple WorkFlowy clone",
+    "dependencies": {
+        "body-parser": "^1.14.2",
+        "config": "~1.19.0",
+        "errorhandler": "^1.4.3",
+        "express": "^4",
+        "lodash": "^4.0.1",
+        "method-override": "^2.3.5",
+        "path": "~0.12.7",
+        "pg": "~3.4.1",
+        "sequelize": "~3.17.3",
+        "sequelize-cli": "^2.3.1",
+        "socket.io": "~1.4.4"
+    },
+    "devDependencies": {
+        "sqlite3": "~3.1.1"
+    },
+    "engines": {
+        "node": "5.4.x",
+        "npm": "3.3.11"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "db:migrate": "./node_modules/.bin/sequelize -m --config config/database.json",
+        "db:seed": "node db/seed/initial_tasks.js",
+        "postinstall": "npm run db:migrate && npm run db:seed"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/abhshkdz/HackFlowy.git"
+    }
 }

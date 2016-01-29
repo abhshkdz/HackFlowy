@@ -32,7 +32,7 @@ Task
       this.listView.collection.add(new Task({content: this.input.val().trim() }));
       this.input.val('');
     }
- 
+
  });
 
 return PageView;

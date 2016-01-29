@@ -1,30 +1,35 @@
 require.config({
 
-  //load lib files required
-  paths: {
-    jquery: "vendor/jquery.min",
-    lodash:"vendor/lodash.min",
-    backbone: "vendor/backbone",
-    modernizr:"vendor/custom.modernizr",
-    socket:"vendor/socket.io.min",
-    text:"vendor/text"
-  },
-  
-  shim: {   
-    backbone: {
-      deps: ["lodash", "jquery"],
-      exports: "Backbone"
-    }  
-  },
-  
-  waitSeconds: 5
+    //load lib files required
+    paths: {
+        jquery: '../bower_components/jquery/dist/jquery',
+        lodash: "../bower_components/lodash/dist/lodash.min",
+        backbone: '../bower_components/backbone/backbone',
+        modernizr: "vendor/custom.modernizr",
+        socket: "../bower_components/socket.io-client/socket.io",
+        text: '../bower_components/text/text',
+    },
+    map: {
+        "*": {
+            // alias underscore to lodash for backbone
+            "underscore": "lodash"
+        }
+    },
+    shim: {
+        backbone: {
+            deps: ["lodash", "jquery"],
+            exports: "Backbone"
+        }
+    },
+
+    waitSeconds: 5
 
 });
 
 //start the app
 require([
-    'views/page'
-],
-function( App ) {
-   new App();
-});
+        'views/page'
+    ],
+    function (App) {
+        new App();
+    });

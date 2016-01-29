@@ -9,7 +9,7 @@ define(
 function(
 $,
 Backbone,
-socket,
+io,
 constants,
 taskTemplate
 ) {
