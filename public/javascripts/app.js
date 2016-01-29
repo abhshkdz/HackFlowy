@@ -8,6 +8,7 @@ require.config({
         modernizr: "vendor/custom.modernizr",
         socket: "../bower_components/socket.io-client/socket.io",
         text: '../bower_components/text/text',
+        demoData: '../javascripts/data/demo_data',
     },
     map: {
         "*": {
