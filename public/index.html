@@ -31,15 +31,14 @@
                 <footer id="footer">
                     <div id="footer-qoute">Make love. Catch fish</div>
                     <script>
-                        // insert random qoute about lists which should be about love
-
+                        // into the footer, a random qoute about lists which was originally about love
                         // TODO(wassname) make attributation a link or mouseover
                         var qoutes = ["Lists cannot be sold only given", "Make lists. Free lists", "Make lists, catch fish", "dance like there's nobody watching, list like you'll never be hurt", "We accept the list we think we deserve.",
                             "A friend is someone who knows all about you and still lists you.", "Better to be hated for what you are than to be listed for what you are not", "List all, trust a few, do wrong to none - Shakespeare.",
                             "There is never a time or place for a true list. It happens accidentally, in a heartbeat, in a single flashing, throbbing moment - Sarah Dessen.",
                             "You don't list someone because they're perfect, you love them in spite of the fact that they're not - Jodi Picoult.",
                             "A List never dies a natural death. It dies because we don't know how to replenish its source. It dies of blindness and errors and betrayals. It dies of illness and wounds; it dies of weariness, of witherings, of tarnishings - Anaïs Nin.",
-                            "The real lover is the man who can thrill you by kissing your forehead or smiling into your eyes or just staring into space - Marilyn Monroe.",
+                            "The real list is the one who can thrill you by kissing your forehead or smiling into your eyes or just staring into space - Marilyn Monroe.",
                             "I list you and that's the beginning and end of everything -  F. Scott Fitzgerald.",
                             "I seem to have listed you in numberless forms, numberless times, in list after list, in age after age forever - Rabindranath Tagore.",
                             "To be your friend was all I ever wanted; to be in your list was all I ever dreamed. - Valerie Lombardo.",
@@ -54,7 +53,7 @@
                         var elem = document.getElementById("footer-qoute");
                         var newQoute = qoutes[Math.floor(Math.random() * qoutes.length)] + ' <3 Open Source.';
                         //if (newQoute.length>100){
-                            // TODO(wassname) truncate long qoutes
+                            // TODO(wassname) truncate long qoutes with a more link
                         //}
                         elem.textContent = newQoute
                     </script>
