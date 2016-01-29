@@ -5543,14 +5543,14 @@ body {
 /* line 54, ../sass/app.scss */
 body #hackflowy {
   background-color: white;
-  height: 1000px;
+  min-height: 1000px;
   margin: 75px 100px;
   box-shadow: 0px 0px 10px 5px #cccccc;
   padding: 60px 60px;
 }
 /* line 60, ../sass/app.scss */
 body #hackflowy #main {
-  height: 880px;
+  min-height: 880px;
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #eeeeee;
 }
