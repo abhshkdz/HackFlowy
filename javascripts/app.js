@@ -2,9 +2,9 @@ require.config({
 
     //load lib files required
     paths: {
-        jquery: '../bower_components/jquery/dist/jquery',
+        jquery: '../bower_components/jquery/dist/jquery.min',
         lodash: "../bower_components/lodash/dist/lodash.min",
-        backbone: '../bower_components/backbone/backbone',
+        backbone: '../bower_components/backbone/backbone-min',
         modernizr: "vendor/custom.modernizr",
         socket: "../bower_components/socket.io-client/socket.io",
         text: '../bower_components/text/text',
