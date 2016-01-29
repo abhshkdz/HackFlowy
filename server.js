@@ -44,7 +44,7 @@ app.get('/tasks', function (req, res) {
 app.post('/tasks', function (req, res) {
     Tasks.create({
         content: req.body.content,
-        parent: parseInt(req.body.parent) || 0,
+        parentId: parseInt(req.body.parentId) || 0,
         isCompleted: false
     }).then(function (task) {
         res.send(task);
@@ -58,10 +58,11 @@ app.get('/tasks/:id', function (req, res) {
 });
 
 app.put('/tasks/:id', function (req, res) {
-    console.log(req.body.isCompleted);
+    console.log({isCompleted: req.body.isCompleted});
     Tasks.findById(req.params.id).then(function (task) {
         task.content = req.body.content;
-        task.parent = parseInt(req.body.parent) || 0,
+        console.log({view: "put('/tasks/:id)", body:req.body});
+        task.parentId = parseInt(req.body.parentId) || 0,
             task.isCompleted = req.body.isCompleted == 1;
         task.save().then(function (task) {
             res.send(task);

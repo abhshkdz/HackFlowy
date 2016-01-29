@@ -37,10 +37,10 @@ TaskView
         model: task
       });
       var a = taskView.render();
-      if (a.model.get('parent')===null||a.model.get('parent')===0)
+      if (a.model.get('parentId')===0)
         this.$el.append(a.el);
       else
-        a.$el.insertAfter($('*[data-id="'+a.model.get('parent')+'"]').parents('li:first'));
+        a.$el.insertAfter($('*[data-id="'+a.model.get('parentId')+'"]').parents('li:first'));
     }
 
  });

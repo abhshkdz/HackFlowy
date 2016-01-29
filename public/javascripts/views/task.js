@@ -160,11 +160,15 @@ define(
                 });
             },
 
+            /**
+             * Add a new blank note
+             * @param {object} inputEle Input elelement from parent item
+             */
             addNote: function (inputEle) {
                 var $inputEle = $(inputEle);
                 Tasks.add({
                     content: '',
-                    parentId: this.model.get('parentId')
+                    parentId: $inputEle.data('id')||0
                 });
                 $inputEle.blur();
                 $inputEle.closest('li').next('li').find('input').focus();
