@@ -51,6 +51,12 @@ app.post('/tasks', function (req, res) {
     });
 });
 
+app.get('/tasks/:id', function (req, res) {
+    Tasks.findById(req.params.id).then(function (task) {
+            res.send(task);
+    });
+});
+
 app.put('/tasks/:id', function (req, res) {
     console.log(req.body.isCompleted);
     Tasks.findById(req.params.id).then(function (task) {
