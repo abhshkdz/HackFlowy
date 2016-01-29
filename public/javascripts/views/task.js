@@ -162,13 +162,16 @@ define(
 
             /**
              * Add a new blank note
-             * @param {object} inputEle Input elelement from parent item
+             * @param {object} inputEle Input elelement from current item
              */
             addNote: function (inputEle) {
                 var $inputEle = $(inputEle);
+                var currentId = $inputEle.data('id')||0;
+                parentId = currentId!==0 ? Tasks.get(currentId).get('parentId'): 0;
+
                 Tasks.add({
                     content: '',
-                    parentId: $inputEle.data('id')||0
+                    parentId: parentId
                 });
                 $inputEle.blur();
                 $inputEle.closest('li').next('li').find('input').focus();
