@@ -29,6 +29,11 @@ localforageBackbone
                 return Backbone.sync.apply(this, arguments);
         },
 
+        /** sort by priority then created date **/
+        comporator: function(child){
+            return [child.get('priority'),child.get('createdAt')];
+        },
+
         url: '/tasks'
 
     });

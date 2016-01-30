@@ -1,5 +1,3 @@
-
-
 define(
     ['jquery',
         'backbone',
@@ -55,7 +53,7 @@ define(
                 this.listenTo(this.model, 'destroy', this.remove);
 
                 // updates from server
-                if (!window.hackflowyOffline){
+                if (!window.hackflowyOffline) {
                     this.socket = io.connect();
                     this.socket.on('task', function (data) {
                         if (task.model.id == data.id) {
@@ -64,16 +62,23 @@ define(
                                 'isCompleted': data.isCompleted
                             });
                         } else {
-                            console.error("task.model.id != data.id",task.model.id , data.id);
+                            console.error("task.model.id != data.id", task.model.id, data.id);
                         }
                     });
                 }
 
             },
 
-            // Only show direct children
+            // override marionette filter to filter displayed children
             filter: function (child, index, collection) {
-              return child.get('parentId') === this.model.get('id');
+                return child.get('parentId') === this.model.get('id');
+            },
+
+            /** Get the parent view or root view **/
+            getParentView: function(){
+                var parentId = this.model.get('parentId');
+                if (parentId>0) return Tasks.get(parentId).view;
+                else return listView;
             },
 
             edit: function () {
@@ -84,32 +89,58 @@ define(
             handleKey: function (e) {
                 if (e.keyCode === constants.ENTER_KEY)
                     this.addNote(e.currentTarget);
-                if (e.keyCode == constants.DOWN_ARROW)
-                    this.$el.next('li').find('input').focus();
-                else if (e.keyCode == constants.UP_ARROW)
-                    this.$el.prev('li').find('input').focus();
-
-                // shift and tab
-                if (e.shiftKey && e.keyCode == constants.TAB) {
+                else if (e.ctrlKey && e.keyCode == constants.DOWN_ARROW){
                     e.preventDefault();
-                    var newParentId = this.$el.parents('ul:first').find('input:first').data('parent-id');
-                    if (newParentId === null) newParentId = 0;
-                    this.model.set('parentId', newParentId);
-                    this.model.save();
-                    Tasks.get(newParentId).view.render()
+                    this.model.save({priority: this.model.get('priority')-1});
+                    this.getParentView().collection.sortBy();
+                    this.getParentView().resortView();
                     this.model.view.ui.input.focus();
+                } else if (e.ctrlKey && e.keyCode == constants.UP_ARROW){
+                    e.preventDefault();
+                    this.model.save({priority: this.model.get('priority')+1});
+                    this.getParentView().collection.sortBy();
+                    this.getParentView().resortView();
+                    this.model.view.ui.input.focus();
+                } else if (e.keyCode == constants.DOWN_ARROW){
+                    var all = listView.$el.find('ul:visible');
+                    var next = $(all[all.index(this.$el)+1]);
+                    if (next)
+                        next.find('input:first').focus();
+                }  else if (e.keyCode == constants.UP_ARROW){
+                    var all = listView.$el.find('ul:visible');
+                    var prev = $(all[all.index(this.$el)-1]);
+                    if (prev)
+                        prev.find('input:first').focus();
                 }
+                // indent one less, by changing parent
+                else if (e.shiftKey && e.keyCode == constants.TAB) {
+                    e.preventDefault();
+                    var parent = this.$el.parents('ul:first');
+                    var grandparentId = parent.find('input:first').data('parent-id') || 0;
+                    if (this.model.get('parentId') !== grandparentId) {
+                        this.model.save({parentId: grandparentId});
+                        this.getParentView().render();
+                        this.model.view.ui.input.focus();
+                    } else {
+                        console.warn("Can't untab any further");
+                    }
+                }
+                // indent one more, by changing parent
                 else if (e.keyCode == constants.TAB) {
                     e.preventDefault();
-                    var newParentId = this.$el.prev('ul').find('input:first').data('id');
-                    this.model.set('parentId', newParentId);
-                    this.model.save();
-                    this.model.view.remove();
-                    Tasks.get(newParentId).view.render();
-                    this.model.view.ui.input.focus();
+                    var prevSibling = this.$el.prev('ul');
+                    if (prevSibling.length > 0) {
+                        var siblingId = prevSibling.find('input:first').data('id');
+                        this.model.save({parentId: siblingId});
+                        this.model.view.remove();
+                        this.getParentView().render();
+                        this.model.view.ui.input.focus();
+                    } else {
+                        console.warn("Can't tab any further");
+                    }
                 }
 
-                if (!window.hackflowyOffline){
+                if (!window.hackflowyOffline) {
                     this.socket.emit('task', {
                         id: this.model.id,
                         parentId: this.model.parentId,
@@ -126,9 +157,12 @@ define(
                 var value = this.$('.edit:first').val().trim();
                 if (value === '')
                     // remove empty items
+                    // TODO let us tab and untab empty ones
                     this.model.destroy();
                 else
-                    this.model.save({content: value});
+                    this.model.save({
+                        content: value
+                    });
                 this.$el.removeClass('editing');
             },
 
@@ -162,6 +196,7 @@ define(
 
             /** Add a new blank note **/
             addNote: function () {
+                // TODO add it after the current one
                 var currentId = this.ui.input.data('id') || 0;
                 parentId = this.ui.input.data('parent-id');
 
@@ -173,7 +208,7 @@ define(
             },
 
             /** Fold children of the clicked element */
-            foldChildren: function(){
+            foldChildren: function () {
                 this.$el.find('ul').toggle();
                 this.$el.find('li').toggleClass('folded');
             },
