@@ -22,7 +22,7 @@ Task
     },
 
     initialize: function() {
-      this.listView = new ListView();
+      listView = this.listView = new ListView();
       this.input = $('#newTask');
     },
 

@@ -5603,12 +5603,20 @@ body #hackflowy #main .children li .task .with-children > .link {
 body #hackflowy #main .children li .task .open > .link {
   background-color: white;
 }
+
+/* Show that this item has folded contents */
+body #hackflowy #main .children li.folded .task .link  {
+  z-index: 7;
+  background-color: #ddd;
+}
+
 /* line 105, ../sass/app.scss */
 body #hackflowy #main .children li .task .link:hover {
   cursor: pointer;
   z-index: 8;
   background-color: #aaa;
 }
+
 /* line 110, ../sass/app.scss */
 body #hackflowy #main .children li .task input.edit {
   box-shadow: none;
@@ -5684,6 +5692,12 @@ body #hackflowy #footer {
   font-size: 12px;
 }
 
+/* line 138, ../sass/app.scss */
+body #hackflowy #main .children ul.shift {
+  margin-left: 30px;
+  margin-bottom: 0px;
+}
+
 .options-div{
   display: none;
 }
@@ -5713,7 +5727,7 @@ cursor: pointer;
 background: #ddd;
 border: 1px solid #bbb;
 width: 80px;
-height: 58px;
+min-height: 58px;
 padding: 10px 0 5px 10px;
 margin-bottom: 10px;
 border-radius: 4px;
@@ -5772,6 +5786,7 @@ border-bottom: 15px solid #ddd;
 border-left: 15px solid transparent;
 border-right: 15px solid transparent;
 }
+
 
 .task-completed{
   text-decoration: line-through;

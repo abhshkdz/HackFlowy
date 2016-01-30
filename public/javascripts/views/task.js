@@ -5,7 +5,8 @@ define(
         'backbone',
         'socket',
         'util/constants',
-        'text!../../templates/task.html'
+        'text!../../templates/task.html',
+        'marionette',
     ],
 
     function (
@@ -13,136 +14,130 @@ define(
         Backbone,
         io,
         constants,
-        taskTemplate
+        taskTemplate,
+        Marionette
     ) {
+        // The recursive tree view http://jsfiddle.net/wassname/zf61mLvh/2/
+        var TaskView = Backbone.Marionette.CompositeView.extend({
 
-        var TaskView = Backbone.View.extend({
+            template: '#task-view-template',
+            tagName: 'ul',
+            className: "shift",
 
-            tagName: 'li',
-            template: taskTemplate,
+            ui: {
+                input: '.task input',
+                options: '.task .options:first'
+            },
 
             events: {
-                'click .task': 'edit',
-                'blur .edit': 'close',
-                'keyup .edit': 'handleKeyup',
-                'keypress .edit': 'update',
-                'mouseover .link': 'showOptions',
-                'mouseout .link': 'hideOptions',
-                'click .complete': 'markComplete',
-                'click .uncomplete': 'unmarkComlete',
-                'click .note': 'addNote'
+                'click .task:first': 'edit',
+                'blur .edit:first': 'close',
+                'keydown .edit:first': 'handleKey',
+                'keypress .edit:first': 'handleKey',
+                'mouseover .link:first': 'showOptions',
+                'mouseout .link:first': 'hideOptions',
+                'click .complete:first': 'markComplete',
+                'click .uncomplete:first': 'unmarkComlete',
+                'click .note:first': 'addNote',
+                'click .mouse-tip:first': 'foldChildren'
             },
 
             initialize: function () {
+                var task = this;
+
+                // backlink
+                this.model.view = this;
+
+                this.collection = this.model.collection;
+
+                // events
                 this.listenTo(this.model, 'change', this.render);
                 this.listenTo(this.model, 'destroy', this.remove);
-                this.socket = io.connect();
-                var task = this;
-                this.socket.on('task', function (data) {
-                    if (task.model.id == data.id) {
-                        task.model.set({
-                            'content': data.content,
-                            'isCompleted': data.isCompleted
-                        });
-                    }
-                });
+
+                // updates from server
+                if (!window.hackflowyOffline){
+                    this.socket = io.connect();
+                    this.socket.on('task', function (data) {
+                        if (task.model.id == data.id) {
+                            task.model.set({
+                                'content': data.content,
+                                'isCompleted': data.isCompleted
+                            });
+                        } else {
+                            console.error("task.model.id != data.id",task.model.id , data.id);
+                        }
+                    });
+                }
 
             },
 
-            render: function () {
-                var tmpl = _.template(this.template);
-                var task = this;
-                this.$el.html(tmpl({
-                    model: this.model.toJSON()
-                }));
-                if (this.model.get('parentId') != 0) {
-                    // add a shift[n] class for n-indents
-                    this.$el.addClass('shift1');
-                    var className = $('*[data-id="' + this.model.get('parentId') + '"]').parents('li:first').attr('class');
-                    if (className != undefined && className != 0 && className.substring(0, 5) == 'shift') {
-                        this.$el.removeClass();
-                        this.$el.addClass('shift' + (parseInt(className.charAt(5)) + 1));
-                    }
-                }
-                this.$input = this.$('.edit:first');
-
-                return this;
+            // Only show direct children
+            filter: function (child, index, collection) {
+              return child.get('parentId') === this.model.get('id');
             },
 
             edit: function () {
                 this.$el.addClass('editing');
-                this.$input.focus();
+                this.$('.edit:first').focus();
             },
 
-            handleKeyup: function (e) {
-                // down arrow
-                if (e.keyCode == 40)
+            handleKey: function (e) {
+                if (e.keyCode === constants.ENTER_KEY)
+                    this.addNote(e.currentTarget);
+                if (e.keyCode == constants.DOWN_ARROW)
                     this.$el.next('li').find('input').focus();
-                // Up arrow
-                else if (e.keyCode == 38)
+                else if (e.keyCode == constants.UP_ARROW)
                     this.$el.prev('li').find('input').focus();
 
                 // shift and tab
-                if (e.shiftKey && e.keyCode == 9) {
-                    var model = this.$el.next('li').find('input').data('id');
-                    model = Tasks.get(model);
-                    var old_parent = model.get('parentId');
-                    old_parent = Tasks.get(old_parent);
-                    var new_parent = old_parent.get('parentId');
-                    if (new_parent == null) new_parent = 0;
-                    model.set('parentId', new_parent);
-                    model.save({
-                        content: model.get('content'),
-                        parentId: model.get('parentId')
-                    });
+                if (e.shiftKey && e.keyCode == constants.TAB) {
+                    e.preventDefault();
+                    var newParentId = this.$el.parents('ul:first').find('input:first').data('parent-id');
+                    if (newParentId === null) newParentId = 0;
+                    this.model.set('parentId', newParentId);
+                    this.model.save();
+                    Tasks.get(newParentId).view.render()
+                    this.model.view.ui.input.focus();
                 }
-                // tab
-                else if (e.keyCode == 9) {
-                    var parent = this.$el.prev('li').prev('li').find('input').data('id');
-                    var current = this.$el.prev('li').find('input').data('id');
-                    var model = Tasks.get(current);
-                    model.set('parentId', parent);
-                    model.save({
-                        content: model.get('content'),
-                        parentId: model.get('parentId')
-                    });
+                else if (e.keyCode == constants.TAB) {
+                    e.preventDefault();
+                    var newParentId = this.$el.prev('ul').find('input:first').data('id');
+                    this.model.set('parentId', newParentId);
+                    this.model.save();
+                    this.model.view.remove();
+                    Tasks.get(newParentId).view.render();
+                    this.model.view.ui.input.focus();
                 }
 
-                this.socket.emit('task', {
-                    id: this.model.id,
-                    parentId: this.model.parentId,
-                    content: this.$input.val().trim(),
-                    isCompleted: this.model.toJSON().isCompleted
-                });
+                if (!window.hackflowyOffline){
+                    this.socket.emit('task', {
+                        id: this.model.id,
+                        parentId: this.model.parentId,
+                        content: this.$('.edit:first').val().trim(),
+                        isCompleted: this.model.toJSON().isCompleted
+                    });
+                } else {
+
+                }
             },
 
-            update: function (e) {
-                if (e.which === constants.ENTER_KEY) {
-                    this.addNote(e.currentTarget);
-                }
-
-            },
             /** Finish editing an item **/
             close: function () {
-                var value = this.$input.val().trim();
-                if (value === '') {
+                var value = this.$('.edit:first').val().trim();
+                if (value === '')
+                    // remove empty items
                     this.model.destroy();
-                    // collection.at(this.model.get('id')).destroy();
-                } else {
-                    this.model.save({
-                        content: value,
-                        parentId: this.model.attributes.parentId
-                    });
-                }
+                else
+                    this.model.save({content: value});
                 this.$el.removeClass('editing');
             },
 
             showOptions: function () {
-                this.$el.find('.options').show();
+                this.ui.options.show();
             },
 
             hideOptions: function () {
-                this.$el.find('.options').hide();
+                this.ui.options.hide();
             },
 
             markComplete: function () {
@@ -165,23 +160,23 @@ define(
                 });
             },
 
-            /**
-             * Add a new blank note
-             * @param {object} inputEle Input elelement from current item
-             */
-            addNote: function (inputEle) {
-                var $inputEle = $(inputEle);
-                var currentId = $inputEle.data('id') || 0;
-                parentId = currentId !== 0 ? Tasks.get(currentId).get('parentId') : 0;
+            /** Add a new blank note **/
+            addNote: function () {
+                var currentId = this.ui.input.data('id') || 0;
+                parentId = this.ui.input.data('parent-id');
 
-                Tasks.add({
-                    content: '',
+                var task = Tasks.add({
                     parentId: parentId
                 });
-                $inputEle.blur();
-                $inputEle.closest('li').next('li').find('input').focus();
-            }
+                this.ui.input.blur();
+                task.view.ui.input.focus();
+            },
 
+            /** Fold children of the clicked element */
+            foldChildren: function(){
+                this.$el.find('ul').toggle();
+                this.$el.find('li').toggleClass('folded');
+            },
         });
 
         return TaskView;

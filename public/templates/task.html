@@ -1,10 +1,12 @@
+<%  if(content){%>
+<li>
 <div class="task-wrappper">
   <div class="task">
     <div class="link">•
       <div class="options">
         <div class="options-left">
           <div class="mouse-tip"></div>
-          <%  if(model.isCompleted){%>
+          <%  if(isCompleted){%>
             <a class="uncomplete">Uncomplete<hr></a>
           <%}else {%>
             <a class="complete">Complete<hr></a>
@@ -16,10 +18,12 @@
       </div>
     </div>
 
-    <%  if(model.isCompleted){%>
-      <input value="<%= model.content %>" data-id="<%= model.id %>" data-parent-id="<%= model.parentId %>" data-priority="<%= model.priority %>" class="edit task-completed">
+    <%  if(isCompleted){%>
+      <input value="<%= content %>" data-id="<%= id %>" data-parent-id="<%= parentId %>" data-priority="<%= priority %>" class="edit task-completed">
     <%}else {%>
-      <input value="<%= model.content %>" data-id="<%= model.id %>" data-parent-id="<%= model.parentId %>" data-priority="<%= model.priority %>" class="edit">
+      <input value="<%= content %>" data-id="<%= id %>" data-parent-id="<%= parentId %>" data-priority="<%= priority %>" class="edit">
     <%}%>
   </div>
 </div>
+</li>
+<%}%>

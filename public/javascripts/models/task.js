@@ -13,6 +13,7 @@ function (
     var TaskModel = Backbone.Model.extend({
 
         offlineSync: Backbone.localforage.sync('TaskModel'),
+
         /** switches sync between server and local databases **/
         sync: function () {
 
@@ -26,7 +27,8 @@ function (
             parentId: 0,
             content: '',
             isCompleted: 0,
-            priority: 0
+            priority: 0,
+            id: '',
         },
 
         toggelCompletedStatus: function (isCompleted) {
