@@ -22,8 +22,12 @@ Task
     },
 
     initialize: function() {
-      this.listView = new ListView();
+      listView = this.listView = new ListView();
       this.input = $('#newTask');
+
+      // stop browser going back a page when jamming backspace
+      window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+0008'||e.keyIdentifier=='Backspace'){if(e.target==document.body){e.preventDefault();}}},true);
+
     },
 
     createNewTask: function(e) {

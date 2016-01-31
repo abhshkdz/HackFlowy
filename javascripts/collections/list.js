@@ -13,22 +13,66 @@ localforage,
 localforageBackbone
 ) {
 
-  var List = Backbone.Collection.extend({
+    var List = Backbone.Collection.extend({
 
+        model: Task,
+        offlineSync: Backbone.localforage.sync("tasks"),
 
-    model: Task,
-    offlineSync: Backbone.localforage.sync("tasks"),
-    /** switches sync between server and local databases **/
-    sync: function(){
+        initialize: function(){
+            // update order on add, remove.
+            // Ref: http://stackoverflow.com/a/11665085/221742
+            this.on('add remove', this.updateModelPriority);
+        },
+
+        moveUp: function(model) { // I see move up as the -1
+          var index = this.indexOf(model);
+          if (index > 0) {
+            this.remove(model, {silent: true}); // silence this to stop excess event triggers
+            this.add(model, {at: index-1});
+          }
+        },
+
+        moveDown: function(model) { // I see move up as the -1
+          var index = this.indexOf(model);
+          if (index < this.models.length) {
+            this.remove(model, {silent: true}); // silence this to stop excess event triggers
+            this.add(model, {at: index+1});
+          }
+        },
+
+        /** Updated priority of each member of list **/
+        updateModelPriority: function() {
+          this.each(function(model, index) {
+            if (model)
+                model.set('priority', index);
+          }, this);
+        },
+
+        /** switches sync between server and local databases **/
+        sync: function(){
+            //var self = this;
+            _localforageNamespace = this.offlineSync._localforageNamespace;
+            _localeForageKeyFn=this.offlineSync._localeForageKeyFn;
+            localforageKey = this.offlineSync._localeForageKeyFn;
             if (window.hackflowyOffline)
                 return this.offlineSync.apply(this, arguments);
             else
                 return Backbone.sync.apply(this, arguments);
-    },
+        },
 
-    url: '/tasks'
+        /** sort by priority then created date **/
+        comporator: function(child){
+            return [child.get('priority'), child.get('createdAt')];
+        },
 
- });
+        url: '/tasks'
+
+    });
+
+    // a couple of vars backbone.localforage needs in the sync function
+    List.prototype.sync.localforage = List.prototype.offlineSync._localeForageKeyFn;
+    List.prototype.sync._localeForageKeyFn = List.prototype.offlineSync._localeForageKeyFn;
+    List.prototype.sync._localforageNamespace = List.prototype.offlineSync._localforageNamespace;
 
 return List;
 
