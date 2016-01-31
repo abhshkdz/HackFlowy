@@ -5681,6 +5681,9 @@ body #hackflowy #main .children li.shift8 {
 body #hackflowy #main .children li.shift9 {
   margin-left: 270px;
 }
+body #hackflowy #main .children ul.shift {
+  margin-bottom: 0px;
+}
 /* line 167, ../sass/app.scss */
 body #hackflowy #main > .children {
   margin-left: 0;
@@ -5692,11 +5695,6 @@ body #hackflowy #footer {
   font-size: 12px;
 }
 
-/* line 138, ../sass/app.scss */
-body #hackflowy #main .children ul.shift {
-  margin-left: 30px;
-  margin-bottom: 0px;
-}
 
 .options-div{
   display: none;

@@ -23,7 +23,8 @@ define(
 
             el: $("#main .children"),
             childView: TaskView,
-            template: '#list-view-template',
+            viewComparator: List.prototype.comporator,
+            template: _.template(listTemplate),
 
             events: {
                 'click #add': 'addTask'
@@ -32,7 +33,13 @@ define(
             initialize: function () {
                 var self = this;
 
-                this.collection = Tasks = new List();
+                // this wholeCollection holds all items
+                this.wholeCollection = Tasks = new List();
+                //this.collection = new List();
+
+                // custom events
+                this.listenTo(this, 'childview:rerender', this.render);
+                // this.listenTo(this.collection, 'add remove', this.render);
 
                 /** Load demo data **/
                 function loadDemoData() {
@@ -44,11 +51,11 @@ define(
 
                 function success(children, data, promise) {
                     // load demo data if the server returns nothing
-                    if (children.length === 0)
+                    var directChildren = children.filter(this.filterDirectChildren);
+                    if (directChildren.length === 0)
                         loadDemoData();
-                    else {
-                        this.render();
-                    }
+                    this.collection = new List(Tasks.filter(this.filterDirectChildren));
+                    this.render();
                 }
 
                 Tasks.fetch({
@@ -70,8 +77,19 @@ define(
             },
 
             // Only show direct children
-            filter: function (child, index, collection) {
+            filterDirectChildren: function (child, index, collection) {
                 return child.get('parentId') === 0;
+            },
+
+            /** This is the root view in the tree **/
+            getParentView: function () {
+                return this;
+            },
+
+            /** Update parentId when added to collection **/
+            onAddChild: function(childView){
+                if (childView.model.get('parentId')!==0)
+                    childView.model.save({parentId: 0});
             },
 
         });

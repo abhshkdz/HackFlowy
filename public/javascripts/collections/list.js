@@ -17,6 +17,37 @@ localforageBackbone
 
         model: Task,
         offlineSync: Backbone.localforage.sync("tasks"),
+
+        initialize: function(){
+            // update order on add, remove.
+            // Ref: http://stackoverflow.com/a/11665085/221742
+            this.on('add remove', this.updateModelPriority);
+        },
+
+        moveUp: function(model) { // I see move up as the -1
+          var index = this.indexOf(model);
+          if (index > 0) {
+            this.remove(model, {silent: true}); // silence this to stop excess event triggers
+            this.add(model, {at: index-1});
+          }
+        },
+
+        moveDown: function(model) { // I see move up as the -1
+          var index = this.indexOf(model);
+          if (index < this.models.length) {
+            this.remove(model, {silent: true}); // silence this to stop excess event triggers
+            this.add(model, {at: index+1});
+          }
+        },
+
+        /** Updated priority of each member of list **/
+        updateModelPriority: function() {
+          this.each(function(model, index) {
+            if (model)
+                model.set('priority', index);
+          }, this);
+        },
+
         /** switches sync between server and local databases **/
         sync: function(){
             //var self = this;
@@ -31,7 +62,7 @@ localforageBackbone
 
         /** sort by priority then created date **/
         comporator: function(child){
-            return [child.get('priority'),child.get('createdAt')];
+            return [child.get('priority'), child.get('createdAt')];
         },
 
         url: '/tasks'

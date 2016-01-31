@@ -2,6 +2,7 @@ define(
     ['jquery',
         'backbone',
         'socket',
+        'collections/list',
         'util/constants',
         'text!../../templates/task.html',
         'marionette',
@@ -11,46 +12,77 @@ define(
         $,
         Backbone,
         io,
+        List,
         constants,
         taskTemplate,
         Marionette
     ) {
-        // The recursive tree view http://jsfiddle.net/wassname/zf61mLvh/2/
+        // The recursive tree view. Ref:http://jsfiddle.net/wassname/zf61mLvh/2/
         var TaskView = Backbone.Marionette.CompositeView.extend({
 
-            template: '#task-view-template',
+            template: _.template(taskTemplate), //'#task-view-template',
             tagName: 'ul',
             className: "shift",
+            childView: TaskView,
+            childViewContainer: '.children',
+            childViewOptions: {
+                reorderOnSort: true
+            },
 
             ui: {
-                input: '.task input',
-                options: '.task .options:first'
+                input: '.task input:first',
+                options: '.task .options:first',
+                // ui elements are bound before child render
+                // so the below child hashes are only available because
+                // render:collection triggers this.bindUIElements
+                children: '.children>ul',
+                descendants: '.children ul',
             },
 
             events: {
                 'click .task:first': 'edit',
                 'blur .edit:first': 'close',
-                'keydown .edit:first': 'handleKey',
-                'keypress .edit:first': 'handleKey',
+                'keyup .edit:first': 'handleKeyUp',
+                'keydown .edit:first': 'handleKeyDown',
+                'keypress .edit:first': 'handleKeyPress',
                 'mouseover .link:first': 'showOptions',
                 'mouseout .link:first': 'hideOptions',
                 'click .complete:first': 'markComplete',
                 'click .uncomplete:first': 'unmarkComlete',
                 'click .note:first': 'addNote',
-                'click .mouse-tip:first': 'foldChildren'
+                'click .mouse-tip:first': 'foldChildren',
+
             },
 
-            initialize: function () {
+            collectionEvents: {},
+
+            childEvents: {},
+
+            initialize: function (options) {
                 var task = this;
+
+                // options
+                if (!('reorderOnSort' in options)) {
+                    options.reorderOnSort = true;
+                }
 
                 // backlink
                 this.model.view = this;
 
-                this.collection = this.model.collection;
+                var children = Tasks.filter(
+                    function (child, index, collection) {
+                        return child.get('parentId') === this.model.id;
+                    }, this);
+                this.collection = new List(children);
 
                 // events
                 this.listenTo(this.model, 'change', this.render);
                 this.listenTo(this.model, 'destroy', this.remove);
+                // refresh ui hashes after children are rendered
+                this.listenTo(this, 'render:collection', this.bindUIElements);
+                // custom event
+                this.listenTo(this, 'childview:rerender', this.render);
+                this.listenTo(this, 'focus', this.model.focusOnView);
 
                 // updates from server
                 if (!window.hackflowyOffline) {
@@ -70,71 +102,111 @@ define(
             },
 
             // override marionette filter to filter displayed children
-            filter: function (child, index, collection) {
-                return child.get('parentId') === this.model.get('id');
-            },
-
-            /** Get the parent view or root view **/
-            getParentView: function(){
-                var parentId = this.model.get('parentId');
-                if (parentId>0) return Tasks.get(parentId).view;
-                else return listView;
-            },
+            // filterDirectChildren: function (child, index, collection) {
+            //     return child.get('parentId') === this.model.get('id');
+            // },
 
             edit: function () {
                 this.$el.addClass('editing');
                 this.$('.edit:first').focus();
             },
 
-            handleKey: function (e) {
+            /** Get the parent view or root view **/
+            getParentView: function () {
+                var parent = Tasks.get(this.model.get('parentId'));
+                if (parent) return parent.view;
+                else return listView;
+            },
+
+            /** Update parentId when added to collection **/
+            onAddChild: function(childView){
+                if (childView.model.get('parentId')!==this.model.id)
+                    childView.model.save({parentId: this.model.id});
+            },
+
+            /** Focus on the next visible element down despite list level **/
+            focusOnPrev: function () {
+                var all = listView.$el.find('ul:visible');
+                var prev = $(all[all.index(this.$el) - 1]);
+                if (prev.length){
+                    prev.find('input:first').focus();
+                }
+                return prev;
+            },
+
+            focusOnNext: function () {
+                var all = listView.$el.find('ul:visible');
+                var next = $(all[all.index(this.$el) + 1]);
+                if (next)
+                    next.find('input:first').focus();
+                return next;
+            },
+
+            handleKeyUp: function(e){
+            },
+
+            handleKeyPress: function(e){
+            },
+
+            handleKeyDown: function (e) {
+                if (e.keyCode == constants.BACKSPACE) {
+                    // remove if backspace pressed on empty/soon-to-be-empty item
+                    if (this.ui.input.val().length < 2 && this.$('.children>ul').length===0) {
+                        e.preventDefault();
+                        prev = this.focusOnPrev();
+                        this.destroy();
+                        this.model.destroy();
+                        // set the cursor to the end of the previous input
+                        prev.find('input:first').focus();
+                        var input = prev.find('input:first')[0];
+                        input.selectionStart = input.selectionEnd = input.value.length;
+                        return false;
+                    }
+                }
                 if (e.keyCode === constants.ENTER_KEY)
                     this.addNote(e.currentTarget);
-                else if (e.ctrlKey && e.keyCode == constants.DOWN_ARROW){
+                else if (e.ctrlKey && e.keyCode == constants.DOWN_ARROW) {
+                    // move down list by swapping priority with next sibling
                     e.preventDefault();
-                    this.model.save({priority: this.model.get('priority')-1});
-                    this.getParentView().collection.sortBy();
-                    this.getParentView().resortView();
-                    this.model.view.ui.input.focus();
-                } else if (e.ctrlKey && e.keyCode == constants.UP_ARROW){
+                    this.getParentView().collection.moveDown(this.model);
+                    this.trigger('rerender');
+                    this.model.focusOnView();
+                } else if (e.ctrlKey && e.keyCode == constants.UP_ARROW) {
+                    // move up the list
                     e.preventDefault();
-                    this.model.save({priority: this.model.get('priority')+1});
-                    this.getParentView().collection.sortBy();
-                    this.getParentView().resortView();
-                    this.model.view.ui.input.focus();
-                } else if (e.keyCode == constants.DOWN_ARROW){
-                    var all = listView.$el.find('ul:visible');
-                    var next = $(all[all.index(this.$el)+1]);
-                    if (next)
-                        next.find('input:first').focus();
-                }  else if (e.keyCode == constants.UP_ARROW){
-                    var all = listView.$el.find('ul:visible');
-                    var prev = $(all[all.index(this.$el)-1]);
-                    if (prev)
-                        prev.find('input:first').focus();
-                }
-                // indent one less, by changing parent
-                else if (e.shiftKey && e.keyCode == constants.TAB) {
+                    this.getParentView().collection.moveUp(this.model);
+                    this.trigger('rerender');
+                    this.model.focusOnView();
+                } else if (e.keyCode == constants.DOWN_ARROW) {
+                    this.focusOnNext();
+                } else if (e.keyCode == constants.UP_ARROW) {
+                    this.focusOnPrev();
+                } else if (e.shiftKey && e.keyCode == constants.TAB) {
+                    // indent one less, by changing parent
                     e.preventDefault();
-                    var parent = this.$el.parents('ul:first');
-                    var grandparentId = parent.find('input:first').data('parent-id') || 0;
-                    if (this.model.get('parentId') !== grandparentId) {
-                        this.model.save({parentId: grandparentId});
-                        this.getParentView().render();
-                        this.model.view.ui.input.focus();
+                    var parentId = this.$el.parents('ul:first').find('input:first').data('id');
+                    if (parentId===0){
+
+                    } else if (parentId){
+                        parentModel = Tasks.get(parentId);
+                        this.getParentView().collection.remove(this.model);
+                        var index = parentModel.view.getParentView().collection.indexOf(parentModel);
+                        if (index<0) index=this.getParentView().collection.length-1;
+                        parentModel.view.getParentView().collection.add(this.model, {at:index+1});
+                        this.model.focusOnView();
                     } else {
                         console.warn("Can't untab any further");
                     }
-                }
-                // indent one more, by changing parent
-                else if (e.keyCode == constants.TAB) {
+                } else if (e.keyCode == constants.TAB) {
+                    // indent one more, by changing parent
                     e.preventDefault();
                     var prevSibling = this.$el.prev('ul');
-                    if (prevSibling.length > 0) {
-                        var siblingId = prevSibling.find('input:first').data('id');
-                        this.model.save({parentId: siblingId});
-                        this.model.view.remove();
-                        this.getParentView().render();
-                        this.model.view.ui.input.focus();
+                    if (prevSibling.length) {
+                        var prevSibId = prevSibling.find('input:first').data('id');
+                        var prevSibView =Tasks.get(prevSibId).view;
+                        this.getParentView().collection.remove(this.model);
+                        prevSibView.collection.add(this.model);
+                        this.model.focusOnView();
                     } else {
                         console.warn("Can't tab any further");
                     }
@@ -155,11 +227,6 @@ define(
             /** Finish editing an item **/
             close: function () {
                 var value = this.$('.edit:first').val().trim();
-                if (value === '')
-                    // remove empty items
-                    // TODO let us tab and untab empty ones
-                    this.model.destroy();
-                else
                     this.model.save({
                         content: value
                     });
@@ -176,7 +243,7 @@ define(
 
             markComplete: function () {
                 this.model.toggelCompletedStatus(true);
-                this.socket.emit('task', {
+                if (!window.hackflowyOffline) this.socket.emit('task', {
                     id: this.model.id,
                     parentId: this.model.parentId,
                     content: this.model.toJSON().content,
@@ -186,7 +253,7 @@ define(
 
             unmarkComlete: function () {
                 this.model.toggelCompletedStatus(false);
-                this.socket.emit('task', {
+                if (!window.hackflowyOffline)  this.socket.emit('task', {
                     id: this.model.id,
                     parentId: this.model.parentId,
                     content: this.model.toJSON().content,
@@ -194,23 +261,34 @@ define(
                 });
             },
 
-            /** Add a new blank note **/
+            /** Add a new blank note below this **/
             addNote: function () {
-                // TODO add it after the current one
                 var currentId = this.ui.input.data('id') || 0;
                 parentId = this.ui.input.data('parent-id');
 
-                var task = Tasks.add({
-                    parentId: parentId
-                });
+
+                var index= this.getParentView().collection.indexOf(this.model);
+
+                var task = Tasks.add({parentId: this.model.get('parentId')});
+                task.save();
+                if (index>=0)
+                    this.getParentView().collection.add(task, {at:index+1});
+                else
+                    this.getParentView().collection.add(task);
+                console.log(index);
                 this.ui.input.blur();
                 task.view.ui.input.focus();
             },
 
             /** Fold children of the clicked element */
             foldChildren: function () {
-                this.$el.find('ul').toggle();
-                this.$el.find('li').toggleClass('folded');
+                if (this.ui.children.length > 0) {
+                    this.ui.children.toggle();
+                    this.$el.find('li:first').toggleClass('folded');
+                } else {
+                    this.ui.children.show();
+                    this.$el.find('li:first').removeClass('folded');
+                }
             },
         });
 

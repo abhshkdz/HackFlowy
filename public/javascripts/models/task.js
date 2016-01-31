@@ -45,6 +45,10 @@ function (
                     });
                 }
             });
+        },
+
+        focusOnView: function(){
+            return this.view.$('input:first').focus();
         }
 
     });

@@ -28,13 +28,20 @@ Or proceed manually as follow:
 ## Controls
 
 * <kbd>UP</kbd> & <kbd>DOWN</kbd>: navigate through tasks
+* <kbd>CNTRL+UP</kbd> & <kbd>CNTRL+DOWN</kbd>: shuffle tasks
 * <kbd>TAB</kbd>: right-indent
 * <kbd>SHIFT</kbd> + <kbd>TAB</kbd>: left-indent
+* <kbd>BACKSPACE</kbd>: Remove an empty task
+* <kbd>ENTER</kbd>: New task
+* Click on a bullet point to fold it
+* Hover on a bullet point and click complete to complete it
 
 ## Technologies used
 
 * Node + Socket.io
 * Backbone
+* Backbone.marionette
+* Backbone.localforage
 * Foundation
 
 ## To-do
