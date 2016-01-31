@@ -3,7 +3,7 @@ require.config({
     //load lib files required
     paths: {
         jquery: '../bower_components/jquery/dist/jquery.min',
-        underscore: "../bower_components/underscore/underscore.min",
+        underscore: "../bower_components/underscore/underscore-min",
         backbone: '../bower_components/backbone/backbone-min',
         localforage: '../bower_components/localforage/dist/localforage',
         localforagebackbone: '../bower_components/localforage-backbone/dist/localforage.backbone',
