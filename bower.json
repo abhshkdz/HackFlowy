@@ -2,6 +2,7 @@
   "name": "hackflowy",
   "description": "A simple WorkFlowy clone",
   "main": "public/javascripts/app.js",
+  "version": "0.0.3",
   "license": "MIT",
   "ignore": [
     "**/.*",
