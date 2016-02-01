@@ -109,8 +109,8 @@ List
 
     updateBreadCrumbs: function(){
         var rootId = this.getRootId();
+        this.$('#task-breadcrumbs').empty();
         if (rootId){
-            this.$('#task-breadcrumbs').empty();
             var current = this.collection.get(rootId);
             var breadCrumbs = '';//_.template('<a href="#<%= id %>"><%= content %></a>')(current.attributes);
             var depth=0;

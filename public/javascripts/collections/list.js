@@ -21,7 +21,7 @@ localforageBackbone
         initialize: function(){
             // update order on add, remove.
             // Ref: http://stackoverflow.com/a/11665085/221742
-            this.on('add remove', this.updateModelPriority);
+            this.on('add remove sort', this.updateModelPriority);
         },
 
         /**

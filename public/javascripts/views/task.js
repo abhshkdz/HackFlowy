@@ -20,7 +20,7 @@ define(
         // The recursive tree view. Ref:http://jsfiddle.net/wassname/zf61mLvh/2/
         var TaskView = Backbone.Marionette.CompositeView.extend({
 
-            template: _.template(taskTemplate), //'#task-view-template',
+            template: _.template(taskTemplate),
             tagName: 'ul',
             className: "task-view",
             viewComparator: List.prototype.comporator,
@@ -52,6 +52,8 @@ define(
                 'click .uncomplete:first': 'unmarkComlete',
                 'click .note:first': 'addNote',
                 'click .fold-button:first': 'foldChildren',
+                'click .fold:first': 'foldChildren',
+                'click .destroy:first': 'destroy',
                 // custom events
                 'focus': 'this.model.focusOnView',
 
@@ -64,11 +66,6 @@ define(
 
             initialize: function (options) {
                 var task = this;
-
-                // options
-                if (!('reorderOnSort' in options)) {
-                    options.reorderOnSort = true;
-                }
 
                 // backlink
                 this.model.view = this;
