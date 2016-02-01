@@ -28,5 +28,5 @@ require([
         'views/page'
     ],
     function (App) {
-        new App();
+        pageView = new App();
     });

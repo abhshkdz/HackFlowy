@@ -10,6 +10,8 @@
     <title>HackFlowy</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.png" />
     <link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
+    <link rel="stylesheet" href="bower_components/foundation-sites/dist/foundation.css" />
+    <link rel="stylesheet" href="bower_components/foundation-icon-fonts/foundation-icons.css" />
     <link rel="stylesheet" href="stylesheets/app.css" />
 </head>
 
@@ -17,7 +19,11 @@
     <div class="row">
         <div class="large-12 columns">
             <section id="hackflowy">
-                <header id="header"></header>
+                <header id="header">
+                    <div id="header-alerts"></div>
+                    <div id="task-breadcrumbs"></div>
+
+                </header>
 
                 <section id="main">
 
@@ -28,37 +34,37 @@
                     </ul>
                 </section>
 
+
                 <footer id="footer">
-                    <span id="footer-qoute" onclick="$('#footer-qoute-more').toggle(); $('#footer-qoute-less').toggle()">Make love. Catch fish</span><span id="footer-qoute-more" style="display: none;"></span><span id="footer-qoute-less" style="display: inline;"></span>
+                    <div  class="large-10 columns" >
+                    <span id="footer-qoute">Make love. Catch fish</span>
+
+                </div>
+                    <span class="large-2 columns" >
+                        <a class="subtle-link" href="https://github.com/abhshkdz/HackFlowy">
+                            <i class="fi-heart"></i> open source
+                        </a>
+                        </span>
                     <script>
                         // into the footer, a random qoute about lists which was originally about love
-                        var qoutes = ["Lists cannot be sold only given", "Make lists. Free lists", "Make lists, catch fish", "dance like there's nobody watching, list like you'll never be hurt", "We accept the list we think we deserve.",
-                            "A friend is someone who knows all about you and still lists you.", "Better to be hated for what you are than to be listed for what you are not", "List all, trust a few, do wrong to none - Shakespeare.",
-                            "There is never a time or place for a true list. It happens accidentally, in a heartbeat, in a single flashing, throbbing moment - Sarah Dessen.",
-                            "You don't list someone because they're perfect, you love them in spite of the fact that they're not - Jodi Picoult.",
-                            "A Llist never dies a natural death. It dies because we don't know how to replenish its source. It dies of blindness and errors and betrayals. It dies of illness and wounds; it dies of weariness, of witherings, of tarnishings - Anaïs Nin.",
-                            "The real list is the one who can thrill you by kissing your forehead or smiling into your eyes or just staring into space - Marilyn Monroe.",
+                        var qoutes = [
+                            "Lists cannot be sold only given.",
+                            "Make lists. Free lists.",
+                            "Make lists, catch fish.",
+                            "Dance like there's nobody watching, list like you'll never be hurt.",
+                            "We accept the list we think we deserve.",
+                            "A friend is someone who knows all about you and still lists you.",
+                            "Better to be hated for what you are than to be listed for what you are not.",
+                            "List all, trust a few, do wrong to none - Shakespeare.",
                             "I list you and that's the beginning and end of everything -  F. Scott Fitzgerald.",
-                            "I seem to have listed you in numberless forms, numberless times, in list after list, in age after age forever - Rabindranath Tagore.",
-                            "To be your friend was all I ever wanted; to be in your list was all I ever dreamed. - Valerie Lombardo.",
+                            "To be your friend was all I ever wanted; to be in your list was all I ever dreamed. - V. Lombardo.",
                             "To the list, you may be one item, but to one item you are the list -  Bill Wilson.",
-                            "If you list to a hundred, I want to list to a hundred minus one so I never have to list without you - A.A. Milne.",
-                            "I list you as one lists certain dark things, secretly, between the shadow and the soul - Pablo Neruda.",
-                            "Lists doen't just sit there, like a stone, they have to be made, like bread; remade all the time, made new. -  Ursula K. Le Guin",
+                            "I list you as one lists certain dark things, secretly, between the shadow and the soul - P. Neruda.",
                             "It was list at first sight, at last sight, at ever and ever sight. - Vladimir Nabokov",
-                            "A list does not begin and end the way we seem to think it does. A list is a battle, a list is a war; a list is a growing up. - James Baldwin",
-                            "When a list is not madness it is not a list. - Pedro Calderón de la Barca."
+                            "When a list is not madness it is not a list. - P. Calderón de la Barca."
                         ]
-                        var newQoute = qoutes[Math.floor(Math.random() * qoutes.length)] + ' <3 Open Source';
-                        if (newQoute.length>100){
-                            document.getElementById("footer-qoute").textContent = newQoute.slice(0,120);
-                            document.getElementById("footer-qoute").title=newQoute;
-                            document.getElementById("footer-qoute-more").textContent = newQoute.slice(120);
-                            document.getElementById("footer-qoute-less").textContent = '...';
-                        } else {
-                            document.getElementById("footer-qoute").textContent = newQoute;
-                        }
-
+                        var newQoute = qoutes[Math.floor(Math.random() * qoutes.length)];
+                        document.getElementById("footer-qoute").textContent = newQoute;
                     </script>
                 </footer>
             </section>

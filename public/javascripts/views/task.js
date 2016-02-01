@@ -22,7 +22,8 @@ define(
 
             template: _.template(taskTemplate), //'#task-view-template',
             tagName: 'ul',
-            className: "shift",
+            className: "task-view",
+            viewComparator: List.prototype.comporator,
             childView: TaskView,
             childViewContainer: '.children',
             childViewOptions: {
@@ -50,11 +51,14 @@ define(
                 'click .complete:first': 'markComplete',
                 'click .uncomplete:first': 'unmarkComlete',
                 'click .note:first': 'addNote',
-                'click .mouse-tip:first': 'foldChildren',
+                'click .fold-button:first': 'foldChildren',
+                // custom events
+                'focus': 'this.model.focusOnView',
 
             },
 
-            collectionEvents: {},
+            collectionEvents: {
+            },
 
             childEvents: {},
 
@@ -69,11 +73,16 @@ define(
                 // backlink
                 this.model.view = this;
 
-                var children = Tasks.filter(
+                var children = pageView.collection.filter(
                     function (child, index, collection) {
                         return child.get('parentId') === this.model.id;
                     }, this);
                 this.collection = new List(children);
+
+                // there is probobly a better way to do this
+                if (this.isEmpty()){
+                    this.$el.addClass('empty');
+                }
 
                 // events
                 this.listenTo(this.model, 'change', this.render);
@@ -81,7 +90,6 @@ define(
                 // refresh ui hashes after children are rendered
                 this.listenTo(this, 'render:collection', this.bindUIElements);
                 // custom event
-                this.listenTo(this, 'childview:rerender', this.render);
                 this.listenTo(this, 'focus', this.model.focusOnView);
 
                 // updates from server
@@ -113,9 +121,9 @@ define(
 
             /** Get the parent view or root view **/
             getParentView: function () {
-                var parent = Tasks.get(this.model.get('parentId'));
+                var parent = pageView.collection.get(this.model.get('parentId'));
                 if (parent) return parent.view;
-                else return listView;
+                else return pageView.listView;
             },
 
             /** Update parentId when added to collection **/
@@ -126,7 +134,7 @@ define(
 
             /** Focus on the next visible element down despite list level **/
             focusOnPrev: function () {
-                var all = listView.$el.find('ul:visible');
+                var all = pageView.listView.$el.find('ul:visible');
                 var prev = $(all[all.index(this.$el) - 1]);
                 if (prev.length){
                     prev.find('input:first').focus();
@@ -135,7 +143,7 @@ define(
             },
 
             focusOnNext: function () {
-                var all = listView.$el.find('ul:visible');
+                var all = pageView.listView.$el.find('ul:visible');
                 var next = $(all[all.index(this.$el) + 1]);
                 if (next)
                     next.find('input:first').focus();
@@ -169,13 +177,11 @@ define(
                     // move down list by swapping priority with next sibling
                     e.preventDefault();
                     this.getParentView().collection.moveDown(this.model);
-                    this.trigger('rerender');
                     this.model.focusOnView();
                 } else if (e.ctrlKey && e.keyCode == constants.UP_ARROW) {
                     // move up the list
                     e.preventDefault();
                     this.getParentView().collection.moveUp(this.model);
-                    this.trigger('rerender');
                     this.model.focusOnView();
                 } else if (e.keyCode == constants.DOWN_ARROW) {
                     this.focusOnNext();
@@ -188,7 +194,7 @@ define(
                     if (parentId===0){
 
                     } else if (parentId){
-                        parentModel = Tasks.get(parentId);
+                        parentModel = pageView.collection.get(parentId);
                         this.getParentView().collection.remove(this.model);
                         var index = parentModel.view.getParentView().collection.indexOf(parentModel);
                         if (index<0) index=this.getParentView().collection.length-1;
@@ -203,7 +209,7 @@ define(
                     var prevSibling = this.$el.prev('ul');
                     if (prevSibling.length) {
                         var prevSibId = prevSibling.find('input:first').data('id');
-                        var prevSibView =Tasks.get(prevSibId).view;
+                        var prevSibView =pageView.collection.get(prevSibId).view;
                         this.getParentView().collection.remove(this.model);
                         prevSibView.collection.add(this.model);
                         this.model.focusOnView();
@@ -269,7 +275,7 @@ define(
 
                 var index= this.getParentView().collection.indexOf(this.model);
 
-                var task = Tasks.add({parentId: this.model.get('parentId')});
+                var task = pageView.collection.add({parentId: this.model.get('parentId')});
                 task.save();
                 if (index>=0)
                     this.getParentView().collection.add(task, {at:index+1});

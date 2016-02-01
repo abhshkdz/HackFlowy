@@ -3,7 +3,6 @@ define(
         'backbone',
         'collections/list',
         'views/task',
-        'data/demo',
         'text!../../templates/task.html',
         'marionette'
     ],
@@ -13,7 +12,6 @@ define(
         Backbone,
         List,
         TaskView,
-        demoData,
         listTemplate,
         Marionette
     ) {
@@ -27,59 +25,53 @@ define(
             template: _.template(listTemplate),
 
             events: {
-                'click #add': 'addTask'
+                'click #add': 'addTask',
             },
 
             initialize: function () {
-                var self = this;
-
-                // this wholeCollection holds all items
-                this.wholeCollection = Tasks = new List();
-                //this.collection = new List();
-
-                // custom events
-                this.listenTo(this, 'childview:rerender', this.render);
-                // this.listenTo(this.collection, 'add remove', this.render);
-
-                /** Load demo data **/
-                function loadDemoData() {
-                    for (var i = 0; i < demoData.length; i++) {
-                        var task = Tasks.add(demoData[i]);
-                        task.save();
-                    }
-                }
-
-                function success(children, data, promise) {
-                    // load demo data if the server returns nothing
-                    var directChildren = children.filter(this.filterDirectChildren);
-                    if (directChildren.length === 0)
-                        loadDemoData();
-                    this.collection = new List(Tasks.filter(this.filterDirectChildren));
-                    this.render();
-                }
-
-                Tasks.fetch({
-                    success: success,
-                    error: function () {
-
-                        // switch to localforage database if server isn't present and fetch again
-                        // from there
-                        window.hackflowyOffline = true;
-                        $('#header').append('<div class="alert-box secondary round">Running in offline mode, data may be lost </div>');
-                        Tasks.fetch({
-                            success: success,
-                            context: this
-                        });
-                    },
-                    context: this
-                });
-
             },
+
+
+            /** Get root id for the displayed list from the url hash or 0 **/
+            // getRootId: function(){
+            //     var hash = window.location.hash.slice(1);
+            //     return hash ? hash: 0;
+            //
+            // },
+
+            // /** Called when window location hash changes **/
+            // changeRootId: function(){
+            //     this.collection.remove(this.collection.models);
+            //     this.collection.add(pageView.collection.filter(this.filterDirectChildren,this));
+            //     this.updateBreadCrumbs();
+            // },
+
+            // updateBreadCrumbs: function(){
+            //     var rootId = this.getRootId();
+            //     if (rootId){
+            //         var current = Tasks.get(rootId);
+            //         var breadCrumbs = _.template('<a href="#<%= id %>"><%= content %></a>')(current.attributes);
+            //         var depth=0;
+            //         while (current.get('parentId') && depth<100){
+            //             depth++;
+            //             current = Tasks.get(current.get('parentId'));
+            //             breadCrumbs=_.template('<a href="#<%= id %>"><%= content %></a> > ')(current.attributes)+breadCrumbs;
+            //         }
+            //         if (depth>=100) console.error('Max depth exceeded while making breadCrumbs');
+            //         breadCrumbs='<a href="#">Home</a> > '+breadCrumbs;
+            //         $('#task-breadcrumbs').append(breadCrumbs);
+            //
+            //     }
+            // },
 
             // Only show direct children
-            filterDirectChildren: function (child, index, collection) {
-                return child.get('parentId') === 0;
-            },
+            // filterDirectChildren: function (child, index, collection) {
+            //     var rootId = this.getRootId();
+            //     if (rootId)
+            //         return child.get('id') == rootId;
+            //     else
+            //         return child.get('parentId') == rootId;
+            // },
 
             /** This is the root view in the tree **/
             getParentView: function () {
@@ -88,8 +80,9 @@ define(
 
             /** Update parentId when added to collection **/
             onAddChild: function(childView){
-                if (childView.model.get('parentId')!==0)
-                    childView.model.save({parentId: 0});
+                var rootId = pageView.getRootId();
+                if (childView.model.get('parentId')!=rootId && childView.model==rootId)
+                    childView.model.save({parentId: rootId});
             },
 
         });

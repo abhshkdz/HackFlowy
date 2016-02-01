@@ -23,5 +23,8 @@
     "normalize-css": "normalize.css#~3.0.3",
     "backbone.marionette": "~2.4.4",
     "underscore": "~1.8.3"
+  },
+  "resolutions": {
+    "jquery": "^1.8.0 || ^2.0.0"
   }
 }

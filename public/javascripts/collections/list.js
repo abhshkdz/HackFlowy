@@ -24,20 +24,30 @@ localforageBackbone
             this.on('add remove', this.updateModelPriority);
         },
 
+        /**
+         * Move a model in the list up. Only a sort event is emitted
+         * @param  {Backbone.Model} model - Model to be moved
+         */
         moveUp: function(model) { // I see move up as the -1
           var index = this.indexOf(model);
           if (index > 0) {
-            this.remove(model, {silent: true}); // silence this to stop excess event triggers
-            this.add(model, {at: index-1});
+            this.remove(model, {silent: true});
+            this.add(model, {at: index-1, silent: true});
           }
+          this.trigger('sort', this, {});
         },
 
+        /**
+         * Move a model in the list up. Only a sort event is emitted
+         * @param  {Backbone.Model} model - Model to be moved
+         */
         moveDown: function(model) { // I see move up as the -1
           var index = this.indexOf(model);
           if (index < this.models.length) {
-            this.remove(model, {silent: true}); // silence this to stop excess event triggers
-            this.add(model, {at: index+1});
+            this.remove(model, {silent: true});
+            this.add(model, {at: index+1, silent: true});
           }
+          this.trigger('sort', this, {});
         },
 
         /** Updated priority of each member of list **/
