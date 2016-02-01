@@ -25,7 +25,7 @@
          "updatedAt": "2016-01-29T05:44:30.858Z"
      }, {
          "id": 83,
-         "content": "Desyncr pulled this together in a few hours to learn Backbone",
+         "content": "Pulled this together in a few hours to learn Backbone",
          "parentId": 0,
          "isCompleted": false,
          "priority": 0,
