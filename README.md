@@ -10,6 +10,8 @@ An open-source [Workflowy](http://workflowy.com) clone. [Static demo available h
 
 * Edit `config/development.json` and `config/database.json` to your needs
 * `npm install`
+* `npm install bower`
+* `bower install`
 * `node server.js`
 
 ## Heroku deploy

@@ -7,7 +7,7 @@ require.config({
         backbone: '../bower_components/backbone/backbone-min',
         localforage: '../bower_components/localforage/dist/localforage',
         localforagebackbone: '../bower_components/localforage-backbone/dist/localforage.backbone',
-        modernizr: "vendor/custom.modernizr",
+        modernizr: "../bower_components/modernizr/custom.modernizr",
         socket: "../bower_components/socket.io-client/socket.io",
         text: '../bower_components/text/text',
         marionette: '../bower_components/backbone.marionette/lib/backbone.marionette'
@@ -28,5 +28,5 @@ require([
         'views/page'
     ],
     function (App) {
-        new App();
+        pageView = new App();
     });

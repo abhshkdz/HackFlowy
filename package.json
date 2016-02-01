@@ -1,6 +1,7 @@
 {
     "name": "hackflowy",
-    "version": "0.0.2",
+    "version": "0.0.3",
+     "license": "MIT",
     "description": "A simple WorkFlowy clone",
     "dependencies": {
         "body-parser": "^1.14.2",

@@ -4,12 +4,15 @@
             <div class="link">•
                 <div class="options">
                     <div class="options-left">
-                        <div class="mouse-tip"></div>
+                        <a class="fold-button" title="Expand/collapse children"></a>
+                        <a class="mouse-tip" href="#<%= obj.id %>"></a>
                         <%  if(isCompleted){ %>
                         <a class="uncomplete">Uncomplete<hr></a>
                         <% }else { %>
                         <a class="complete">Complete<hr></a>
                         <% } %>
+                        <a class="fold">Fold<hr></a>
+                        <a class="destroy">Delete<hr></a>
                         <a class="note">
                             <span class="note">Add Note</span>
                         </a>
