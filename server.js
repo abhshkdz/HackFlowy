@@ -42,7 +42,6 @@ app.get('/tasks', function (req, res) {
 });
 
 app.post('/tasks', function (req, res) {
-    console.log({view: "post('/tasks/:id)", id:req.params.id, body:req.body});
     return Tasks.create({
         content: req.body.content,
         parentId: req.body.parentId || '00000000-0000-0000-0000-000000000000',
@@ -53,7 +52,6 @@ app.post('/tasks', function (req, res) {
 });
 
 app.put('/tasks', function (req, res) {
-    console.log({view: "put('/tasks/:id)", id:req.params.id, body:req.body});
     return Tasks.create({
         content: req.body.content,
         parentId: req.body.parentId || '00000000-0000-0000-0000-000000000000',
@@ -64,14 +62,12 @@ app.put('/tasks', function (req, res) {
 });
 
 app.get('/tasks/:id', function (req, res) {
-    console.log({view: "get('/tasks/:id)", id:req.params.id, body:req.body});
     return Tasks.findById(req.params.id).then(function (task) {
             return res.send(task);
     });
 });
 
 app.put('/tasks/:id', function (req, res) {
-    console.log({view: "put('/tasks/:id)", id:req.params.id, body:req.body});
     Tasks.findById(req.params.id).then(function (task) {
         task.content = req.body.content;
         task.priority = req.body.priority;
@@ -85,8 +81,6 @@ app.put('/tasks/:id', function (req, res) {
 });
 
 app.delete('/tasks/:id', function (req, res) {
-    console.log({view: "delete('/tasks/:id)", id:req.params.id, body:req.body});
-    console.log({isCompleted: req.body.isCompleted});
     Tasks.findById(req.params.id).then(function (task) {
         return task.destroy().then(function () {
             return res.send('');
