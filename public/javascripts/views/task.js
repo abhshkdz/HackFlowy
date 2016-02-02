@@ -230,7 +230,7 @@ define(
             /** Finish editing an item **/
             close: function () {
                 var value = this.$('.edit:first').val().trim();
-                if (this.model.get('content')!=value)
+                if (this.model.get('content')!=value && value!=='')
                     this.model.save({content: value});
                 this.$el.removeClass('editing');
             },

@@ -18,22 +18,6 @@ localforageBackbone
         model: Task,
         offlineSync: Backbone.localforage.sync("tasks"),
 
-
-        /** Override backbone parse **/
-        // parse: function(models){
-        //     if (this._isModel(models))
-        //         return models;
-        //     var parsedModels =[];
-        //     for (var i = 0; i < models.length; i++) {
-        //         if (this._isModel(models[i]))
-        //             parsedModels.push(models[i]);
-        //         else
-        //             parsedModels.push(new this.model(models[i]));
-        //     }
-        //     return parsedModels;
-        //
-        // },
-
         initialize: function(){
             // update order on add, remove.
             // Ref: http://stackoverflow.com/a/11665085/221742
@@ -69,9 +53,11 @@ localforageBackbone
         /** Updated priority of each member of list **/
         updateModelPriority: function() {
           this.each(function(model, index) {
-            if (model && model.get('priority')!==index)
-                model.save({'priority': index});
-
+            if (model && model.get('priority')!==index){
+                model.set({'priority': index});
+                if (model.id)
+                    model.save({'priority': index});
+            }
           }, this);
         },
 
