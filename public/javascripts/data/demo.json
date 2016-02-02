@@ -1,112 +1,63 @@
 [{
     "id": "fba0d0d9-d540-03c2-ecd5-cb5c391484ef",
     "content": "Welcome to HackFlowy!",
-    "parentId": "00000000-0000-0000-0000-000000000000",
-    "isCompleted": false,
-    "priority": 1,
-    "createdAt": "2016-01-29T05:44:30.858Z",
-    "updatedAt": "2016-01-29T05:44:30.858Z"
+    "priority": 1
 }, {
     "id": "886689fd-8ca1-75ed-8086-fe05904ff039",
     "content": "An open-source WorkFlowy clone",
-    "parentId": "00000000-0000-0000-0000-000000000000",
-    "isCompleted": false,
-    "priority": 2,
-    "createdAt": "2016-01-29T05:44:30.858Z",
-    "updatedAt": "2016-01-29T05:44:30.858Z"
+    "priority": 2
 }, {
     "id": "bbc8e79d-5e51-83b8-2639-812471972e04",
     "content": "Built using Backbone + Socket.IO",
-    "parentId": "00000000-0000-0000-0000-000000000000",
-    "isCompleted": false,
-    "priority": 3,
-    "createdAt": "2016-01-29T05:44:30.858Z",
-    "updatedAt": "2016-01-29T05:44:30.858Z"
+    "priority": 3
 }, {
     "id": "602f03a8-bfdd-5193-f0bb-b4d0f5fa165c",
     "content": "Pulled this together in a few hours to learn Backbone",
-    "parentId": "00000000-0000-0000-0000-000000000000",
-    "isCompleted": false,
-    "priority": 4,
-    "createdAt": "2016-01-29T05:44:30.858Z",
-    "updatedAt": "2016-01-29T05:44:30.858Z"
+    "priority": 4
 }, {
     "id": "1e663464-4c22-bd0a-85a7-3a287ac2f02e",
     "content": "Feel free to try it out and hack on it",
-    "parentId": "00000000-0000-0000-0000-000000000000",
-    "isCompleted": false,
-    "priority": 5,
-    "createdAt": "2016-01-29T05:44:30.858Z",
-    "updatedAt": "2016-01-29T05:44:30.858Z"
+    "priority": 5
 }, {
     "id": "d25704a8-fe09-ab2a-7c54-58c5e8113e88",
     "content": "Good Luck!",
-    "parentId": "00000000-0000-0000-0000-000000000000",
-    "isCompleted": false,
-    "priority": 6,
-    "createdAt": "2016-01-29T05:44:30.858Z",
-    "updatedAt": "2016-01-29T05:44:30.858Z"
+    "priority": 6
 }, {
     "id": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
     "content": "P.S",
-    "parentId": "00000000-0000-0000-0000-000000000000",
-    "isCompleted": false,
     "priority": 7,
-    "isFolded": true,
-    "createdAt": "2016-01-29T05:44:40.978Z",
-    "updatedAt": "2016-01-29T05:44:40.978Z"
+    "isFolded": true
 }, {
     "id": "70a84964-658d-fbf9-4552-e8f243138f6e",
     "content": "It makes sense if you don't think about it; I haven't",
-    "parentId": "00000000-0000-0000-0000-000000000000",
-    "isCompleted": false,
-    "priority": 8,
-    "createdAt": "2016-01-29T05:44:58.737Z",
-    "updatedAt": "2016-01-29T05:45:50.939Z"
+    "priority": 8
 }, {
     "id": "a038960d-420e-f0e7-b9d7-350dd24d3417",
     "content": "Make love not war",
     "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
-    "isCompleted": false,
-    "priority": 1,
-    "createdAt": "2016-01-29T05:45:03.048Z",
-    "updatedAt": "2016-01-29T05:45:57.481Z"
+    "priority": 1
 }, {
     "id": "4e712e09-b6a9-427f-ed37-d2bb5aca072a",
     "content": "Love can be brought not sold",
     "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
-    "isCompleted": false,
-    "priority": 2,
-    "createdAt": "2016-01-29T05:45:32.331Z",
-    "updatedAt": "2016-01-29T05:46:10.478Z"
+    "priority": 2
 }, {
     "id": "55530925-4f64-004a-6008-3384b523e6d1",
     "content": "How do I love thee? Let me count the ways - Shakespeare",
     "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
-    "isCompleted": false,
-    "priority": 3,
-    "createdAt": "2016-01-29T05:46:25.119Z",
-    "updatedAt": "2016-01-29T05:48:00.604Z"
+    "priority": 3
 }, {
     "id": "87d34fde-bc5d-f726-86ef-7e47a8d3b103",
     "content": "Therefore: love can be listed and lists can be loved",
     "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
-    "isCompleted": false,
-    "priority": 4,
-    "createdAt": "2016-01-29T05:46:38.998Z",
-    "updatedAt": "2016-01-29T05:48:22.937Z"
+    "priority": 4
 }, {
     "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
     "content": "Conclusion: lists and love should be free",
-    "isCompleted": false,
-    "priority": 5,
-    "createdAt": "2016-01-29T05:47:26.684Z",
-    "updatedAt": "2016-01-29T05:48:29.796Z"
+    "priority": 5
 }, {
     "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
     "content": "But how can our lists be real if our love isnt? - Jaden Smith",
-    "isCompleted": false,
-    "priority": 6,
-    "createdAt": "2016-01-29T05:47:46.930Z",
-    "updatedAt": "2016-01-29T05:47:46.930Z"
+    "isCompleted": true,
+    "priority": 6
 }]
