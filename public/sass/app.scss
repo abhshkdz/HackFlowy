@@ -53,12 +53,12 @@ body {
   background-color: $lightgrey;
   #hackflowy {
     background-color: white;
-    height: 1000px;
+    min-height: 1000px;
     margin: 75px 100px;
     box-shadow: 0px 0px 10px 5px #ccc;
     padding: 60px 60px;
     #main {
-      height: 880px;
+      min-height: 880px;
       border-top: 1px solid #eee;
       border-bottom: 1px solid #eee;
       #name {
@@ -161,6 +161,9 @@ body {
         }
         li.shift9 {
           margin-left: 270px;
+        }
+        ul.shift {
+         margin-bottom: 0px;
         }
       }
     }

@@ -1,50 +1,50 @@
 define(
-['jquery',
-'backbone',
-'collections/list',
-'views/task'
-],
+    ['jquery',
+        'backbone',
+        'collections/list',
+        'views/task',
+        'text!../../templates/task.html',
+        'marionette'
+    ],
 
-function(
-$,
-Backbone,
-List,
-TaskView
-) {
+    function (
+        $,
+        Backbone,
+        List,
+        TaskView,
+        listTemplate,
+        Marionette
+    ) {
 
-  var ListView = Backbone.View.extend({
+        // renders recursive tree structure for each item in collection
+        var ListView = Backbone.Marionette.CollectionView.extend({
 
-    el: $("#main .children"),
+            el: $("#main .children"),
+            childView: TaskView,
+            viewComparator: List.prototype.comporator,
+            template: _.template(listTemplate),
 
-    events: {
-      'click #add': 'addTask'
-    },
+            events: {
+                'click #add': 'addTask',
+            },
 
-    initialize: function() {
-      Tasks = this.collection = new List();
-      this.collection.fetch();
-      this.listenTo(this.collection, 'add', this.renderTask);
-    },
+            initialize: function () {
+            },
 
-    render: function() {
-      this.collection.each(function(task) {
-        this.renderTask(task);
-      }, this);
-    },
+            /** This is the root view in the tree **/
+            getParentView: function () {
+                return this;
+            },
 
-    renderTask: function(task) {
-      var taskView = new TaskView({
-        model: task
-      });
-      var a = taskView.render();
-      if (a.model.get('parent')!=0)
-        a.$el.insertAfter($('*[data-id="'+a.model.get('parent')+'"]').parents('li:first'));
-      else
-        this.$el.append(a.el);
-    }
+            /** Update parentId when added to collection **/
+            onAddChild: function(childView){
+                var rootId = pageView.getRootId();
+                if (childView.model.get('parentId')!=rootId && childView.model==rootId)
+                    childView.model.save({parentId: rootId});
+            },
 
- });
+        });
 
-return ListView;
+        return ListView;
 
-});
+    });

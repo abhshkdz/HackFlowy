@@ -1,25 +1,41 @@
-<div class="task-wrappper">
-  <div class="task">
-    <div class="link">•
-      <div class="options">
-        <div class="options-left">
-          <div class="mouse-tip"></div>
-          <%  if(model.isCompleted){%>
-            <a class="uncomplete">Uncomplete<hr></a>
-          <%}else {%>
-            <a class="complete">Complete<hr></a>
-          <%}%>
-          <a class="note">
-              <span class="note">Add Note</span>
-          </a>
+<% if (obj.isFolded){ %>
+    <li class="folded">
+<% } else { %>
+    <li class="">
+<% } %>
+    <div class="task-wrappper">
+        <div class="task">
+            <div class="link">•
+                <div class="options">
+                    <div class="options-left">
+                        <a class="fold-button" title="Expand/collapse children"></a>
+                        <a class="mouse-tip" href="#<%= obj.id %>"></a>
+                        <%  if(isCompleted){ %>
+                        <a class="uncomplete">Uncomplete<hr></a>
+                        <% }else { %>
+                        <a class="complete">Complete<hr></a>
+                        <% } %>
+                        <a class="fold">Fold<hr></a>
+                        <a class="destroy">Delete<hr></a>
+                        <a class="note">
+                            <span class="note">Add Note</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <% if(isCompleted) { %>
+            <input value="<%= obj.content %>" data-id="<%= obj.id %>" data-parent-id="<%= parentId %>" data-priority="<%= priority %>" class="edit task-completed">
+            <% }else { %>
+            <input value="<%= obj.content %>" data-id="<%= obj.id %>" data-parent-id="<%= parentId %>" data-priority="<%= priority %>" class="edit">
+            <% } %>
         </div>
-      </div>
     </div>
-    
-    <%  if(model.isCompleted){%>
-      <input value="<%= model.content %>" data-id="<%= model.id %>" class="edit task-completed">
-    <%}else {%>
-      <input value="<%= model.content %>" data-id="<%= model.id %>" class="edit">
-    <%}%>
-  </div>
+</li>
+
+<% if (isFolded){ %>
+    <div class="children folded">
+<% } else { %>
+    <div class="children">
+<% } %>
 </div>
