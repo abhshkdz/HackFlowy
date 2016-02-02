@@ -1,13 +1,13 @@
 define(
 ['backbone',
     'localforage',
-    'localforagebackbone'
-],
-
-function (
+    'localforagebackbone',
+    'util/constants',
+],function (
     Backbone,
     localforage,
-    localforageBackbone
+    localforageBackbone,
+    constants
 ) {
 
     var TaskModel = Backbone.Model.extend({
@@ -24,11 +24,12 @@ function (
         },
 
         defaults: {
-            parentId: 0,
+            parentId: constants.ROOT_PARENT_ID,
             content: '',
-            isCompleted: 0,
+            isCompleted: false,
+            isFolded: false,
             priority: 0,
-            id: '',
+            id: undefined,
         },
 
         toggelCompletedStatus: function (isCompleted) {
@@ -48,7 +49,8 @@ function (
         },
 
         focusOnView: function(){
-            return this.view.$('input:first').focus();
+            if (this.view && this.view.$el)
+                return this.view.$('input:first').focus();
         }
 
     });

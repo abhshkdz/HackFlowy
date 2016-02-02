@@ -4,6 +4,7 @@ define(
 function() {
 
   var constants = {
+      ROOT_PARENT_ID: '00000000-0000-0000-0000-000000000000',
 
       ENTER_KEY :13,
 	  UP_ARROW: 38,

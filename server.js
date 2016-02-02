@@ -42,9 +42,21 @@ app.get('/tasks', function (req, res) {
 });
 
 app.post('/tasks', function (req, res) {
+    console.log({view: "post('/tasks/:id)", id:req.params.id, body:req.body});
     Tasks.create({
         content: req.body.content,
-        parentId: parseInt(req.body.parentId) || 0,
+        parentId: req.body.parentId || '00000000-0000-0000-0000-000000000000',
+        isCompleted: false
+    }).then(function (task) {
+        res.send(task);
+    });
+});
+
+app.put('/tasks', function (req, res) {
+    console.log({view: "put('/tasks/:id)", id:req.params.id, body:req.body});
+    Tasks.create({
+        content: req.body.content,
+        parentId: req.body.parentId || '00000000-0000-0000-0000-000000000000',
         isCompleted: false
     }).then(function (task) {
         res.send(task);
@@ -52,25 +64,29 @@ app.post('/tasks', function (req, res) {
 });
 
 app.get('/tasks/:id', function (req, res) {
+    console.log({view: "get('/tasks/:id)", id:req.params.id, body:req.body});
     Tasks.findById(req.params.id).then(function (task) {
             res.send(task);
     });
 });
 
 app.put('/tasks/:id', function (req, res) {
-    console.log({isCompleted: req.body.isCompleted});
+    console.log({view: "put('/tasks/:id)", id:req.params.id, body:req.body});
     Tasks.findById(req.params.id).then(function (task) {
         task.content = req.body.content;
-        console.log({view: "put('/tasks/:id)", body:req.body});
-        task.parentId = parseInt(req.body.parentId) || 0,
-            task.isCompleted = req.body.isCompleted == 1;
+        task.priority = req.body.priority;
+        task.parentId = req.body.parentId ||  '00000000-0000-0000-0000-000000000000';
+        task.isFolded = req.body.isFolded == true;
+        task.isCompleted = req.body.isCompleted == true;
         task.save().then(function (task) {
             res.send(task);
-        })
+        });
     });
 });
 
 app.delete('/tasks/:id', function (req, res) {
+    console.log({view: "delete('/tasks/:id)", id:req.params.id, body:req.body});
+    console.log({isCompleted: req.body.isCompleted});
     Tasks.findById(req.params.id).then(function (task) {
         task.destroy().then(function () {
             res.send('');
@@ -80,7 +96,6 @@ app.delete('/tasks/:id', function (req, res) {
 
 io.sockets.on('connection', function (socket) {
     socket.on('task', function (data) {
-        console.log(data);
         socket.broadcast.emit('task', data);
     });
 });

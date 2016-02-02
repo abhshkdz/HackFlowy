@@ -1,4 +1,8 @@
-<li>
+<% if (obj.isFolded){ %>
+    <li class="folded">
+<% } else { %>
+    <li class="">
+<% } %>
     <div class="task-wrappper">
         <div class="task">
             <div class="link">•
@@ -28,4 +32,10 @@
         </div>
     </div>
 </li>
-<div class="children"></div>
+
+<% if (isFolded){ %>
+    <div class="children folded">
+<% } else { %>
+    <div class="children">
+<% } %>
+</div>

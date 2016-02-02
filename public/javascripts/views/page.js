@@ -3,9 +3,10 @@ define(
 'backbone',
 'marionette',
 'views/list',
-'data/demo',
+'text!data/demo.json',
 'models/task',
-'collections/list'
+'collections/list',
+'util/constants',
 ],
 
 function(
@@ -15,7 +16,8 @@ Marionette,
 ListView,
 demoData,
 Task,
-List
+List,
+constants
 ) {
 
   var PageView = Marionette.View.extend({
@@ -87,7 +89,7 @@ List
             return hash;
         else if (hash)
             window.location.hash='';
-        return 0;
+        return constants.ROOT_PARENT_ID;
     },
 
     /** Called when window location hash changes **/
@@ -101,23 +103,24 @@ List
     // Only show direct children
     filterDirectChildren: function (child, index, collection) {
         var rootId = this.getRootId();
-        if (rootId)
-            return child.get('id') == rootId;
+        if (rootId === constants.ROOT_PARENT_ID)
+            return child.get('parentId') === rootId;
         else
-            return child.get('parentId') == rootId;
+            return child.get('id') == rootId;
     },
 
     updateBreadCrumbs: function(){
         var rootId = this.getRootId();
         this.$('#task-breadcrumbs').empty();
-        if (rootId){
+        if (rootId!==constants.ROOT_PARENT_ID){
             var current = this.collection.get(rootId);
             var breadCrumbs = '';//_.template('<a href="#<%= id %>"><%= content %></a>')(current.attributes);
             var depth=0;
-            while (current.get('parentId') && depth<100){
+            while (current && current.get('parentId') && depth<100){
                 depth++;
                 current = this.collection.get(current.get('parentId'));
-                breadCrumbs=_.template('<a href="#<%= id %>"><%= content %></a> > ')(current.attributes)+breadCrumbs;
+                if (current)
+                    breadCrumbs=_.template('<a href="#<%= id %>"><%= content %></a> > ')(current.attributes)+breadCrumbs;
             }
             if (depth>=100) console.error('Max depth exceeded while making breadCrumbs');
             breadCrumbs='<a href="#">Home</a> > '+breadCrumbs;

@@ -5,7 +5,7 @@ define(
         'collections/list',
         'util/constants',
         'text!../../templates/task.html',
-        'marionette',
+        'marionette'
     ],
 
     function (
@@ -53,6 +53,7 @@ define(
                 'click .note:first': 'addNote',
                 'click .fold-button:first': 'foldChildren',
                 'click .fold:first': 'foldChildren',
+                // TODO make this destroy children too
                 'click .destroy:first': 'destroy',
                 // custom events
                 'focus': 'this.model.focusOnView',
@@ -70,6 +71,7 @@ define(
                 // backlink
                 this.model.view = this;
 
+                // get only direct children from all tasks in pageView.collection
                 var children = pageView.collection.filter(
                     function (child, index, collection) {
                         return child.get('parentId') === this.model.id;
@@ -98,8 +100,6 @@ define(
                                 'content': data.content,
                                 'isCompleted': data.isCompleted
                             });
-                        } else {
-                            console.error("task.model.id != data.id", task.model.id, data.id);
                         }
                     });
                 }
@@ -159,8 +159,8 @@ define(
                     if (this.ui.input.val().length < 2 && this.$('.children>ul').length===0) {
                         e.preventDefault();
                         prev = this.focusOnPrev();
-                        this.destroy();
                         this.model.destroy();
+                        this.destroy();
                         // set the cursor to the end of the previous input
                         prev.find('input:first').focus();
                         var input = prev.find('input:first')[0];
@@ -230,9 +230,8 @@ define(
             /** Finish editing an item **/
             close: function () {
                 var value = this.$('.edit:first').val().trim();
-                    this.model.save({
-                        content: value
-                    });
+                if (this.model.get('content')!=value)
+                    this.model.save({content: value});
                 this.$el.removeClass('editing');
             },
 
@@ -266,32 +265,23 @@ define(
 
             /** Add a new blank note below this **/
             addNote: function () {
-                var currentId = this.ui.input.data('id') || 0;
+                // var currentId = this.ui.input.data('id') || 0;
                 parentId = this.ui.input.data('parent-id');
-
-
                 var index= this.getParentView().collection.indexOf(this.model);
-
                 var task = pageView.collection.add({parentId: this.model.get('parentId')});
                 task.save();
                 if (index>=0)
                     this.getParentView().collection.add(task, {at:index+1});
                 else
                     this.getParentView().collection.add(task);
-                console.log(index);
-                this.ui.input.blur();
-                task.view.ui.input.focus();
+                this.$('input:first').blur();
+                task.focusOnView();
             },
 
             /** Fold children of the clicked element */
             foldChildren: function () {
-                if (this.ui.children.length > 0) {
-                    this.ui.children.toggle();
-                    this.$el.find('li:first').toggleClass('folded');
-                } else {
-                    this.ui.children.show();
-                    this.$el.find('li:first').removeClass('folded');
-                }
+                var folded = this.$el.find('li:first').hasClass('folded');
+                this.model.save({isFolded: !folded});
             },
         });
 

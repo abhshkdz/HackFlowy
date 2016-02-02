@@ -1,115 +1,112 @@
- define(function (require) {
-     return [{
-         "id": 80,
-         "content": "Welcome to HackFlowy!",
-         "parentId": 0,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:44:30.858Z",
-         "updatedAt": "2016-01-29T05:44:30.858Z"
-     }, {
-         "id": 81,
-         "content": "An open-source WorkFlowy clone",
-         "parentId": 0,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:44:30.858Z",
-         "updatedAt": "2016-01-29T05:44:30.858Z"
-     }, {
-         "id": 82,
-         "content": "Built using Backbone + Socket.IO",
-         "parentId": 0,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:44:30.858Z",
-         "updatedAt": "2016-01-29T05:44:30.858Z"
-     }, {
-         "id": 83,
-         "content": "Pulled this together in a few hours to learn Backbone",
-         "parentId": 0,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:44:30.858Z",
-         "updatedAt": "2016-01-29T05:44:30.858Z"
-     }, {
-         "id": 84,
-         "content": "Feel free to try it out and hack on it",
-         "parentId": 0,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:44:30.858Z",
-         "updatedAt": "2016-01-29T05:44:30.858Z"
-     }, {
-         "id": 85,
-         "content": "Good Luck!",
-         "parentId": 0,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:44:30.858Z",
-         "updatedAt": "2016-01-29T05:44:30.858Z"
-     }, {
-         "id": 86,
-         "content": "P.S",
-         "parentId": 0,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:44:40.978Z",
-         "updatedAt": "2016-01-29T05:44:40.978Z"
-     }, {
-         "id": 88,
-         "content": "It makes sense if you don't think about it; I haven't",
-         "parentId": 0,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:44:58.737Z",
-         "updatedAt": "2016-01-29T05:45:50.939Z"
-     }, {
-         "id": 89,
-         "content": "Make love not war",
-         "parentId": 88,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:45:03.048Z",
-         "updatedAt": "2016-01-29T05:45:57.481Z"
-     }, {
-         "id": 91,
-         "content": "Love can be brought not sold",
-         "parentId": 88,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:45:32.331Z",
-         "updatedAt": "2016-01-29T05:46:10.478Z"
-     }, {
-         "id": 93,
-         "content": "How do I love thee? Let me count the ways - Shakespeare",
-         "parentId": 88,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:46:25.119Z",
-         "updatedAt": "2016-01-29T05:48:00.604Z"
-     }, {
-         "id": 95,
-         "content": "Therefore: love can be listed and lists can be loved",
-         "parentId": 88,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:46:38.998Z",
-         "updatedAt": "2016-01-29T05:48:22.937Z"
-     }, {
-         "id": 96,
-         "content": "Conclusion: lists and love should be free",
-         "parentId": 88,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:47:26.684Z",
-         "updatedAt": "2016-01-29T05:48:29.796Z"
-     }, {
-         "id": 97,
-         "content": "But how can our lists be real if our love isnt? - Jaden Smith",
-         "parentId": 88,
-         "isCompleted": false,
-         "priority": 0,
-         "createdAt": "2016-01-29T05:47:46.930Z",
-         "updatedAt": "2016-01-29T05:47:46.930Z"
-     }];
- });
+[{
+    "id": "fba0d0d9-d540-03c2-ecd5-cb5c391484ef",
+    "content": "Welcome to HackFlowy!",
+    "parentId": "00000000-0000-0000-0000-000000000000",
+    "isCompleted": false,
+    "priority": 1,
+    "createdAt": "2016-01-29T05:44:30.858Z",
+    "updatedAt": "2016-01-29T05:44:30.858Z"
+}, {
+    "id": "886689fd-8ca1-75ed-8086-fe05904ff039",
+    "content": "An open-source WorkFlowy clone",
+    "parentId": "00000000-0000-0000-0000-000000000000",
+    "isCompleted": false,
+    "priority": 2,
+    "createdAt": "2016-01-29T05:44:30.858Z",
+    "updatedAt": "2016-01-29T05:44:30.858Z"
+}, {
+    "id": "bbc8e79d-5e51-83b8-2639-812471972e04",
+    "content": "Built using Backbone + Socket.IO",
+    "parentId": "00000000-0000-0000-0000-000000000000",
+    "isCompleted": false,
+    "priority": 3,
+    "createdAt": "2016-01-29T05:44:30.858Z",
+    "updatedAt": "2016-01-29T05:44:30.858Z"
+}, {
+    "id": "602f03a8-bfdd-5193-f0bb-b4d0f5fa165c",
+    "content": "Pulled this together in a few hours to learn Backbone",
+    "parentId": "00000000-0000-0000-0000-000000000000",
+    "isCompleted": false,
+    "priority": 4,
+    "createdAt": "2016-01-29T05:44:30.858Z",
+    "updatedAt": "2016-01-29T05:44:30.858Z"
+}, {
+    "id": "1e663464-4c22-bd0a-85a7-3a287ac2f02e",
+    "content": "Feel free to try it out and hack on it",
+    "parentId": "00000000-0000-0000-0000-000000000000",
+    "isCompleted": false,
+    "priority": 5,
+    "createdAt": "2016-01-29T05:44:30.858Z",
+    "updatedAt": "2016-01-29T05:44:30.858Z"
+}, {
+    "id": "d25704a8-fe09-ab2a-7c54-58c5e8113e88",
+    "content": "Good Luck!",
+    "parentId": "00000000-0000-0000-0000-000000000000",
+    "isCompleted": false,
+    "priority": 6,
+    "createdAt": "2016-01-29T05:44:30.858Z",
+    "updatedAt": "2016-01-29T05:44:30.858Z"
+}, {
+    "id": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
+    "content": "P.S",
+    "parentId": "00000000-0000-0000-0000-000000000000",
+    "isCompleted": false,
+    "priority": 7,
+    "isFolded": true,
+    "createdAt": "2016-01-29T05:44:40.978Z",
+    "updatedAt": "2016-01-29T05:44:40.978Z"
+}, {
+    "id": "70a84964-658d-fbf9-4552-e8f243138f6e",
+    "content": "It makes sense if you don't think about it; I haven't",
+    "parentId": "00000000-0000-0000-0000-000000000000",
+    "isCompleted": false,
+    "priority": 8,
+    "createdAt": "2016-01-29T05:44:58.737Z",
+    "updatedAt": "2016-01-29T05:45:50.939Z"
+}, {
+    "id": 89,
+    "content": "Make love not war",
+    "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
+    "isCompleted": false,
+    "priority": 1,
+    "createdAt": "2016-01-29T05:45:03.048Z",
+    "updatedAt": "2016-01-29T05:45:57.481Z"
+}, {
+    "id": 91,
+    "content": "Love can be brought not sold",
+    "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
+    "isCompleted": false,
+    "priority": 2,
+    "createdAt": "2016-01-29T05:45:32.331Z",
+    "updatedAt": "2016-01-29T05:46:10.478Z"
+}, {
+    "id": 93,
+    "content": "How do I love thee? Let me count the ways - Shakespeare",
+    "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
+    "isCompleted": false,
+    "priority": 3,
+    "createdAt": "2016-01-29T05:46:25.119Z",
+    "updatedAt": "2016-01-29T05:48:00.604Z"
+}, {
+    "id": 95,
+    "content": "Therefore: love can be listed and lists can be loved",
+    "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
+    "isCompleted": false,
+    "priority": 4,
+    "createdAt": "2016-01-29T05:46:38.998Z",
+    "updatedAt": "2016-01-29T05:48:22.937Z"
+}, {
+    "content": "Conclusion: lists and love should be free",
+    "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
+    "isCompleted": false,
+    "priority": 5,
+    "createdAt": "2016-01-29T05:47:26.684Z",
+    "updatedAt": "2016-01-29T05:48:29.796Z"
+}, {
+    "content": "But how can our lists be real if our love isnt? - Jaden Smith",
+    "parentId": "b61c6f7d-07d0-3fa3-4c30-6e2159280f18",
+    "isCompleted": false,
+    "priority": 6,
+    "createdAt": "2016-01-29T05:47:46.930Z",
+    "updatedAt": "2016-01-29T05:47:46.930Z"
+}]

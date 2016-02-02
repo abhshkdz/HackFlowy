@@ -5812,6 +5812,10 @@ body #hackflowy #main .children ul.task-view {
     content: "+";
 }
 
+.folded.children {
+    display: none;
+}
+
 .task-completed{
   text-decoration: line-through;
 }
