@@ -1,0 +1,31 @@
+<li>
+    <div class="task-wrappper">
+        <div class="task">
+            <div class="link">•
+                <div class="options">
+                    <div class="options-left">
+                        <a class="fold-button" title="Expand/collapse children"></a>
+                        <a class="mouse-tip" href="#<%= obj.id %>"></a>
+                        <%  if(isCompleted){ %>
+                        <a class="uncomplete">Uncomplete<hr></a>
+                        <% }else { %>
+                        <a class="complete">Complete<hr></a>
+                        <% } %>
+                        <a class="fold">Fold<hr></a>
+                        <a class="destroy">Delete<hr></a>
+                        <a class="note">
+                            <span class="note">Add Note</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <% if(isCompleted) { %>
+            <input value="<%= obj.content %>" data-id="<%= obj.id %>" data-parent-id="<%= parentId %>" data-priority="<%= priority %>" class="edit task-completed">
+            <% }else { %>
+            <input value="<%= obj.content %>" data-id="<%= obj.id %>" data-parent-id="<%= parentId %>" data-priority="<%= priority %>" class="edit">
+            <% } %>
+        </div>
+    </div>
+</li>
+<div class="children"></div>
