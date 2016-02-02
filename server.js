@@ -9,7 +9,7 @@ var application_root = __dirname,
     socket = require('socket.io'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
-    errorhandler = require('errorhandler');
+    errorHandler = require('errorhandler');
 
 
 app.use(bodyParser.json());
@@ -36,37 +36,37 @@ server.listen(port, function () {
 var io = socket.listen(server);
 
 app.get('/tasks', function (req, res) {
-    Tasks.all().then(function (tasks) {
-        res.send(tasks);
+    return Tasks.all().then(function (tasks) {
+        return res.send(tasks);
     });
 });
 
 app.post('/tasks', function (req, res) {
     console.log({view: "post('/tasks/:id)", id:req.params.id, body:req.body});
-    Tasks.create({
+    return Tasks.create({
         content: req.body.content,
         parentId: req.body.parentId || '00000000-0000-0000-0000-000000000000',
         isCompleted: false
     }).then(function (task) {
-        res.send(task);
+        return res.send(task);
     });
 });
 
 app.put('/tasks', function (req, res) {
     console.log({view: "put('/tasks/:id)", id:req.params.id, body:req.body});
-    Tasks.create({
+    return Tasks.create({
         content: req.body.content,
         parentId: req.body.parentId || '00000000-0000-0000-0000-000000000000',
         isCompleted: false
     }).then(function (task) {
-        res.send(task);
+        return res.send(task);
     });
 });
 
 app.get('/tasks/:id', function (req, res) {
     console.log({view: "get('/tasks/:id)", id:req.params.id, body:req.body});
-    Tasks.findById(req.params.id).then(function (task) {
-            res.send(task);
+    return Tasks.findById(req.params.id).then(function (task) {
+            return res.send(task);
     });
 });
 
@@ -78,8 +78,8 @@ app.put('/tasks/:id', function (req, res) {
         task.parentId = req.body.parentId ||  '00000000-0000-0000-0000-000000000000';
         task.isFolded = req.body.isFolded == true;
         task.isCompleted = req.body.isCompleted == true;
-        task.save().then(function (task) {
-            res.send(task);
+        return task.save().then(function (task) {
+            return res.send(task);
         });
     });
 });
@@ -88,8 +88,8 @@ app.delete('/tasks/:id', function (req, res) {
     console.log({view: "delete('/tasks/:id)", id:req.params.id, body:req.body});
     console.log({isCompleted: req.body.isCompleted});
     Tasks.findById(req.params.id).then(function (task) {
-        task.destroy().then(function () {
-            res.send('');
+        return task.destroy().then(function () {
+            return res.send('');
         });
     });
 });
