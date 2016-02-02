@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 
 /* http://sequelizejs.com/articles/heroku */
 var parseUrl = function(url) {
-    var match = url.match(/([\w]+):\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+    var match = url.match(/([\w]+):\/\/([^:]+):([^@]*)@([^:]*):(\d*)\/(.+)/);
     db = {
         database : match[6],
         username : match[2],
@@ -23,4 +23,3 @@ module.exports = {
         return new Sequelize(db.database, db.username, db.password, db.options);
     }
 }
-
