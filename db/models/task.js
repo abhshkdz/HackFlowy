@@ -5,11 +5,10 @@ module.exports = {
         task = orm.define('Tasks', {
           id         : {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
           content 	 : {type: Sequelize.TEXT, allowNull: false},
-          parentId   : {type: Sequelize.INTEGER, defaultValue: 0},
-          isCompleted: {type: Sequelize.BOOLEAN, defaultValue: false},
-          priority   : {type: Sequelize.INTEGER, defaultValue: 0},
+          parent     : Sequelize.INTEGER,
+          isCompleted: Sequelize.BOOLEAN,
           createdAt  : Sequelize.DATE,
-          updatedAt  : Sequelize.DATE,
+          updatedAt  : Sequelize.DATE 
         });
 
         orm.sync();

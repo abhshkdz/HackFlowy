@@ -2,7 +2,7 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/abhshkdz/HackFlowy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-An open-source [Workflowy](http://workflowy.com) clone. [Static demo available here](http://wassname.github.io/HackFlowy/).
+An open-source [Workflowy](http://workflowy.com) clone.
 
 ![](https://dl.dropbox.com/u/19398876/screenshots/043.png)
 
@@ -10,8 +10,6 @@ An open-source [Workflowy](http://workflowy.com) clone. [Static demo available h
 
 * Edit `config/development.json` and `config/database.json` to your needs
 * `npm install`
-* `npm install bower`
-* `bower install`
 * `node server.js`
 
 ## Heroku deploy
@@ -30,20 +28,13 @@ Or proceed manually as follow:
 ## Controls
 
 * <kbd>UP</kbd> & <kbd>DOWN</kbd>: navigate through tasks
-* <kbd>CNTRL+UP</kbd> & <kbd>CNTRL+DOWN</kbd>: shuffle tasks
 * <kbd>TAB</kbd>: right-indent
 * <kbd>SHIFT</kbd> + <kbd>TAB</kbd>: left-indent
-* <kbd>BACKSPACE</kbd>: Remove an empty task
-* <kbd>ENTER</kbd>: New task
-* Click on a bullet point to fold it
-* Hover on a bullet point and click complete to complete it
 
 ## Technologies used
 
 * Node + Socket.io
 * Backbone
-* Backbone.marionette
-* Backbone.localforage
 * Foundation
 
 ## To-do
