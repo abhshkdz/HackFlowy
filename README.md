@@ -4,7 +4,7 @@
 
 An open-source [Workflowy](http://workflowy.com) clone. [Static demo available here](http://abhshkdz.github.io/HackFlowy/).
 
-![](https://dl.dropbox.com/u/19398876/screenshots/043.png)
+![](http://i.imgur.com/FmUAIuU.png)
 
 ## Installation
 
